@@ -8,11 +8,11 @@ export
 Graph,
 Network,
 
-# edge_methods
+# edge_functions
 choose_edge,
 add_edge,
 
-# cluster_methods
+# cluster_functions
 get_cluster,
 get_largest_cluster_size,
 get_largest_clusters,
@@ -24,8 +24,8 @@ bohman_frieze,
 product_rule
 
 include("./graphs.jl")
-include("./edge_methods.jl")
-include("./cluster_methods.jl")
+include("./edge_functions.jl")
+include("./cluster_functions.jl")
 include("./evolution_processes.jl")
 
 end # module
