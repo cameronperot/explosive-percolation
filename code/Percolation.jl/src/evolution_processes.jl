@@ -38,14 +38,10 @@ function product_rule(g::Network, τ::Int)
 		cluster₄ = get_cluster(g, edge₂[2])
 		if length(cluster₁) * length(cluster₂) < length(cluster₃) * length(cluster₄)
 			add_edge(g, edge₁)
-			merge_clusters(g, cluster₁, cluster₂)
-			C = get_largest_cluster_size(g)
-			push!(g.C, C)
+			update_clusters(g, cluster₁, cluster₂)
 		else
 			add_edge(g, edge₂)
-			merge_clusters(g, cluster₃, cluster₄)
-			C = get_largest_cluster_size(g)
-			push!(g.C, C)
+			update_clusters(g, cluster₃, cluster₄)
 		end
 	end
 	g.P = g.C ./ g.n
@@ -66,12 +62,12 @@ function new_rule(g::Network, τ::Int, q::Float64)
 		edge = choose_edge(g)
 		cluster₁ = get_cluster(edge[1])
 		cluster₂ = get_cluster(edge[2])
-		C = get_largest_cluster_size(g)
-		p = maximum(1-C/g.n, q)
+		merged_cluster = cluster₁ ∪ cluster₂
+		r = length(merged_cluster) / g.C[end]
+		p = maximum(1-r, q)
 		if rand(g.rng) < p
 			add_edge(g, edge)
-			merge_clusters(g, cluster₁, cluster₂)
-			push!(g.C, maximum(C, length(cluster₁)*length(cluster₂)))
+			update_clusters(g, cluster₁, cluster₂, merged_cluster)
 		end
 	end
 	g.P = g.C ./ g.n

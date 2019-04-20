@@ -28,7 +28,7 @@ mutable struct Network <: Graph
 		nodes    = Set(1:n)
 		edges    = Set()
 		clusters = Set([Set(i) for i in 1:n])
-		C        = []
+		C        = [1]
 		P        = []
 		rng      = MersenneTwister(seed)
 		new(n, nodes, edges, clusters, C, P, rng)
