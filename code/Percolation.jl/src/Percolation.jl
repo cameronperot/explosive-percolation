@@ -14,14 +14,14 @@ add_edge,
 
 # cluster_functions
 get_cluster,
-get_largest_cluster_size,
 get_largest_clusters,
-merge_clusters,
+update_clusters,
 
 # evolution_processes
 erdos_renyi,
 bohman_frieze,
-product_rule
+product_rule,
+new_rule
 
 include("./graphs.jl")
 include("./edge_functions.jl")
