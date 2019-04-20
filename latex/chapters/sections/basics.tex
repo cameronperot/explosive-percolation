@@ -39,6 +39,14 @@ In physics we often encounter systems which have different properties depending 
 Thus we are interested in how the system behaves around the critical point.
 A phase transition is usually characterized by an order parameter, which is a variable that is zero in one phase and non-zero in the other, giving us the ability to distinguish phases and identify phase transitions.
 
+In percolation theory we define the order parameter as the ratio of the largest cluster to the size of the system, i.e. if we have $n$ nodes total and the largest cluster $C$ contains $|C|$ nodes, then the order parameter $P$ is given by:
+
+\begin{equation}
+	\label{eqn:order_parameter}
+	P := \frac{|C|}{n}
+\end{equation}
+Of course the system is usually examined in the thermodynamic limit ($n \rightarrow \infty$), thus $P$ is zero unless there exists a macroscopic cluster.
+
 There are two main types of phase transitions: first- and second-order.
 In a first-order phase transition there is what we call a latent heat, i.e. energy that is either absorbed or emitted during a process where the temperature is fixed, e.g. the transition of water between the solid and liquid phases.
 Second-order (also called continuous) phase transitions are characterized by a divergent correlation length and power law behavior of variables which leads to a set of critical exponents (more about critical exponents below).
@@ -53,9 +61,50 @@ The classic percolation models are known to undergo continuous phase transitions
 
 
 
+\subsubsection{Critical Exponents}
+Around the critical point in a percolation model, there exists a set of numbers called the critical exponents which contain information about how certain quantities of interest behave.
+Let's take for example the order parameter as a function of the occupation probability $p$, which is described by the critical exponent $\beta$ \cite{intro_to_percolation_theory}:
+
+\begin{equation}
+	\label{eqn:crit_exp_P}
+	P(p) \sim (p - p_c)^\beta
+\end{equation}
+The average cluster size $\langle s \rangle$ is described by $\gamma$ \cite{intro_to_percolation_theory}:
+
+\begin{equation}
+	\label{eqn:crit_exp_s}
+	\langle s \rangle (p) \sim (p - p_c)^{-\gamma}
+\end{equation}
+The correlation length $\xi$ is described by $\nu$ \cite{intro_to_percolation_theory}:
+\begin{equation}
+	\label{eqn:crit_exp_xi}
+	\xi (p) \sim |p - p_c|^{-\nu}
+\end{equation}
+
+The neat thing about these exponents is that they are universal in the sense that they only depend on the dimension $d$ of the system, regardless of the microscopic configuration.
+Some values for these are given in the table below \cite{intro_to_percolation_theory}:
+
+\begin{center}
+  \begin{tabular}{ | l | c | c | c | }
+    \hline
+    $d$ & $\beta$ & $\gamma$ & $\nu$ \\ \hline
+    2 & 5/36 & 43/18 & 4/3 \\ \hline
+    3 & 0.41 & 1.82 & 0.88 \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
+
+
+
+
+
+
+
 \subsection{Percolation on a Lattice}
 On a lattice we can look at percolation from two different perspectives: site and bond percolation.
-With site percolation we study graphs where the sites of a lattice are either occupied or unoccupied, whereas with bond percolation we study the graphs where the connections between sites are either open or closed.
+With site percolation we study graphs where the sites of a lattice are either occupied or unoccupied, whereas with bond percolation we study the graphs where the connections between sites are either active or inactive.
 The underlying concepts of percolation are the same, but in practice the details differ slightly.
 
 
