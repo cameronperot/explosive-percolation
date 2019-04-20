@@ -1,0 +1,20 @@
+\section{An "Explosive" Transition}
+In this paper we deal with a specific type of percolation called explosive percolation, where the underlying concept is that the onset of percolation is delayed until a certain point where it then occurs at an accelerated rate.
+The main idea behind it is that the network evolves in a way such that the largest cluster size is controlled.
+We can think of a graph where clusters might evolve separately without connecting among themselves.
+Collectively they take up a large portion of the graph but aren't percolating yet due to the lack of connections between them.
+If at some point these clusters do connect then the graph undergoes the phase transition to the percolating state.
+Whether the phase transition is continuous or not has been heavily debated, so the aim of the next section is to summarize what we know to this point regarding the nature of the transition.
+
+\subsection{How It All Started}
+This all started in the year 2000 when Dimitris Achlioptas brought forth an interesting take on adding edges to a random graph.
+The basic question was what would happen if instead of randomly adding an edge at each step like in the ER model, one evaluated two edges $\{e_1, e_2\}$ and then added one edge and discarded the other according to some selection criteria.
+This process of multiple edge evaluation is referred to as an Achlioptas process.
+
+In 2001 Tom Bohman and Alan Frieze were the first to analyze an Achlioptas process in their paper "Avoiding a Giant component" \cite{BF}, which laid out a model (BF) for delaying the appearance of a giant cluster.
+At each step edge $e_1$ is added and $e_2$ discarded if $e_1$ connects two clusters of size smaller than $K$, if not $e_2$ is added and $e_1$ discarded.
+What this method does is view clusters of size greater than or equal to $K$ as equivalent.
+This is known as a "bounded-size" rule.
+In their paper they showed that this method leads to a delayed onset of percolation when compared to ER.
+It has been hypothesized that all bounded-size rules produce exhibit continuous phase transitions \cite{20070000}.
+The first mention of explosive percolation appeared in 2009 in the paper "Explosive Percolation in Random Networks" \cite{20090313} by Dimitris Achlioptas, Raissa M. D’Souza, and Joel Spencer, which will henceforth be referred to as Achlioptas et al.
