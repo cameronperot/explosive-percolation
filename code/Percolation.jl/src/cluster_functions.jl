@@ -17,7 +17,7 @@ end
 
 function get_largest_clusters(g::Network, n_clusters::Int)
 	"""
-	Determines the `n_clusters` largest clusters in the graph
+	Determines the `n_clusters` largest clusters in 'g'
 	INPUT
 		`g`         : An instance of type Network
 		`n_clusters`: The number of largest clusters to return
@@ -30,7 +30,7 @@ end
 
 function update_clusters(g::Network, cluster₁::Set{Int}, cluster₂::Set{Int})
 	"""
-	Function to merge two clusters in a Network
+	Updates `g` with the newly merged cluster the largest cluster size
 	INPUT
 		`g`       : An instance of type Network
 		`cluster₁`: Any cluster within `g`
@@ -48,7 +48,7 @@ end
 
 function update_clusters(g::Network, cluster₁::Set{Int}, cluster₂::Set{Int}, merged_cluster::Set{Int})
 	"""
-	Function to merge two clusters in a Network
+	Updates `g` with the newly merged cluster and the largest cluster size
 	INPUT
 		`g`             : An instance of type Network
 		`cluster₁`      : Any cluster within `g`

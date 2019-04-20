@@ -1,10 +1,10 @@
 function choose_edge(g::Network)
 	"""
-	Randomly selects and returns a closed edge in `g`
+	Randomly selects an inactive edge in `g`
 	INPUT
 		`g`: An instance of type Network
 	OUTPUT
-		`edge`: A set of two integers representing a closed edge in `g`
+		`edge`: A set of two integers representing an inactive edge in `g`
 	"""
 	edge = (rand(g.rng, 1:g.n), rand(g.rng, 1:g.n))
 	if edge[1] != edge[2] && edge ∉ g.edges
