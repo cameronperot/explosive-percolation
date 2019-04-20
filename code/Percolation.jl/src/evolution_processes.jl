@@ -30,22 +30,19 @@ function product_rule(g::Network, τ::Int)
 		`g`: Evolved verion of input `g`
 	"""
 	for t in 1:τ
-		node₁, node₂ = edge₁ = choose_edge(g)
-		node₃, node₄ = edge₂ = choose_edge(g)
-		while edge₁ == edge₂ # to avoid choosing the same two edges
-			node₃, node₄ = edge₂ = choose_edge(g)
-		end
-		cluster₁ = get_cluster(g, node₁)
-		cluster₂ = get_cluster(g, node₂)
-		cluster₃ = get_cluster(g, node₃)
-		cluster₄ = get_cluster(g, node₄)
+		edge₁ = choose_edge(g)
+		edge₂ = choose_edge(g)
+		cluster₁ = get_cluster(g, edge₁[1])
+		cluster₂ = get_cluster(g, edge₁[2])
+		cluster₃ = get_cluster(g, edge₂[1])
+		cluster₄ = get_cluster(g, edge₂[2])
 		if length(cluster₁) * length(cluster₂) < length(cluster₃) * length(cluster₄)
-			add_edge(g, edge)
+			add_edge(g, edge₁)
 			merge_clusters(g, cluster₁, cluster₂)
 			C = get_largest_cluster_size(g)
 			push!(g.C, C)
 		else
-			add_edge(g, edge)
+			add_edge(g, edge₂)
 			merge_clusters(g, cluster₃, cluster₄)
 			C = get_largest_cluster_size(g)
 			push!(g.C, C)
@@ -66,9 +63,9 @@ function new_rule(g::Network, τ::Int, q::Float64)
 		`g`: Evolved verion of input `g`
 	"""
 	for t in 1:τ
-		node₁, node₂ = edge = choose_edge(g)
-		cluster₁ = get_cluster(node₁)
-		cluster₂ = get_cluster(node₂)
+		edge = choose_edge(g)
+		cluster₁ = get_cluster(edge[1])
+		cluster₂ = get_cluster(edge[2])
 		C = get_largest_cluster_size(g)
 		p = maximum(1-C/g.n, q)
 		if rand(g.rng) < p

@@ -19,7 +19,7 @@ mutable struct Network <: Graph
 	"""
 	n        ::Int
 	nodes    ::Set{Int}
-	edges    ::Set{Set{Int}}
+	edges    ::Set{Tuple{Int, Int}}
 	clusters ::Set{Set{Int}}
 	C        ::Array{Int, 1}
 	P        ::Array{Float64, 1}
