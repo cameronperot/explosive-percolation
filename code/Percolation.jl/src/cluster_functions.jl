@@ -12,6 +12,7 @@ function get_cluster(g::Network, node::Int)
 			return cluster
 		end
 	end
+	return node
 end
 
 
@@ -38,7 +39,7 @@ function update_clusters(g::Network, cluster₁::Set{Int}, cluster₂::Set{Int})
 	OUTPUT
 		None, updates `g` in-place
 	"""
-	filter!(cluster -> cluster ∉ [cluster₁, cluster₂], g.clusters)
+	filter!(cluster -> cluster ∉ (cluster₁, cluster₂), g.clusters)
 	merged_cluster = cluster₁ ∪ cluster₂
 	C = maximum((g.C[end], length(merged_cluster)))
 	push!(g.clusters, merged_cluster)
@@ -57,7 +58,7 @@ function update_clusters(g::Network, cluster₁::Set{Int}, cluster₂::Set{Int},
 	OUTPUT
 		None, updates `g` in-place
 	"""
-	filter!(cluster -> cluster ∉ [cluster₁, cluster₂], g.clusters)
+	filter!(cluster -> cluster ∉ (cluster₁, cluster₂), g.clusters)
 	C = maximum((g.C[end], length(merged_cluster)))
 	push!(g.clusters, merged_cluster)
 	push!(g.C, C)
