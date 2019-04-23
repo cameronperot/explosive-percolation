@@ -15,7 +15,7 @@ function choose_edge(g::Network)
 end
 
 
-function add_edge(g::Network, edge::Tuple{Int, Int})
+function add_edge!(g::Network, edge::Tuple{Int, Int})
 	"""
 	Adds an edge to `g`
 	INPUT

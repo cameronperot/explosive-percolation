@@ -8,10 +8,10 @@ function erdos_renyi(g::Network)
 	"""
 	for t in 1:g.τ
 		edge = choose_edge(g)
-		add_edge(g, edge)
+		add_edge!(g, edge)
 		cluster₁ = get_cluster(g, edge[1])
 		cluster₂ = get_cluster(g, edge[2])
-		update_clusters(g, t, cluster₁, cluster₂)
+		update_clusters!(g, t, cluster₁, cluster₂)
 	end
 	g.P = g.C ./ g.n
 	return g
@@ -40,11 +40,11 @@ function product_rule(g::Network)
 		cluster₃ = get_cluster(g, edge₂[1])
 		cluster₄ = get_cluster(g, edge₂[2])
 		if length(cluster₁) * length(cluster₂) < length(cluster₃) * length(cluster₄)
-			add_edge(g, edge₁)
-			update_clusters(g, t, cluster₁, cluster₂)
+			add_edge!(g, edge₁)
+			update_clusters!(g, t, cluster₁, cluster₂)
 		else
-			add_edge(g, edge₂)
-			update_clusters(g, t, cluster₃, cluster₄)
+			add_edge!(g, edge₂)
+			update_clusters!(g, t, cluster₃, cluster₄)
 		end
 	end
 	g.P = g.C ./ g.n
@@ -69,8 +69,8 @@ function new_rule(g::Network, q::Float64)
 		r = length(merged_cluster) / g.C[t]
 		p = maximum(1-r, q)
 		if rand(g.rng) < p
-			add_edge(g, edge)
-			update_clusters(g, t, cluster₁, cluster₂, merged_cluster)
+			add_edge!(g, edge)
+			update_clusters!(g, t, cluster₁, cluster₂, merged_cluster)
 		end
 	end
 	g.P = g.C ./ g.n

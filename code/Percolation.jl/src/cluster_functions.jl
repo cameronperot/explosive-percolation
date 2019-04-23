@@ -26,11 +26,11 @@ function get_largest_clusters(g::Network, n_clusters::Int)
 		Sorted (descending) array of the `n_clusters` largest clusters in `g`
 	"""
 	# TODO need account for the case when length(g.clusters) < n_clusters
-	return sort(collect(g.clusters), by=length, rev=true)[1:n_clusters]
+	return sort!(collect(g.clusters), by=length, rev=true)[1:n_clusters]
 end
 
 
-function update_clusters(g::Network, t::Int, cluster₁::Set{Int}, cluster₂::Set{Int})
+function update_clusters!(g::Network, t::Int, cluster₁::Set{Int}, cluster₂::Set{Int})
 	"""
 	Updates `g` with the newly merged cluster the largest cluster size
 	INPUT
@@ -42,14 +42,13 @@ function update_clusters(g::Network, t::Int, cluster₁::Set{Int}, cluster₂::S
 		None, updates `g` in-place
 	"""
 	filter!(cluster -> cluster ∉ (cluster₁, cluster₂), g.clusters)
-	merged_cluster = cluster₁ ∪ cluster₂
-	push!(g.clusters, merged_cluster)
-	C = maximum((g.C[t], length(merged_cluster)))
-	g.C[t+1] = C
+	union!(cluster₁, cluster₂)
+	push!(g.clusters, cluster₁)
+	g.C[t+1] = maximum((g.C[t], length(cluster₁)))
 end
 
 
-function update_clusters(g::Network, t::Int, cluster₁::Set{Int}, cluster₂::Set{Int}, merged_cluster::Set{Int})
+function update_clusters!(g::Network, t::Int, cluster₁::Set{Int}, cluster₂::Set{Int}, merged_cluster::Set{Int})
 	"""
 	Updates `g` with the newly merged cluster and the largest cluster size
 	INPUT
@@ -63,6 +62,5 @@ function update_clusters(g::Network, t::Int, cluster₁::Set{Int}, cluster₂::S
 	"""
 	filter!(cluster -> cluster ∉ (cluster₁, cluster₂), g.clusters)
 	push!(g.clusters, merged_cluster)
-	C = maximum((g.C[t], length(merged_cluster)))
-	g.C[t+1] = C
+	g.C[t+1] = maximum((g.C[t], length(merged_cluster)))
 end

@@ -10,12 +10,13 @@ Network,
 
 # edge_functions
 choose_edge,
-add_edge,
+add_edge!,
 
 # cluster_functions
 get_cluster,
+get_largest_cluster_size,
 get_largest_clusters,
-update_clusters,
+update_clusters!,
 
 # evolution_processes
 erdos_renyi,
