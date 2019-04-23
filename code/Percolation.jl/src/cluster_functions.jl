@@ -16,6 +16,18 @@ function get_cluster(g::Network, node::Int)
 end
 
 
+function get_largest_cluster_size(g::Network)
+	"""
+	Determines the size of the largest cluster in `g`
+	INPUT
+		`g`: An instance of type Network
+	OUTPUT
+		Integer representing the number of nodes in the largest cluster of `g`
+	"""
+	return maximum([length(cluster) for cluster in g.clusters])
+end
+
+
 function get_largest_clusters(g::Network, n_clusters::Int)
 	"""
 	Determines the `n_clusters` largest clusters in 'g'
