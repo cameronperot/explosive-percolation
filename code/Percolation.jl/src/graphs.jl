@@ -5,37 +5,37 @@ mutable struct Network <: Graph
 	"""
 	Type to house the sets of nodes, edges, and clusters of a network
 	INPUT
-		`n`   : Total number of nodes in the network
-		`τ`   : (optional kwarg) Number of edges to add to the graph
-		`seed`: (optional kwarg) Seed value for the random number generator
+		`n`       : Total number of nodes in the network
+		`n_steps` : Number of edges to add to the graph
+		`seed`    : (optional kwarg) Seed value for the random number generator
 	OUTPUT
 		`g`: A new instance of type Network
 	VARIABLES
-		`n`       : Number of nodes
-		`τ`       : Number of edges to add to the graph
-		`nodes`   : Set of nodes present in the graph
+		`n`       : Total number of nodes in the network
+		`n_steps` : Number of edges to add to the graph
+		`nodes`   : Dictionary with node IDs as keys and cluster IDs as values
 		`edges`   : Set of edges present in the graph
-		`clusters`: Set of clusters present in the graph
+		`clusters`: Dictionary with cluster IDs as keys and clusters as values
 		`C`       : Largest cluster size
 		`P`       : Order parameter
 		`rng`     : Random number generator
 	"""
 	n        ::Int
-	τ        ::Int
-	nodes    ::Set{Int}
+	n_steps  ::Int
+	nodes    ::Dict{Int64, Int64}
 	edges    ::Set{Tuple{Int, Int}}
-	clusters ::Set{Set{Int}}
+	clusters ::Dict{Int64, Set{Int64}}
 	C        ::Array{Int, 1}
 	P        ::Array{Float64, 1}
 	rng      ::MersenneTwister
-	function Network(n::Int; τ=0, seed=8)
-		nodes    = Set(1:n)
+	function Network(n::Int, n_steps::Int; seed::Int=8)
+		nodes    = Dict(1:n .=> 1:n)
 		edges    = Set()
-		clusters = Set()
-		C        = zeros(Int, τ+1)
+		clusters = Dict(1:n .=> Set.(1:n))
+		C        = zeros(Int, n_steps+1)
 		C[1]     = 1
 		P        = []
 		rng      = MersenneTwister(seed)
-		new(n, τ, nodes, edges, clusters, C, P, rng)
+		new(n, n_steps, nodes, edges, clusters, C, P, rng)
 	end
 end
