@@ -60,6 +60,7 @@ function update_clusters!(g::Graph, t::Int, edge::Tuple)
 			g.nodes[node] = larger_cluster
 		end
 		delete!(g.clusters, smaller_cluster)
+		delete!(g.cluster_sizes, smaller_cluster)
 		g.C[t+1] = maximum((g.C[t], g.cluster_sizes[larger_cluster]))
 	else
 		g.C[t+1] = g.C[t]
