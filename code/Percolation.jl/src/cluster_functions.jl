@@ -46,24 +46,21 @@ function update_clusters!(g::Graph, t::Int, edge::Tuple)
 	OUTPUT
 		None, updates `g` in-place
 	"""
-	cluster₁ = g.nodes[edge[1]]
-	cluster₂ = g.nodes[edge[2]]
-	if cluster₁ ≠ cluster₂
-		if length(g.clusters[cluster₁]) > length(g.clusters[cluster₂])
-			union!(g.clusters[cluster₁], g.clusters[cluster₂])
-			for node in g.clusters[cluster₂]
-				g.nodes[node] = cluster₁
-			end
-			delete!(g.clusters, cluster₂)
-			g.C[t+1] = maximum((g.C[t], length(g.clusters[cluster₁])))
+	if g.nodes[edge[1]] ≠ g.nodes[edge[2]]
+		if g.cluster_sizes[g.nodes[edge[1]]] > g.cluster_sizes[g.nodes[edge[2]]]
+			larger_cluster = g.nodes[edge[1]]
+			smaller_cluster = g.nodes[edge[2]]
 		else
-			union!(g.clusters[cluster₂], g.clusters[cluster₁])
-			for node in g.clusters[cluster₁]
-				g.nodes[node] = cluster₂
-			end
-			delete!(g.clusters, cluster₁)
-			g.C[t+1] = maximum((g.C[t], length(g.clusters[cluster₂])))
+			larger_cluster = g.nodes[edge[2]]
+			smaller_cluster = g.nodes[edge[1]]
 		end
+		union!(g.clusters[larger_cluster], g.clusters[smaller_cluster])
+		g.cluster_sizes[larger_cluster] = length(g.clusters[larger_cluster])
+		for node in g.clusters[smaller_cluster]
+			g.nodes[node] = larger_cluster
+		end
+		delete!(g.clusters, smaller_cluster)
+		g.C[t+1] = maximum((g.C[t], g.cluster_sizes[larger_cluster]))
 	else
 		g.C[t+1] = g.C[t]
 	end
