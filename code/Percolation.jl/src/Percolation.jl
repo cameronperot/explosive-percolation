@@ -1,6 +1,7 @@
 module Percolation
 
 using Random
+using Statistics
 
 export
 
@@ -15,6 +16,7 @@ add_edge!,
 
 # cluster_functions
 get_largest_cluster_size,
+get_avg_cluster_size,
 get_largest_clusters,
 update_clusters!,
 

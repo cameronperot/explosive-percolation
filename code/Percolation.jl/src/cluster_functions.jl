@@ -6,7 +6,19 @@ function get_largest_cluster_size(g::Graph)
 	OUTPUT
 		Integer representing the number of nodes in the largest cluster of `g`
 	"""
-	return maximum([length(cluster) for cluster in values(g.clusters)])
+	return maximum(length.(values(g.clusters)))
+end
+
+
+function get_avg_cluster_size(g::Graph)
+	"""
+	Determines the average cluster size in `g`
+	INPUT
+		`g`: An instance of type Graph
+	OUTPUT
+		Float64 representing the average cluster size
+	"""
+	return mean(length.(values(g.clusters)))
 end
 
 
