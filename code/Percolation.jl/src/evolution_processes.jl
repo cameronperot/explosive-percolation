@@ -53,7 +53,7 @@ function product_rule(g_::Graph)
 	for t in 1:g.n_steps
 		node₁, node₂ = edge₁ = choose_edge(g)
 		node₃, node₄ = edge₂ = choose_edge(g, edge₁)
-		if length(g.clusters[g.nodes[node₁]]) * length(g.clusters[g.nodes[node₂]]) < length(g.clusters[g.nodes[node₃]]) * length(g.clusters[g.nodes[node₄]])
+		if g.cluster_sizes[g.nodes[node₁]] * g.cluster_sizes[g.nodes[node₂]] < g.cluster_sizes[g.nodes[node₃]] * g.cluster_sizes[g.nodes[node₄]]
 			add_edge!(g, edge₁)
 			update_clusters!(g, t, edge₁)
 		else
