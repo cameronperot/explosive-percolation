@@ -84,3 +84,7 @@ mutable struct Lattice2D <: Graph
 		new(L, n, n_steps, nodes, edges, clusters, C, P, rng)
 	end
 end
+
+
+Base.copy(g::Network) = Network(g.n, g.n_steps)
+Base.copy(g::Lattice2D) = Lattice2D(g.n, g.n_steps)

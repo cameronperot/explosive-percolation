@@ -1,3 +1,22 @@
+function erdos_renyi(g_::Graph)
+	"""
+	Erdos-Renyi style graph evolution, adds edges randomly at each step
+	INPUT
+		`g_`: An instance of type Graph
+	OUTPUT
+		`g` : An evolved instance of `g_`
+	"""
+	g = copy(g_)
+	for t in 1:g.n_steps
+		edge = choose_edge(g)
+		add_edge!(g, edge)
+		update_clusters!(g, t, edge)
+	end
+	g.P = g.C ./ g.n
+	return g
+end
+
+
 function erdos_renyi!(g::Graph)
 	"""
 	Erdos-Renyi style graph evolution, adds edges randomly at each step
@@ -12,12 +31,38 @@ function erdos_renyi!(g::Graph)
 		update_clusters!(g, t, edge)
 	end
 	g.P = g.C ./ g.n
+	return g
 end
 
 
 function bohman_frieze!(g::Graph)
 	for t in 1:g.n_steps
 	end
+end
+
+
+function product_rule(g_::Graph)
+	"""
+	Achlioptas process, implementation of da Costa's product rule
+	INPUT
+		`g_`: An instance of type Graph
+	OUTPUT
+		`g` : An evolved instance of `g_`
+	"""
+	g = copy(g_)
+	for t in 1:g.n_steps
+		node₁, node₂ = edge₁ = choose_edge(g)
+		node₃, node₄ = edge₂ = choose_edge(g, edge₁)
+		if length(g.clusters[g.nodes[node₁]]) * length(g.clusters[g.nodes[node₂]]) < length(g.clusters[g.nodes[node₃]]) * length(g.clusters[g.nodes[node₄]])
+			add_edge!(g, edge₁)
+			update_clusters!(g, t, edge₁)
+		else
+			add_edge!(g, edge₂)
+			update_clusters!(g, t, edge₂)
+		end
+	end
+	g.P = g.C ./ g.n
+	return g
 end
 
 
@@ -41,6 +86,7 @@ function product_rule!(g::Graph)
 		end
 	end
 	g.P = g.C ./ g.n
+	return g
 end
 
 
@@ -65,4 +111,5 @@ function new_rule!(g::Graph, q::Float64)
 		end
 	end
 	g.P = g.C ./ g.n
+	return g
 end
