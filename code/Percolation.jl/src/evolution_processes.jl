@@ -1,8 +1,8 @@
-function erdos_renyi!(g::Network)
+function erdos_renyi!(g::Graph)
 	"""
 	Erdos-Renyi style graph evolution, adds edges randomly at each step
 	INPUT
-		`g`: An instance of type Network
+		`g`: An instance of type Graph
 	OUTPUT
 		None, updates `g` in-place
 	"""
@@ -15,17 +15,17 @@ function erdos_renyi!(g::Network)
 end
 
 
-function bohman_frieze!(g::Network)
+function bohman_frieze!(g::Graph)
 	for t in 1:g.n_steps
 	end
 end
 
 
-function product_rule!(g::Network)
+function product_rule!(g::Graph)
 	"""
 	Achlioptas process, implementation of da Costa's product rule
 	INPUT
-		`g`: An instance of type Network
+		`g`: An instance of type Graph
 	OUTPUT
 		None, updates `g` in-place
 	"""
@@ -44,11 +44,11 @@ function product_rule!(g::Network)
 end
 
 
-function new_rule!(g::Network, q::Float64)
+function new_rule!(g::Graph, q::Float64)
 	"""
 	Stochastic process for adding edges to `g`
 	INPUT
-		`g`: An instance of type Network
+		`g`: An instance of type Graph
 		`q`: Minimum probability that the chosen edge is accepted
 	OUTPUT
 		None, updates `g` in-place

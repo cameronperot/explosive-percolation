@@ -7,6 +7,7 @@ export
 # graphs
 Graph,
 Network,
+Lattice2D,
 
 # edge_functions
 choose_edge,
