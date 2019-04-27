@@ -28,7 +28,6 @@ mutable struct Network <: Graph
 	clusters     ::Dict{Int64, Set{Int64}}
 	cluster_sizes::Dict{Int64, Int64}
 	C            ::Array{Int, 1}
-	P            ::Array{Float64, 1}
 	rng          ::MersenneTwister
 	function Network(n::Int, n_steps::Int; seed::Int=8)
 		nodes         = Dict(1:n .=> 1:n)
@@ -37,9 +36,8 @@ mutable struct Network <: Graph
 		cluster_sizes = Dict(1:n .=> 1)
 		C             = zeros(Int, n_steps+1)
 		C[1]          = 1
-		P             = []
 		rng           = MersenneTwister(seed)
-		new(n, n_steps, nodes, edges, clusters, cluster_sizes, C, P, rng)
+		new(n, n_steps, nodes, edges, clusters, cluster_sizes, C, rng)
 	end
 end
 
@@ -73,7 +71,6 @@ mutable struct Lattice2D <: Graph
 	clusters     ::Dict{Int64, Set{Tuple{Int, Int}}}
 	cluster_sizes::Dict{Int64, Int64}
 	C            ::Array{Int, 1}
-	P            ::Array{Float64, 1}
 	rng          ::MersenneTwister
 	function Lattice2D(L::Int, n_steps::Int; seed::Int=8)
 		indices       = [(i, j) for i in 1:L, j in 1:L][:]
@@ -84,10 +81,9 @@ mutable struct Lattice2D <: Graph
 		cluster_sizes = Dict(1:n .=> 1)
 		C             = zeros(Int, n_steps+1)
 		C[1]          = 1
-		P             = []
 		rng           = MersenneTwister(seed)
 		indices       = []
-		new(L, n, n_steps, nodes, edges, clusters, cluster_sizes, C, P, rng)
+		new(L, n, n_steps, nodes, edges, clusters, cluster_sizes, C, rng)
 	end
 end
 

@@ -12,7 +12,6 @@ function erdos_renyi(g_::Graph)
 		add_edge!(g, edge)
 		update_clusters!(g, t, edge)
 	end
-	g.P = g.C ./ g.n
 	return g
 end
 
@@ -30,7 +29,6 @@ function erdos_renyi!(g::Graph)
 		add_edge!(g, edge)
 		update_clusters!(g, t, edge)
 	end
-	g.P = g.C ./ g.n
 	return g
 end
 
@@ -61,7 +59,6 @@ function product_rule(g_::Graph)
 			update_clusters!(g, t, edge₂)
 		end
 	end
-	g.P = g.C ./ g.n
 	return g
 end
 
@@ -85,7 +82,6 @@ function product_rule!(g::Graph)
 			update_clusters!(g, t, edge₂)
 		end
 	end
-	g.P = g.C ./ g.n
 	return g
 end
 
@@ -110,6 +106,8 @@ function new_rule!(g::Graph, q::Float64)
 			t += 1
 		end
 	end
-	g.P = g.C ./ g.n
+	return g
+end
+
 	return g
 end
