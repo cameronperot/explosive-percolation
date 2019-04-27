@@ -3,22 +3,21 @@ abstract type Graph end
 
 mutable struct Network <: Graph
 	"""
-	Type to house the sets of nodes, edges, and clusters of a network
+	Type to house the nodes, edges, and clusters of a network
 	INPUT
 		`n`            : Total number of nodes in the network
-		`n_steps`      : Number of edges to add to the graph
+		`n_steps`      : (optional kwarg) Number of edges to add to the network
 		`seed`         : (optional kwarg) Seed value for the random number generator
 	OUTPUT
 		`g`            : A new instance of type `Network`
 	VARIABLES
 		`n`            : Total number of nodes in the network
-		`n_steps`      : Number of edges to add to the graph
-		`edges`        : Set of edges present in the graph
+		`n_steps`      : Number of edges to add to the network
+		`edges`        : Set of edges present in the network
 		`cluster_ids`  : Dictionary with nodes as keys and cluster IDs as values
 		`clusters`     : Dictionary with cluster IDs as keys and clusters as values
 		`cluster_sizes`: Dictionary with cluster IDs as keys and clusters sizes as values
-		`C`            : Array where `C[t]` is the largest cluster size at step `t`
-		`P`            : Array where `P[t]` is the order parameter at step `t`
+		`C`            : Array where `C[t]` is the largest cluster size at step `t-1`
 		`rng`          : Random number generator
 	"""
 	n            ::Int
@@ -44,23 +43,22 @@ end
 
 mutable struct Lattice2D <: Graph
 	"""
-	Type to house the sets of nodes, edges, and clusters of a 2D lattice
+	Type to house the nodes, edges, and clusters of a 2D lattice
 	INPUT
 		`L`            : Side length of the square lattice
-		`n_steps`      : Number of edges to add to the graph
+		`n_steps`      : (optional kwarg) Number of edges to add to the lattice
 		`seed`         : (optional kwarg) Seed value for the random number generator
 	OUTPUT
 		`g`            : A new instance of type `Lattice2D`
 	VARIABLES
 		`L`            : Side length of the square lattice
 		`n`            : Total number of nodes in the lattice, `n = L^2`
-		`n_steps`      : Number of edges to add to the graph
-		`edges`        : Set of edges present in the graph
+		`n_steps`      : Number of edges to add to the lattice
+		`edges`        : Set of edges present in the lattice
 		`cluster_ids`  : Dictionary with nodes as keys and cluster IDs as values
 		`clusters`     : Dictionary with cluster IDs as keys and clusters as values
 		`cluster_sizes`: Dictionary with cluster IDs as keys and clusters sizes as values
-		`C`            : Array where `C[t]` is the largest cluster size at step `t`
-		`P`            : Array where `P[t]` is the order parameter at step `t`
+		`C`            : Array where `C[t]` is the largest cluster size at step `t-1`
 		`rng`          : Random number generator
 	"""
 	L            ::Int

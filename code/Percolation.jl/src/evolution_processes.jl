@@ -84,7 +84,7 @@ end
 
 function product_rule(g_::Graph)
 	"""
-	Achlioptas process, implementation of da Costa's product rule
+	Achlioptas process, implementation of the product rule
 	INPUT
 		`g_`: An instance of type Graph
 	OUTPUT
@@ -108,7 +108,7 @@ end
 
 function product_rule!(g::Graph)
 	"""
-	Achlioptas process, implementation of da Costa's product rule
+	Achlioptas process, implementation of the product rule
 	INPUT
 		`g`: An instance of type Graph
 	OUTPUT
@@ -131,7 +131,7 @@ end
 
 function new_rule(g_::Graph, q::Float64)
 	"""
-	Achlioptas process, with a stochastic based rule for accepting edges
+	Achlioptas process, a probability based rule for accepting edges
 	INPUT
 		`g_`: An instance of type Graph
 		`q` : Minimum probability that edge₁ is accepted
@@ -158,7 +158,7 @@ end
 
 function new_rule!(g::Graph, q::Float64)
 	"""
-	Stochastic process for adding edges to `g`
+	Achlioptas process, a probability based rule for accepting edges
 	INPUT
 		`g`: An instance of type Graph
 		`q`: Minimum probability that edge₁ is accepted

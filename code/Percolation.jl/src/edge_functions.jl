@@ -75,7 +75,7 @@ function add_edge!(g::Graph, edge::Tuple)
 	Adds an edge to `g`
 	INPUT
 		`g`   : An instance of type Graph
-		`edge`: edge to be added to `g``, two-tuple of integers
+		`edge`: A two-tuple of integers representing the edge to be added to `g`
 	OUTPUT
 		None, updates `g` in-place
 	"""

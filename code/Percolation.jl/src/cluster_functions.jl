@@ -4,7 +4,7 @@ function get_largest_cluster_size(g::Graph)
 	INPUT
 		`g`: An instance of type Graph
 	OUTPUT
-		Integer representing the number of nodes in the largest cluster of `g`
+		Integer representing the number of nodes in the largest cluster in `g`
 	"""
 	return maximum(values(g.cluster_sizes))
 end
@@ -16,7 +16,7 @@ function get_avg_cluster_size(g::Graph)
 	INPUT
 		`g`: An instance of type Graph
 	OUTPUT
-		Float64 representing the average cluster size
+		Float64 representing the average cluster size in `g`
 	"""
 	return mean(values(g.cluster_sizes))
 end
@@ -38,7 +38,7 @@ end
 
 function update_clusters!(g::Graph, t::Int, edge::Tuple)
 	"""
-	Updates `g` with the newly merged cluster the largest cluster size
+	Updates `g` with the newly merged cluster and the largest cluster size
 	INPUT
 		`g`   : An instance of type Graph
 		`t`   : Current step in the evolution process
