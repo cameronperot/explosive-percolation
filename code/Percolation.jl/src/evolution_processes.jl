@@ -49,9 +49,9 @@ function product_rule(g_::Graph)
 	"""
 	g = copy(g_)
 	for t in 1:g.n_steps
-		node₁, node₂ = edge₁ = choose_edge(g)
-		node₃, node₄ = edge₂ = choose_edge(g, edge₁)
-		if g.cluster_sizes[g.nodes[node₁]] * g.cluster_sizes[g.nodes[node₂]] < g.cluster_sizes[g.nodes[node₃]] * g.cluster_sizes[g.nodes[node₄]]
+		edge₁ = choose_edge(g)
+		edge₂ = choose_edge(g, edge₁)
+		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] * g.cluster_sizes[g.cluster_ids[edge₁[2]]] < g.cluster_sizes[g.cluster_ids[edge₂[1]]] * g.cluster_sizes[g.cluster_ids[edge₂[2]]]
 			add_edge!(g, edge₁)
 			update_clusters!(g, t, edge₁)
 		else
@@ -72,9 +72,9 @@ function product_rule!(g::Graph)
 		None, updates `g` in-place
 	"""
 	for t in 1:g.n_steps
-		node₁, node₂ = edge₁ = choose_edge(g)
-		node₃, node₄ = edge₂ = choose_edge(g, edge₁)
-		if length(g.clusters[g.nodes[node₁]]) * length(g.clusters[g.nodes[node₂]]) < length(g.clusters[g.nodes[node₃]]) * length(g.clusters[g.nodes[node₄]])
+		edge₁ = choose_edge(g)
+		edge₂ = choose_edge(g, edge₁)
+		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] * g.cluster_sizes[g.cluster_ids[edge₁[2]]] < g.cluster_sizes[g.cluster_ids[edge₂[1]]] * g.cluster_sizes[g.cluster_ids[edge₂[2]]]
 			add_edge!(g, edge₁)
 			update_clusters!(g, t, edge₁)
 		else
@@ -97,8 +97,8 @@ function new_rule!(g::Graph, q::Float64)
 	"""
 	t = 1
 	while t <= g.n_steps
-		node₁, node₂ = edge = choose_edge(g)
-		r = length(g.clusters[g.nodes[node₁]] ∪ g.clusters[g.nodes[node₂]]) / g.C[t]
+		edge = choose_edge(g)
+		r = length(g.clusters[g.cluster_ids[edge[1]]] ∪ g.clusters[g.cluster_ids[edge[2]]]) / g.C[t]
 		p = maximum((1-r, q))
 		if rand(g.rng) < p
 			add_edge!(g, edge)

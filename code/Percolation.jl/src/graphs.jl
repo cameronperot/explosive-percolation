@@ -13,8 +13,8 @@ mutable struct Network <: Graph
 	VARIABLES
 		`n`            : Total number of nodes in the network
 		`n_steps`      : Number of edges to add to the graph
-		`nodes`        : Dictionary with node IDs as keys and cluster IDs as values
 		`edges`        : Set of edges present in the graph
+		`cluster_ids`  : Dictionary with nodes as keys and cluster IDs as values
 		`clusters`     : Dictionary with cluster IDs as keys and clusters as values
 		`cluster_sizes`: Dictionary with cluster IDs as keys and clusters sizes as values
 		`C`            : Array where `C[t]` is the largest cluster size at step `t`
@@ -23,21 +23,21 @@ mutable struct Network <: Graph
 	"""
 	n            ::Int
 	n_steps      ::Int
-	nodes        ::Dict{Int64, Int64}
 	edges        ::Set{Tuple{Int, Int}}
+	cluster_ids  ::Dict{Int64, Int64}
 	clusters     ::Dict{Int64, Set{Int64}}
 	cluster_sizes::Dict{Int64, Int64}
 	C            ::Array{Int, 1}
 	rng          ::MersenneTwister
 	function Network(n::Int, n_steps::Int; seed::Int=8)
-		nodes         = Dict(1:n .=> 1:n)
 		edges         = Set()
+		cluster_ids   = Dict(1:n .=> 1:n)
 		clusters      = Dict(1:n .=> Set.(1:n))
 		cluster_sizes = Dict(1:n .=> 1)
 		C             = zeros(Int, n_steps+1)
 		C[1]          = 1
 		rng           = MersenneTwister(seed)
-		new(n, n_steps, nodes, edges, clusters, cluster_sizes, C, rng)
+		new(n, n_steps, edges, cluster_ids, clusters, cluster_sizes, C, rng)
 	end
 end
 
@@ -55,8 +55,8 @@ mutable struct Lattice2D <: Graph
 		`L`            : Side length of the square lattice
 		`n`            : Total number of nodes in the lattice, `n = L^2`
 		`n_steps`      : Number of edges to add to the graph
-		`nodes`        : Dictionary with node IDs as keys and cluster IDs as values
 		`edges`        : Set of edges present in the graph
+		`cluster_ids`  : Dictionary with nodes as keys and cluster IDs as values
 		`clusters`     : Dictionary with cluster IDs as keys and clusters as values
 		`cluster_sizes`: Dictionary with cluster IDs as keys and clusters sizes as values
 		`C`            : Array where `C[t]` is the largest cluster size at step `t`
@@ -66,24 +66,24 @@ mutable struct Lattice2D <: Graph
 	L            ::Int
 	n            ::Int
 	n_steps      ::Int
-	nodes        ::Dict{Tuple{Int, Int}, Int64}
 	edges        ::Set{Tuple{Tuple{Int, Int}, Tuple{Int, Int}}}
+	cluster_ids  ::Dict{Tuple{Int, Int}, Int64}
 	clusters     ::Dict{Int64, Set{Tuple{Int, Int}}}
 	cluster_sizes::Dict{Int64, Int64}
 	C            ::Array{Int, 1}
 	rng          ::MersenneTwister
 	function Lattice2D(L::Int, n_steps::Int; seed::Int=8)
-		indices       = [(i, j) for i in 1:L, j in 1:L][:]
 		n             = L^2
-		nodes         = Dict(indices .=> 1:n)
 		edges         = Set()
+		indices       = [(i, j) for i in 1:L, j in 1:L][:]
+		cluster_ids   = Dict(indices .=> 1:n)
 		clusters      = Dict(1:n .=> Set.([[i] for i in indices]))
 		cluster_sizes = Dict(1:n .=> 1)
 		C             = zeros(Int, n_steps+1)
 		C[1]          = 1
 		rng           = MersenneTwister(seed)
 		indices       = []
-		new(L, n, n_steps, nodes, edges, clusters, cluster_sizes, C, rng)
+		new(L, n, n_steps, edges, cluster_ids, clusters, cluster_sizes, C, rng)
 	end
 end
 

@@ -46,18 +46,18 @@ function update_clusters!(g::Graph, t::Int, edge::Tuple)
 	OUTPUT
 		None, updates `g` in-place
 	"""
-	if g.nodes[edge[1]] ≠ g.nodes[edge[2]]
-		if g.cluster_sizes[g.nodes[edge[1]]] > g.cluster_sizes[g.nodes[edge[2]]]
-			larger_cluster = g.nodes[edge[1]]
-			smaller_cluster = g.nodes[edge[2]]
+	if g.cluster_ids[edge[1]] ≠ g.cluster_ids[edge[2]]
+		if g.cluster_sizes[g.cluster_ids[edge[1]]] > g.cluster_sizes[g.cluster_ids[edge[2]]]
+			larger_cluster = g.cluster_ids[edge[1]]
+			smaller_cluster = g.cluster_ids[edge[2]]
 		else
-			larger_cluster = g.nodes[edge[2]]
-			smaller_cluster = g.nodes[edge[1]]
+			larger_cluster = g.cluster_ids[edge[2]]
+			smaller_cluster = g.cluster_ids[edge[1]]
 		end
 		union!(g.clusters[larger_cluster], g.clusters[smaller_cluster])
 		g.cluster_sizes[larger_cluster] = length(g.clusters[larger_cluster])
 		for node in g.clusters[smaller_cluster]
-			g.nodes[node] = larger_cluster
+			g.cluster_ids[node] = larger_cluster
 		end
 		delete!(g.clusters, smaller_cluster)
 		delete!(g.cluster_sizes, smaller_cluster)
