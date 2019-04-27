@@ -23,6 +23,7 @@ update_clusters!,
 # evolution_processes
 erdos_renyi,
 erdos_renyi!,
+bohman_frieze,
 bohman_frieze!,
 product_rule,
 product_rule!,

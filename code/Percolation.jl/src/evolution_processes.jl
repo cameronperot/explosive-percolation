@@ -33,9 +33,52 @@ function erdos_renyi!(g::Graph)
 end
 
 
-function bohman_frieze!(g::Graph)
+function bohman_frieze(g_::Graph, K::Int)
+	"""
+	Achlioptas process, implementation of Bohman-Frieze bounded size rule
+	INPUT
+		`g_`: An instance of type Graph
+		`K` : Bounded size of clusters upon which to determine edge acceptance
+	OUTPUT
+		`g` : An evolved instance of `g_`
+	"""
+	g = copy(g_)
 	for t in 1:g.n_steps
+		edge₁ = choose_edge(g)
+		edge₂ = choose_edge(g, edge₁)
+		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] < K && g.cluster_sizes[g.cluster_ids[edge₁[2]]] < K
+			add_edge!(g, edge₁)
+			update_clusters!(g, t, edge₁)
+		else
+			add_edge!(g, edge₂)
+			update_clusters!(g, t, edge₂)
+		end
 	end
+	return g
+end
+
+
+function bohman_frieze!(g::Graph, K::Int)
+	"""
+	Achlioptas process, implementation of Bohman-Frieze bounded size rule
+	INPUT
+		`g`: An instance of type Graph
+		`K`: Bounded size of clusters upon which to determine edge acceptance
+	OUTPUT
+		None, updates `g` in-place
+	"""
+	for t in 1:g.n_steps
+		edge₁ = choose_edge(g)
+		edge₂ = choose_edge(g, edge₁)
+		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] < K && g.cluster_sizes[g.cluster_ids[edge₁[2]]] < K
+			add_edge!(g, edge₁)
+			update_clusters!(g, t, edge₁)
+		else
+			add_edge!(g, edge₂)
+			update_clusters!(g, t, edge₂)
+		end
+	end
+	return g
 end
 
 
