@@ -80,7 +80,7 @@ mutable struct Lattice2D <: Graph
 		C             = zeros(Int, n_steps+1)
 		C[1]          = 1
 		rng           = MersenneTwister(seed)
-		indices       = []
+		indices       = nothing
 		new(L, n, n_steps, edges, cluster_ids, clusters, cluster_sizes, C, rng)
 	end
 end
