@@ -1,5 +1,7 @@
 module Percolation
 
+using Plots; gr()
+using LaTeXStrings
 using Random
 using Statistics
 
@@ -27,11 +29,15 @@ bohman_frieze,
 bohman_frieze!,
 product_rule,
 product_rule!,
-new_rule!
+new_rule!,
+
+# plot_functions
+plot_order_parameter
 
 include("./graphs.jl")
 include("./edge_functions.jl")
 include("./cluster_functions.jl")
 include("./evolution_processes.jl")
+include("./plot_functions.jl")
 
 end # module
