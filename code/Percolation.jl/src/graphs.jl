@@ -28,7 +28,7 @@ mutable struct Network <: Graph
 	cluster_sizes::Dict{Int64, Int64}
 	C            ::Array{Int, 1}
 	rng          ::MersenneTwister
-	function Network(n::Int, n_steps::Int; seed::Int=8)
+	function Network(n::Int; n_steps::Int=0, seed::Int=8)
 		edges         = Set()
 		cluster_ids   = Dict(1:n .=> 1:n)
 		clusters      = Dict(1:n .=> Set.(1:n))
@@ -70,7 +70,7 @@ mutable struct Lattice2D <: Graph
 	cluster_sizes::Dict{Int64, Int64}
 	C            ::Array{Int, 1}
 	rng          ::MersenneTwister
-	function Lattice2D(L::Int, n_steps::Int; seed::Int=8)
+	function Lattice2D(L::Int; n_steps::Int=0, seed::Int=8)
 		n             = L^2
 		edges         = Set()
 		indices       = [(i, j) for i in 1:L, j in 1:L][:]
