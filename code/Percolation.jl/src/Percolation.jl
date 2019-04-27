@@ -29,6 +29,7 @@ bohman_frieze,
 bohman_frieze!,
 product_rule,
 product_rule!,
+new_rule,
 new_rule!,
 
 # plot_functions
