@@ -48,20 +48,20 @@ function update_clusters!(g::Graph, t::Int, edge::Tuple)
 	"""
 	if g.cluster_ids[edge[1]] ≠ g.cluster_ids[edge[2]]
 		if g.cluster_sizes[g.cluster_ids[edge[1]]] > g.cluster_sizes[g.cluster_ids[edge[2]]]
-			larger_cluster = g.cluster_ids[edge[1]]
-			smaller_cluster = g.cluster_ids[edge[2]]
+			larger_cluster_id  = g.cluster_ids[edge[1]]
+			smaller_cluster_id = g.cluster_ids[edge[2]]
 		else
-			larger_cluster = g.cluster_ids[edge[2]]
-			smaller_cluster = g.cluster_ids[edge[1]]
+			larger_cluster_id  = g.cluster_ids[edge[2]]
+			smaller_cluster_id = g.cluster_ids[edge[1]]
 		end
-		union!(g.clusters[larger_cluster], g.clusters[smaller_cluster])
-		g.cluster_sizes[larger_cluster] = length(g.clusters[larger_cluster])
-		for node in g.clusters[smaller_cluster]
-			g.cluster_ids[node] = larger_cluster
+		union!(g.clusters[larger_cluster_id], g.clusters[smaller_cluster_id])
+		g.cluster_sizes[larger_cluster_id] = length(g.clusters[larger_cluster_id])
+		for node in g.clusters[smaller_cluster_id]
+			g.cluster_ids[node] = larger_cluster_id
 		end
-		delete!(g.clusters, smaller_cluster)
-		delete!(g.cluster_sizes, smaller_cluster)
-		g.C[t+1] = maximum((g.C[t], g.cluster_sizes[larger_cluster]))
+		delete!(g.clusters, smaller_cluster_id)
+		delete!(g.cluster_sizes, smaller_cluster_id)
+		g.C[t+1] = maximum((g.C[t], g.cluster_sizes[larger_cluster_id]))
 	else
 		g.C[t+1] = g.C[t]
 	end
