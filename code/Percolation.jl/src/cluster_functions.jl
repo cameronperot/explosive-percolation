@@ -1,3 +1,16 @@
+function get_cluster(g::AbstractGraph, node)
+	"""
+	Determines the cluster in `g` which `node` is a member of
+	Arguments:
+		`g`   : An instance of type AbstractGraph
+		`node`: Node in `keys(g.cluster_ids)`
+	Output:
+		Set of nodes representing the cluster which `node` is a member of
+	"""
+	return g.clusters[g.cluster_ids[node]]
+end
+
+
 function get_largest_cluster_size(g::AbstractGraph)
 	"""
 	Determines the size of the largest cluster in `g`
