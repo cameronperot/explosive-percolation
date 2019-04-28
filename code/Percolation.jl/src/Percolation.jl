@@ -17,6 +17,7 @@ choose_edge,
 add_edge!,
 
 # cluster_functions
+get_cluster,
 get_largest_cluster_size,
 get_avg_cluster_size,
 get_largest_clusters,
