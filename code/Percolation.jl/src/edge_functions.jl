@@ -15,24 +15,6 @@ function choose_edge(g::Network)
 end
 
 
-function choose_edge(g::Network, edge₁::Tuple{Int, Int})
-	"""
-	Randomly selects an inactive edge in `g` that is not equal to `edge₁`
-	Arguments:
-		`g`    : An instance of type Network
-		`edge₁`: A two-tuple of integers representing an inactive edge in `g`
-	Output:
-		`edge₂`: A two-tuple of integers representing an inactive edge in `g`
-	"""
-	edge₂ = choose_edge(g)
-	if edge₂ ≠ edge₁ && edge₂ ≠ reverse(edge₁)
-		return edge₂
-	else
-		choose_edge(g, edge₁)
-	end
-end
-
-
 function choose_edge(g::Lattice2D)
 	"""
 	Randomly selects an inactive edge in `g`
@@ -52,7 +34,7 @@ function choose_edge(g::Lattice2D)
 end
 
 
-function choose_edge(g::Lattice2D, edge₁::Tuple{Tuple{Int, Int}, Tuple{Int, Int}})
+function choose_edge(g::AbstractGraph, edge₁::Tuple)
 	"""
 	Randomly selects an inactive edge in `g` that is not equal to `edge₁`
 	Arguments:
