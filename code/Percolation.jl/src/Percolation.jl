@@ -35,7 +35,7 @@ new_rule!,
 # plot_functions
 plot_order_parameter
 
-include("./graphs.jl")
+include("./AbstractGraphs.jl")
 include("./edge_functions.jl")
 include("./cluster_functions.jl")
 include("./evolution_processes.jl")
