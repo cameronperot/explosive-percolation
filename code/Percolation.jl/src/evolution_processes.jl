@@ -1,9 +1,9 @@
 function erdos_renyi(g_::Graph)
 	"""
 	Erdos-Renyi style graph evolution, adds edges randomly at each step
-	INPUT
+	Arguments:
 		`g_`: An instance of type Graph
-	OUTPUT
+	Output:
 		`g` : An evolved instance of `g_`
 	"""
 	g = copy(g_)
@@ -19,9 +19,9 @@ end
 function erdos_renyi!(g::Graph)
 	"""
 	Erdos-Renyi style graph evolution, adds edges randomly at each step
-	INPUT
+	Arguments:
 		`g`: An instance of type Graph
-	OUTPUT
+	Output:
 		None, updates `g` in-place
 	"""
 	for t in 1:g.n_steps
@@ -36,10 +36,10 @@ end
 function bohman_frieze(g_::Graph, K::Int)
 	"""
 	Achlioptas process, implementation of Bohman-Frieze bounded size rule
-	INPUT
+	Arguments:
 		`g_`: An instance of type Graph
 		`K` : Bounded size of clusters upon which to determine edge acceptance
-	OUTPUT
+	Output:
 		`g` : An evolved instance of `g_`
 	"""
 	g = copy(g_)
@@ -61,10 +61,10 @@ end
 function bohman_frieze!(g::Graph, K::Int)
 	"""
 	Achlioptas process, implementation of Bohman-Frieze bounded size rule
-	INPUT
+	Arguments:
 		`g`: An instance of type Graph
 		`K`: Bounded size of clusters upon which to determine edge acceptance
-	OUTPUT
+	Output:
 		None, updates `g` in-place
 	"""
 	for t in 1:g.n_steps
@@ -85,9 +85,9 @@ end
 function product_rule(g_::Graph)
 	"""
 	Achlioptas process, implementation of the product rule
-	INPUT
+	Arguments:
 		`g_`: An instance of type Graph
-	OUTPUT
+	Output:
 		`g` : An evolved instance of `g_`
 	"""
 	g = copy(g_)
@@ -109,9 +109,9 @@ end
 function product_rule!(g::Graph)
 	"""
 	Achlioptas process, implementation of the product rule
-	INPUT
+	Arguments:
 		`g`: An instance of type Graph
-	OUTPUT
+	Output:
 		None, updates `g` in-place
 	"""
 	for t in 1:g.n_steps
@@ -132,10 +132,10 @@ end
 function new_rule(g_::Graph, q::Float64)
 	"""
 	Achlioptas process, a probability based rule for accepting edges
-	INPUT
+	Arguments:
 		`g_`: An instance of type Graph
 		`q` : Minimum probability that edge₁ is accepted
-	OUTPUT
+	Output:
 		`g` : An evolved instance of `g_`
 	"""
 	g = copy(g_)
@@ -159,10 +159,10 @@ end
 function new_rule!(g::Graph, q::Float64)
 	"""
 	Achlioptas process, a probability based rule for accepting edges
-	INPUT
+	Arguments:
 		`g`: An instance of type Graph
 		`q`: Minimum probability that edge₁ is accepted
-	OUTPUT
+	Output:
 		None, updates `g` in-place
 	"""
 	for t in 1:g.n_steps

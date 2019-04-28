@@ -1,9 +1,9 @@
 function choose_edge(g::Network)
 	"""
 	Randomly selects an inactive edge in `g`
-	INPUT
+	Arguments:
 		`g`   : An instance of type Network
-	OUTPUT
+	Output:
 		`edge`: A two-tuple of integers representing an inactive edge in `g`
 	"""
 	edge = (rand(g.rng, 1:g.n), rand(g.rng, 1:g.n))
@@ -18,10 +18,10 @@ end
 function choose_edge(g::Network, edge₁::Tuple{Int, Int})
 	"""
 	Randomly selects an inactive edge in `g` that is not equal to `edge₁`
-	INPUT
+	Arguments:
 		`g`    : An instance of type Network
 		`edge₁`: A two-tuple of integers representing an inactive edge in `g`
-	OUTPUT
+	Output:
 		`edge₂`: A two-tuple of integers representing an inactive edge in `g`
 	"""
 	edge₂ = choose_edge(g)
@@ -36,9 +36,9 @@ end
 function choose_edge(g::Lattice2D)
 	"""
 	Randomly selects an inactive edge in `g`
-	INPUT
+	Arguments:
 		`g`   : An instance of type Lattice2D
-	OUTPUT
+	Output:
 		`edge`: A two-tuple of two-tuples of integers representing an inactive edge in `g`
 	"""
 	node     = (rand(g.rng, 1:g.L), rand(g.rng, 1:g.L))
@@ -55,10 +55,10 @@ end
 function choose_edge(g::Lattice2D, edge₁::Tuple{Tuple{Int, Int}, Tuple{Int, Int}})
 	"""
 	Randomly selects an inactive edge in `g` that is not equal to `edge₁`
-	INPUT
+	Arguments:
 		`g`    : An instance of type Lattice2D
 		`edge₁`: A two-tuple of two-tuples of integers representing an inactive edge in `g`
-	OUTPUT
+	Output:
 		`edge₂`: A two-tuple of two-tuples of integers representing an inactive edge in `g`
 	"""
 	edge₂ = choose_edge(g)
@@ -73,10 +73,10 @@ end
 function add_edge!(g::Graph, edge::Tuple)
 	"""
 	Adds an edge to `g`
-	INPUT
+	Arguments:
 		`g`   : An instance of type Graph
 		`edge`: A two-tuple of integers representing the edge to be added to `g`
-	OUTPUT
+	Output:
 		None, updates `g` in-place
 	"""
 	push!(g.edges, edge)
@@ -98,10 +98,10 @@ end
 function nearest_neighbors(g::Lattice2D, node::Tuple{Int, Int})
 	"""
 	Determines the next-nearest neighbors of `node`
-	INPUT
+	Arguments:
 		`g`        : An instance of type Lattice2D
 		`node`     : A two-tuple of integers representing a node in `g`
-	OUTPUT
+	Output:
 		`neighbors`: A four-tuple of two-tuples of integers representing the cartesian indices of the (up, down, left, right) neighbors
 	"""
 	return ((minus(g, node[1]), node[2]), (plus(g, node[1]), node[2]), (node[1], minus(g, node[2])), (node[1], plus(g, node[2])))

@@ -4,13 +4,14 @@ abstract type Graph end
 mutable struct Network <: Graph
 	"""
 	Type to house the nodes, edges, and clusters of a network
-	INPUT
+	Arguments:
 		`n`            : Total number of nodes in the network
-		`n_steps`      : (optional kwarg) Number of edges to add to the network
-		`seed`         : (optional kwarg) Seed value for the random number generator
-	OUTPUT
+	Keyword Arguments:
+		`n_steps`      : Number of edges to add to the network (default = 0)
+		`seed`         : Seed value for the random number generator (default = 8)
+	Output:
 		`g`            : A new instance of type `Network`
-	VARIABLES
+	Attributes:
 		`n`            : Total number of nodes in the network
 		`n_steps`      : Number of edges to add to the network
 		`edges`        : Set of edges present in the network
@@ -44,13 +45,14 @@ end
 mutable struct Lattice2D <: Graph
 	"""
 	Type to house the nodes, edges, and clusters of a 2D lattice
-	INPUT
+	Arguments:
 		`L`            : Side length of the square lattice
-		`n_steps`      : (optional kwarg) Number of edges to add to the lattice
-		`seed`         : (optional kwarg) Seed value for the random number generator
-	OUTPUT
+	Keyword Arguments:
+		`n_steps`      : Number of edges to add to the lattice (default = 0)
+		`seed`         : Seed value for the random number generator (default = 8)
+	Output:
 		`g`            : A new instance of type `Lattice2D`
-	VARIABLES
+	Attributes:
 		`L`            : Side length of the square lattice
 		`n`            : Total number of nodes in the lattice, `n = L^2`
 		`n_steps`      : Number of edges to add to the lattice
