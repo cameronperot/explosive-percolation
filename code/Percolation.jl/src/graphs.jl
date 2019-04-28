@@ -1,7 +1,7 @@
-abstract type Graph end
+abstract type AbstractGraph end
 
 
-mutable struct Network <: Graph
+mutable struct Network <: AbstractGraph
 	"""
 	Type to house the nodes, edges, and clusters of a network
 	Arguments:
@@ -42,7 +42,7 @@ mutable struct Network <: Graph
 end
 
 
-mutable struct Lattice2D <: Graph
+mutable struct Lattice2D <: AbstractGraph
 	"""
 	Type to house the nodes, edges, and clusters of a 2D lattice
 	Arguments:

@@ -1,8 +1,8 @@
-function get_largest_cluster_size(g::Graph)
+function get_largest_cluster_size(g::AbstractGraph)
 	"""
 	Determines the size of the largest cluster in `g`
 	Arguments:
-		`g`: An instance of type Graph
+		`g`: An instance of type AbstractGraph
 	Output:
 		Integer representing the number of nodes in the largest cluster in `g`
 	"""
@@ -10,11 +10,11 @@ function get_largest_cluster_size(g::Graph)
 end
 
 
-function get_avg_cluster_size(g::Graph)
+function get_avg_cluster_size(g::AbstractGraph)
 	"""
 	Determines the average cluster size in `g`
 	Arguments:
-		`g`: An instance of type Graph
+		`g`: An instance of type AbstractGraph
 	Output:
 		Float64 representing the average cluster size in `g`
 	"""
@@ -22,11 +22,11 @@ function get_avg_cluster_size(g::Graph)
 end
 
 
-function get_largest_clusters(g::Graph, n_clusters::Int)
+function get_largest_clusters(g::AbstractGraph, n_clusters::Int)
 	"""
 	Determines the `n_clusters` largest clusters in 'g'
 	Arguments:
-		`g`         : An instance of type Graph
+		`g`         : An instance of type AbstractGraph
 		`n_clusters`: The number of largest clusters to return
 	Output:
 		Sorted (descending) array of the `n_clusters` largest clusters in `g`
@@ -36,11 +36,11 @@ function get_largest_clusters(g::Graph, n_clusters::Int)
 end
 
 
-function update_clusters!(g::Graph, t::Int, edge::Tuple)
+function update_clusters!(g::AbstractGraph, t::Int, edge::Tuple)
 	"""
 	Updates `g` with the newly merged cluster and the largest cluster size
 	Arguments:
-		`g`   : An instance of type Graph
+		`g`   : An instance of type AbstractGraph
 		`t`   : Current step in the evolution process
 		`edge`: Edge added to `g` at step `t`
 	Output:

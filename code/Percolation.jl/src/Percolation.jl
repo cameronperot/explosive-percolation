@@ -8,7 +8,7 @@ using Statistics
 export
 
 # graphs
-Graph,
+AbstractGraph,
 Network,
 Lattice2D,
 

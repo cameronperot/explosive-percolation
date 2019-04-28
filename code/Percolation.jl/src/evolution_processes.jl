@@ -1,8 +1,8 @@
-function erdos_renyi(g_::Graph)
+function erdos_renyi(g_::AbstractGraph)
 	"""
 	Erdos-Renyi style graph evolution, adds edges randomly at each step
 	Arguments:
-		`g_`: An instance of type Graph
+		`g_`: An instance of type AbstractGraph
 	Output:
 		`g` : An evolved instance of `g_`
 	"""
@@ -16,11 +16,11 @@ function erdos_renyi(g_::Graph)
 end
 
 
-function erdos_renyi!(g::Graph)
+function erdos_renyi!(g::AbstractGraph)
 	"""
 	Erdos-Renyi style graph evolution, adds edges randomly at each step
 	Arguments:
-		`g`: An instance of type Graph
+		`g`: An instance of type AbstractGraph
 	Output:
 		None, updates `g` in-place
 	"""
@@ -33,11 +33,11 @@ function erdos_renyi!(g::Graph)
 end
 
 
-function bohman_frieze(g_::Graph, K::Int)
+function bohman_frieze(g_::AbstractGraph, K::Int)
 	"""
 	Achlioptas process, implementation of Bohman-Frieze bounded size rule
 	Arguments:
-		`g_`: An instance of type Graph
+		`g_`: An instance of type AbstractGraph
 		`K` : Bounded size of clusters upon which to determine edge acceptance
 	Output:
 		`g` : An evolved instance of `g_`
@@ -58,11 +58,11 @@ function bohman_frieze(g_::Graph, K::Int)
 end
 
 
-function bohman_frieze!(g::Graph, K::Int)
+function bohman_frieze!(g::AbstractGraph, K::Int)
 	"""
 	Achlioptas process, implementation of Bohman-Frieze bounded size rule
 	Arguments:
-		`g`: An instance of type Graph
+		`g`: An instance of type AbstractGraph
 		`K`: Bounded size of clusters upon which to determine edge acceptance
 	Output:
 		None, updates `g` in-place
@@ -82,11 +82,11 @@ function bohman_frieze!(g::Graph, K::Int)
 end
 
 
-function product_rule(g_::Graph)
+function product_rule(g_::AbstractGraph)
 	"""
 	Achlioptas process, implementation of the product rule
 	Arguments:
-		`g_`: An instance of type Graph
+		`g_`: An instance of type AbstractGraph
 	Output:
 		`g` : An evolved instance of `g_`
 	"""
@@ -106,11 +106,11 @@ function product_rule(g_::Graph)
 end
 
 
-function product_rule!(g::Graph)
+function product_rule!(g::AbstractGraph)
 	"""
 	Achlioptas process, implementation of the product rule
 	Arguments:
-		`g`: An instance of type Graph
+		`g`: An instance of type AbstractGraph
 	Output:
 		None, updates `g` in-place
 	"""
@@ -129,11 +129,11 @@ function product_rule!(g::Graph)
 end
 
 
-function new_rule(g_::Graph, q::Float64)
+function new_rule(g_::AbstractGraph, q::Float64)
 	"""
 	Achlioptas process, a probability based rule for accepting edges
 	Arguments:
-		`g_`: An instance of type Graph
+		`g_`: An instance of type AbstractGraph
 		`q` : Minimum probability that edge₁ is accepted
 	Output:
 		`g` : An evolved instance of `g_`
@@ -156,11 +156,11 @@ function new_rule(g_::Graph, q::Float64)
 end
 
 
-function new_rule!(g::Graph, q::Float64)
+function new_rule!(g::AbstractGraph, q::Float64)
 	"""
 	Achlioptas process, a probability based rule for accepting edges
 	Arguments:
-		`g`: An instance of type Graph
+		`g`: An instance of type AbstractGraph
 		`q`: Minimum probability that edge₁ is accepted
 	Output:
 		None, updates `g` in-place

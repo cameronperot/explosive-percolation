@@ -70,11 +70,11 @@ function choose_edge(g::Lattice2D, edge₁::Tuple{Tuple{Int, Int}, Tuple{Int, In
 end
 
 
-function add_edge!(g::Graph, edge::Tuple)
+function add_edge!(g::AbstractGraph, edge::Tuple)
 	"""
 	Adds an edge to `g`
 	Arguments:
-		`g`   : An instance of type Graph
+		`g`   : An instance of type AbstractGraph
 		`edge`: A two-tuple of integers representing the edge to be added to `g`
 	Output:
 		None, updates `g` in-place
