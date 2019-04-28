@@ -81,6 +81,8 @@ function add_edge!(g::AbstractGraph, edge::Tuple)
 	"""
 	push!(g.edges, edge)
 	push!(g.edges, reverse(edge))
+	g.t += 1
+	update_clusters!(g, edge)
 end
 
 

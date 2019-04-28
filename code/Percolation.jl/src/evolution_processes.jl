@@ -10,7 +10,6 @@ function erdos_renyi(g_::AbstractGraph)
 	for t in 1:g.n_steps
 		edge = choose_edge(g)
 		add_edge!(g, edge)
-		update_clusters!(g, t, edge)
 	end
 	return g
 end
@@ -27,7 +26,6 @@ function erdos_renyi!(g::AbstractGraph)
 	for t in 1:g.n_steps
 		edge = choose_edge(g)
 		add_edge!(g, edge)
-		update_clusters!(g, t, edge)
 	end
 	return g
 end
@@ -48,10 +46,8 @@ function bohman_frieze(g_::AbstractGraph, K::Int)
 		edge₂ = choose_edge(g, edge₁)
 		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] < K && g.cluster_sizes[g.cluster_ids[edge₁[2]]] < K
 			add_edge!(g, edge₁)
-			update_clusters!(g, t, edge₁)
 		else
 			add_edge!(g, edge₂)
-			update_clusters!(g, t, edge₂)
 		end
 	end
 	return g
@@ -72,10 +68,8 @@ function bohman_frieze!(g::AbstractGraph, K::Int)
 		edge₂ = choose_edge(g, edge₁)
 		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] < K && g.cluster_sizes[g.cluster_ids[edge₁[2]]] < K
 			add_edge!(g, edge₁)
-			update_clusters!(g, t, edge₁)
 		else
 			add_edge!(g, edge₂)
-			update_clusters!(g, t, edge₂)
 		end
 	end
 	return g
@@ -96,10 +90,8 @@ function product_rule(g_::AbstractGraph)
 		edge₂ = choose_edge(g, edge₁)
 		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] * g.cluster_sizes[g.cluster_ids[edge₁[2]]] < g.cluster_sizes[g.cluster_ids[edge₂[1]]] * g.cluster_sizes[g.cluster_ids[edge₂[2]]]
 			add_edge!(g, edge₁)
-			update_clusters!(g, t, edge₁)
 		else
 			add_edge!(g, edge₂)
-			update_clusters!(g, t, edge₂)
 		end
 	end
 	return g
@@ -119,10 +111,8 @@ function product_rule!(g::AbstractGraph)
 		edge₂ = choose_edge(g, edge₁)
 		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] * g.cluster_sizes[g.cluster_ids[edge₁[2]]] < g.cluster_sizes[g.cluster_ids[edge₂[1]]] * g.cluster_sizes[g.cluster_ids[edge₂[2]]]
 			add_edge!(g, edge₁)
-			update_clusters!(g, t, edge₁)
 		else
 			add_edge!(g, edge₂)
-			update_clusters!(g, t, edge₂)
 		end
 	end
 	return g
@@ -146,10 +136,8 @@ function new_rule(g_::AbstractGraph, q::Float64)
 		p = maximum((1-r, q))
 		if rand(g.rng) < p
 			add_edge!(g, edge₁)
-			update_clusters!(g, t, edge₁)
 		else
 			add_edge!(g, edge₂)
-			update_clusters!(g, t, edge₂)
 		end
 	end
 	return g
@@ -172,10 +160,8 @@ function new_rule!(g::AbstractGraph, q::Float64)
 		p = maximum((1-r, q))
 		if rand(g.rng) < p
 			add_edge!(g, edge₁)
-			update_clusters!(g, t, edge₁)
 		else
 			add_edge!(g, edge₂)
-			update_clusters!(g, t, edge₂)
 		end
 	end
 	return g

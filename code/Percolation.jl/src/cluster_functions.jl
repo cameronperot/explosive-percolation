@@ -36,13 +36,12 @@ function get_largest_clusters(g::AbstractGraph, n_clusters::Int)
 end
 
 
-function update_clusters!(g::AbstractGraph, t::Int, edge::Tuple)
+function update_clusters!(g::AbstractGraph, edge::Tuple)
 	"""
 	Updates `g` with the newly merged cluster and the largest cluster size
 	Arguments:
 		`g`   : An instance of type AbstractGraph
-		`t`   : Current step in the evolution process
-		`edge`: Edge added to `g` at step `t`
+		`edge`: Edge added to `g` at step `g.t`
 	Output:
 		None, updates `g` in-place
 	"""
@@ -61,8 +60,8 @@ function update_clusters!(g::AbstractGraph, t::Int, edge::Tuple)
 		end
 		delete!(g.clusters, smaller_cluster_id)
 		delete!(g.cluster_sizes, smaller_cluster_id)
-		g.C[t+1] = maximum((g.C[t], g.cluster_sizes[larger_cluster_id]))
+		push!(g.C, maximum((g.C[g.t], g.cluster_sizes[larger_cluster_id])))
 	else
-		g.C[t+1] = g.C[t]
+		push!(g.C, g.C[g.t])
 	end
 end
