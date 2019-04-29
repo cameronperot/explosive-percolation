@@ -1,9 +1,9 @@
 function choose_edge(g::Network)
 	"""
 	Randomly selects an inactive edge in `g`
-	Arguments:
+	Arguments
 		`g`   : An instance of type Network
-	Output:
+	Return
 		`edge`: A two-tuple of integers representing an inactive edge in `g`
 	"""
 	edge = (rand(g.rng, 1:g.n), rand(g.rng, 1:g.n))
@@ -18,9 +18,9 @@ end
 function choose_edge(g::Lattice2D)
 	"""
 	Randomly selects an inactive edge in `g`
-	Arguments:
+	Arguments
 		`g`   : An instance of type Lattice2D
-	Output:
+	Return
 		`edge`: A two-tuple of two-tuples of integers representing an inactive edge in `g`
 	"""
 	node     = (rand(g.rng, 1:g.L), rand(g.rng, 1:g.L))
@@ -37,10 +37,10 @@ end
 function choose_edge(g::AbstractGraph, edge₁::Tuple)
 	"""
 	Randomly selects an inactive edge in `g` that is not equal to `edge₁`
-	Arguments:
+	Arguments
 		`g`    : An instance of type Lattice2D
 		`edge₁`: A two-tuple of two-tuples of integers representing an inactive edge in `g`
-	Output:
+	Return
 		`edge₂`: A two-tuple of two-tuples of integers representing an inactive edge in `g`
 	"""
 	edge₂ = choose_edge(g)
@@ -55,10 +55,10 @@ end
 function add_edge!(g::AbstractGraph, edge::Tuple)
 	"""
 	Adds an edge to `g`
-	Arguments:
+	Arguments
 		`g`   : An instance of type AbstractGraph
 		`edge`: A two-tuple of integers representing the edge to be added to `g`
-	Output:
+	Return
 		None, updates `g` in-place
 	"""
 	push!(g.edges, edge)
@@ -82,10 +82,10 @@ end
 function nearest_neighbors(g::Lattice2D, node::Tuple{Int, Int})
 	"""
 	Determines the next-nearest neighbors of `node`
-	Arguments:
+	Arguments
 		`g`        : An instance of type Lattice2D
 		`node`     : A two-tuple of integers representing a node in `g`
-	Output:
+	Return
 		`neighbors`: A four-tuple of two-tuples of integers representing the cartesian indices of the (up, down, left, right) neighbors
 	"""
 	return ((minus(g, node[1]), node[2]), (plus(g, node[1]), node[2]), (node[1], minus(g, node[2])), (node[1], plus(g, node[2])))

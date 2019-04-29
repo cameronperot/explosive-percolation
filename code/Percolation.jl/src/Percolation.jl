@@ -41,5 +41,6 @@ include("./edge_functions.jl")
 include("./cluster_functions.jl")
 include("./evolution_processes.jl")
 include("./plot_functions.jl")
+include("./animation_functions.jl")
 
 end # module

@@ -4,17 +4,15 @@ abstract type AbstractGraph end
 mutable struct Network <: AbstractGraph
 	"""
 	Type to house the nodes, edges, and clusters of a network
-	Arguments:
+	Arguments
 		`n`            : Total number of nodes in the network
-	Keyword Arguments:
-		`n_steps`      : Number of edges to add to the network (default = 0)
+	Keyword Arguments
 		`seed`         : Seed value for the random number generator (default = 8)
-	Output:
+	Return
 		`g`            : A new instance of type `Network`
-	Attributes:
+	Attributes
 		`n`            : Total number of nodes in the network
 		`t`            : Current step in the evolution process, number of edges in the network
-		`n_steps`      : Number of edges to add to the network
 		`edges`        : Set of edges present in the network
 		`cluster_ids`  : Dictionary with nodes as keys and cluster IDs as values
 		`clusters`     : Dictionary with cluster IDs as keys and clusters as values
@@ -46,18 +44,16 @@ end
 mutable struct Lattice2D <: AbstractGraph
 	"""
 	Type to house the nodes, edges, and clusters of a 2D lattice
-	Arguments:
+	Arguments
 		`L`            : Side length of the square lattice
-	Keyword Arguments:
-		`n_steps`      : Number of edges to add to the lattice (default = 0)
+	Keyword Arguments
 		`seed`         : Seed value for the random number generator (default = 8)
-	Output:
+	Return
 		`g`            : A new instance of type `Lattice2D`
-	Attributes:
+	Attributes
 		`L`            : Side length of the square lattice
 		`n`            : Total number of nodes in the lattice, `n = L^2`
 		`t`            : Current step in the evolution process, number of edges in the lattice
-		`n_steps`      : Number of edges to add to the lattice
 		`edges`        : Set of edges present in the lattice
 		`cluster_ids`  : Dictionary with nodes as keys and cluster IDs as values
 		`clusters`     : Dictionary with cluster IDs as keys and clusters as values

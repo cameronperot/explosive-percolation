@@ -1,10 +1,10 @@
 function get_cluster(g::AbstractGraph, node)
 	"""
 	Determines the cluster in `g` which `node` is a member of
-	Arguments:
+	Arguments
 		`g`   : An instance of type AbstractGraph
 		`node`: Node in `keys(g.cluster_ids)`
-	Output:
+	Return
 		Set of nodes representing the cluster which `node` is a member of
 	"""
 	return g.clusters[g.cluster_ids[node]]
@@ -14,9 +14,9 @@ end
 function get_largest_cluster_size(g::AbstractGraph)
 	"""
 	Determines the size of the largest cluster in `g`
-	Arguments:
+	Arguments
 		`g`: An instance of type AbstractGraph
-	Output:
+	Return
 		Integer representing the number of nodes in the largest cluster in `g`
 	"""
 	return maximum(values(g.cluster_sizes))
@@ -26,9 +26,9 @@ end
 function get_avg_cluster_size(g::AbstractGraph)
 	"""
 	Determines the average cluster size in `g`
-	Arguments:
+	Arguments
 		`g`: An instance of type AbstractGraph
-	Output:
+	Return
 		Float64 representing the average cluster size in `g`
 	"""
 	return mean(values(g.cluster_sizes))
@@ -38,10 +38,10 @@ end
 function get_largest_clusters(g::AbstractGraph, n_clusters::Int)
 	"""
 	Determines the `n_clusters` largest clusters in 'g'
-	Arguments:
+	Arguments
 		`g`         : An instance of type AbstractGraph
 		`n_clusters`: The number of largest clusters to return
-	Output:
+	Return
 		Sorted (descending) array of the `n_clusters` largest clusters in `g`
 	"""
 	# TODO need account for the case when length(g.clusters) < n_clusters
@@ -52,10 +52,10 @@ end
 function update_clusters!(g::AbstractGraph, edge::Tuple)
 	"""
 	Updates `g` with the newly merged cluster and the largest cluster size
-	Arguments:
+	Arguments
 		`g`   : An instance of type AbstractGraph
 		`edge`: Edge added to `g` at step `g.t`
-	Output:
+	Return
 		None, updates `g` in-place
 	"""
 	if g.cluster_ids[edge[1]] ≠ g.cluster_ids[edge[2]]
