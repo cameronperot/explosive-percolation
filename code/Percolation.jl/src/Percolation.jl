@@ -11,6 +11,7 @@ export
 AbstractGraph,
 Network,
 Lattice2D,
+Lattice3D,
 
 # edge_functions
 choose_edge,

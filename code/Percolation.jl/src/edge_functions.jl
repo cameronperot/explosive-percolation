@@ -34,6 +34,25 @@ function choose_edge(g::Lattice2D)
 end
 
 
+function choose_edge(g::Lattice3D)
+	"""
+	Randomly selects an inactive edge in `g`
+	Arguments
+		`g`   : An instance of type Lattice3D
+	Return
+		`edge`: A two-tuple of three-tuples of integers representing an inactive edge in `g`
+	"""
+	node     = (rand(g.rng, 1:g.L), rand(g.rng, 1:g.L), rand(g.rng, 1:g.L))
+	neighbor = nearest_neighbors(g, node)[rand(g.rng, 1:6)]
+	edge     = (node, neighbor)
+	if edge ∉ g.edges
+		return edge
+	else
+		choose_edge(g)
+	end
+end
+
+
 function choose_edge(g::AbstractGraph, edge₁::Tuple)
 	"""
 	Randomly selects an inactive edge in `g` that is not equal to `edge₁`
@@ -69,12 +88,18 @@ end
 
 
 """
-Functions plus and minus are an implementation of periodic boundary conditions for use in the `nearest_neighbors` function below
+Functions plus and minus are an implementation of periodic boundary conditions for use in the `nearest_neighbors` functions below
 """
 function plus(g::Lattice2D, i::Int)
 	i == g.L ? 1 : i+1
 end
 function minus(g::Lattice2D, i::Int)
+	i == 1 ? g.L : i-1
+end
+function plus(g::Lattice3D, i::Int)
+	i == g.L ? 1 : i+1
+end
+function minus(g::Lattice3D, i::Int)
 	i == 1 ? g.L : i-1
 end
 
@@ -88,5 +113,26 @@ function nearest_neighbors(g::Lattice2D, node::Tuple{Int, Int})
 	Return
 		`neighbors`: A four-tuple of two-tuples of integers representing the cartesian indices of the (up, down, left, right) neighbors
 	"""
-	return ((minus(g, node[1]), node[2]), (plus(g, node[1]), node[2]), (node[1], minus(g, node[2])), (node[1], plus(g, node[2])))
+	return ((minus(g, node[1]), node[2]),
+			(plus(g, node[1]), node[2]),
+			(node[1], minus(g, node[2])),
+			(node[1], plus(g, node[2])))
+end
+
+
+function nearest_neighbors(g::Lattice3D, node::Tuple{Int, Int, Int})
+	"""
+	Determines the next-nearest neighbors of `node`
+	Arguments
+		`g`        : An instance of type Lattice3D
+		`node`     : A three-tuple of integers representing a node in `g`
+	Return
+		`neighbors`: A four-tuple of three-tuples of integers representing the cartesian indices of the (up, down, left, right, front, back) neighbors
+	"""
+	return ((minus(g, node[1]), node[2], node[3]),
+			(plus(g, node[1]), node[2], node[3]),
+			(node[1], minus(g, node[2]), node[3]),
+			(node[1], plus(g, node[2]), node[3]),
+			(node[1], node[2], minus(g, node[3])),
+			(node[1], node[2], plus(g, node[3])))
 end
