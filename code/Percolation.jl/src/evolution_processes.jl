@@ -1,4 +1,4 @@
-function erdos_renyi(g_::AbstractGraph)
+function erdos_renyi(g_::AbstractGraph, n_steps::Int)
 	"""
 	Erdos-Renyi style graph evolution, adds edges randomly at each step
 	Arguments:
@@ -7,7 +7,7 @@ function erdos_renyi(g_::AbstractGraph)
 		`g` : An evolved instance of `g_`
 	"""
 	g = copy(g_)
-	for t in 1:g.n_steps
+	for t in 1:n_steps
 		edge = choose_edge(g)
 		add_edge!(g, edge)
 	end
@@ -15,7 +15,7 @@ function erdos_renyi(g_::AbstractGraph)
 end
 
 
-function erdos_renyi!(g::AbstractGraph)
+function erdos_renyi!(g::AbstractGraph, n_steps::Int)
 	"""
 	Erdos-Renyi style graph evolution, adds edges randomly at each step
 	Arguments:
@@ -23,7 +23,7 @@ function erdos_renyi!(g::AbstractGraph)
 	Output:
 		None, updates `g` in-place
 	"""
-	for t in 1:g.n_steps
+	for t in 1:n_steps
 		edge = choose_edge(g)
 		add_edge!(g, edge)
 	end
@@ -31,7 +31,7 @@ function erdos_renyi!(g::AbstractGraph)
 end
 
 
-function bohman_frieze(g_::AbstractGraph, K::Int)
+function bohman_frieze(g_::AbstractGraph, n_steps::Int, K::Int)
 	"""
 	Achlioptas process, implementation of Bohman-Frieze bounded size rule
 	Arguments:
@@ -41,7 +41,7 @@ function bohman_frieze(g_::AbstractGraph, K::Int)
 		`g` : An evolved instance of `g_`
 	"""
 	g = copy(g_)
-	for t in 1:g.n_steps
+	for t in 1:n_steps
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] < K && g.cluster_sizes[g.cluster_ids[edge₁[2]]] < K
@@ -54,7 +54,7 @@ function bohman_frieze(g_::AbstractGraph, K::Int)
 end
 
 
-function bohman_frieze!(g::AbstractGraph, K::Int)
+function bohman_frieze!(g::AbstractGraph, n_steps::Int, K::Int)
 	"""
 	Achlioptas process, implementation of Bohman-Frieze bounded size rule
 	Arguments:
@@ -63,7 +63,7 @@ function bohman_frieze!(g::AbstractGraph, K::Int)
 	Output:
 		None, updates `g` in-place
 	"""
-	for t in 1:g.n_steps
+	for t in 1:n_steps
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] < K && g.cluster_sizes[g.cluster_ids[edge₁[2]]] < K
@@ -76,7 +76,7 @@ function bohman_frieze!(g::AbstractGraph, K::Int)
 end
 
 
-function product_rule(g_::AbstractGraph)
+function product_rule(g_::AbstractGraph, n_steps::Int)
 	"""
 	Achlioptas process, implementation of the product rule
 	Arguments:
@@ -85,7 +85,7 @@ function product_rule(g_::AbstractGraph)
 		`g` : An evolved instance of `g_`
 	"""
 	g = copy(g_)
-	for t in 1:g.n_steps
+	for t in 1:n_steps
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] * g.cluster_sizes[g.cluster_ids[edge₁[2]]] < g.cluster_sizes[g.cluster_ids[edge₂[1]]] * g.cluster_sizes[g.cluster_ids[edge₂[2]]]
@@ -98,7 +98,7 @@ function product_rule(g_::AbstractGraph)
 end
 
 
-function product_rule!(g::AbstractGraph)
+function product_rule!(g::AbstractGraph, n_steps::Int)
 	"""
 	Achlioptas process, implementation of the product rule
 	Arguments:
@@ -106,7 +106,7 @@ function product_rule!(g::AbstractGraph)
 	Output:
 		None, updates `g` in-place
 	"""
-	for t in 1:g.n_steps
+	for t in 1:n_steps
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] * g.cluster_sizes[g.cluster_ids[edge₁[2]]] < g.cluster_sizes[g.cluster_ids[edge₂[1]]] * g.cluster_sizes[g.cluster_ids[edge₂[2]]]
@@ -119,7 +119,7 @@ function product_rule!(g::AbstractGraph)
 end
 
 
-function new_rule(g_::AbstractGraph, q::Float64)
+function new_rule(g_::AbstractGraph, n_steps::Int, q::Float64)
 	"""
 	Achlioptas process, a probability based rule for accepting edges
 	Arguments:
@@ -129,7 +129,7 @@ function new_rule(g_::AbstractGraph, q::Float64)
 		`g` : An evolved instance of `g_`
 	"""
 	g = copy(g_)
-	for t in 1:g.n_steps
+	for t in 1:n_steps
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 		r = length(g.clusters[g.cluster_ids[edge₁[1]]] ∪ g.clusters[g.cluster_ids[edge₁[2]]]) / g.C[t]
@@ -144,7 +144,7 @@ function new_rule(g_::AbstractGraph, q::Float64)
 end
 
 
-function new_rule!(g::AbstractGraph, q::Float64)
+function new_rule!(g::AbstractGraph, n_steps::Int, q::Float64)
 	"""
 	Achlioptas process, a probability based rule for accepting edges
 	Arguments:
@@ -153,7 +153,7 @@ function new_rule!(g::AbstractGraph, q::Float64)
 	Output:
 		None, updates `g` in-place
 	"""
-	for t in 1:g.n_steps
+	for t in 1:n_steps
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 		r = length(g.clusters[g.cluster_ids[edge₁[1]]] ∪ g.clusters[g.cluster_ids[edge₁[2]]]) / g.C[t]

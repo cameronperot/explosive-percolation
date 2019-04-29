@@ -24,14 +24,13 @@ mutable struct Network <: AbstractGraph
 	"""
 	n            ::Int
 	t            ::Int
-	n_steps      ::Int
 	edges        ::Set{Tuple{Int, Int}}
 	cluster_ids  ::Dict{Int64, Int64}
 	clusters     ::Dict{Int64, Set{Int64}}
 	cluster_sizes::Dict{Int64, Int64}
 	C            ::Array{Int, 1}
 	rng          ::MersenneTwister
-	function Network(n::Int; n_steps::Int=0, seed::Int=8)
+	function Network(n::Int; seed::Int=8)
 		t             = 0
 		edges         = Set()
 		cluster_ids   = Dict(1:n .=> 1:n)
@@ -39,7 +38,7 @@ mutable struct Network <: AbstractGraph
 		cluster_sizes = Dict(1:n .=> 1)
 		C             = Int[1]
 		rng           = MersenneTwister(seed)
-		new(n, t, n_steps, edges, cluster_ids, clusters, cluster_sizes, C, rng)
+		new(n, t, edges, cluster_ids, clusters, cluster_sizes, C, rng)
 	end
 end
 
@@ -69,14 +68,13 @@ mutable struct Lattice2D <: AbstractGraph
 	L            ::Int
 	n            ::Int
 	t            ::Int
-	n_steps      ::Int
 	edges        ::Set{Tuple{Tuple{Int, Int}, Tuple{Int, Int}}}
 	cluster_ids  ::Dict{Tuple{Int, Int}, Int64}
 	clusters     ::Dict{Int64, Set{Tuple{Int, Int}}}
 	cluster_sizes::Dict{Int64, Int64}
 	C            ::Array{Int, 1}
 	rng          ::MersenneTwister
-	function Lattice2D(L::Int; n_steps::Int=0, seed::Int=8)
+	function Lattice2D(L::Int; seed::Int=8)
 		n             = L^2
 		t             = 0
 		edges         = Set()
@@ -87,7 +85,7 @@ mutable struct Lattice2D <: AbstractGraph
 		C             = Int[1]
 		rng           = MersenneTwister(seed)
 		indices       = nothing
-		new(L, n, t, n_steps, edges, cluster_ids, clusters, cluster_sizes, C, rng)
+		new(L, n, t, edges, cluster_ids, clusters, cluster_sizes, C, rng)
 	end
 end
 
