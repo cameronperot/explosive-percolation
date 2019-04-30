@@ -1,9 +1,9 @@
 module Percolation
 
-using Plots; gr()
-using LaTeXStrings
 using Random
-using Statistics
+import Plots; Plots.gr()
+import LaTeXStrings: latexstring
+import Statistics: mean
 
 export
 
