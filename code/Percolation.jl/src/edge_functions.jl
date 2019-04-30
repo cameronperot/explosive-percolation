@@ -90,17 +90,11 @@ end
 """
 Functions plus and minus are an implementation of periodic boundary conditions for use in the `nearest_neighbors` functions below
 """
-function plus(g::Lattice2D, i::Int)
-	i == g.L ? 1 : i+1
+function plus(L::Int, i::Int)
+	i == L ? 1 : i+1
 end
-function minus(g::Lattice2D, i::Int)
-	i == 1 ? g.L : i-1
-end
-function plus(g::Lattice3D, i::Int)
-	i == g.L ? 1 : i+1
-end
-function minus(g::Lattice3D, i::Int)
-	i == 1 ? g.L : i-1
+function minus(L::Int, i::Int)
+	i == 1 ? L : i-1
 end
 
 
@@ -113,10 +107,10 @@ function nearest_neighbors(g::Lattice2D, node::Tuple{Int, Int})
 	Return
 		`neighbors`: A four-tuple of two-tuples of integers representing the cartesian indices of the (up, down, left, right) neighbors
 	"""
-	return ((minus(g, node[1]), node[2]),
-			(plus(g, node[1]), node[2]),
-			(node[1], minus(g, node[2])),
-			(node[1], plus(g, node[2])))
+	return ((minus(g.L, node[1]), node[2]),
+			(plus(g.L, node[1]), node[2]),
+			(node[1], minus(g.L, node[2])),
+			(node[1], plus(g.L, node[2])))
 end
 
 
@@ -129,10 +123,10 @@ function nearest_neighbors(g::Lattice3D, node::Tuple{Int, Int, Int})
 	Return
 		`neighbors`: A four-tuple of three-tuples of integers representing the cartesian indices of the (up, down, left, right, front, back) neighbors
 	"""
-	return ((minus(g, node[1]), node[2], node[3]),
-			(plus(g, node[1]), node[2], node[3]),
-			(node[1], minus(g, node[2]), node[3]),
-			(node[1], plus(g, node[2]), node[3]),
-			(node[1], node[2], minus(g, node[3])),
-			(node[1], node[2], plus(g, node[3])))
+	return ((minus(g.L, node[1]), node[2], node[3]),
+			(plus(g.L, node[1]), node[2], node[3]),
+			(node[1], minus(g.L, node[2]), node[3]),
+			(node[1], plus(g.L, node[2]), node[3]),
+			(node[1], node[2], minus(g.L, node[3])),
+			(node[1], node[2], plus(g.L, node[3])))
 end
