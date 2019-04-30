@@ -7,6 +7,7 @@ function choose_edge(g::Network)
 		`edge`: A two-tuple of integers representing an inactive edge in `g`
 	"""
 	edge = (rand(g.rng, 1:g.n), rand(g.rng, 1:g.n))
+
 	if edge[1] ≠ edge[2] && edge ∉ g.edges
 		return edge
 	else
@@ -26,6 +27,7 @@ function choose_edge(g::Lattice2D)
 	node     = (rand(g.rng, 1:g.L), rand(g.rng, 1:g.L))
 	neighbor = nearest_neighbors(g, node)[rand(g.rng, 1:4)]
 	edge     = (node, neighbor)
+
 	if edge ∉ g.edges
 		return edge
 	else
@@ -45,6 +47,7 @@ function choose_edge(g::Lattice3D)
 	node     = (rand(g.rng, 1:g.L), rand(g.rng, 1:g.L), rand(g.rng, 1:g.L))
 	neighbor = nearest_neighbors(g, node)[rand(g.rng, 1:6)]
 	edge     = (node, neighbor)
+
 	if edge ∉ g.edges
 		return edge
 	else
@@ -63,6 +66,7 @@ function choose_edge(g::AbstractGraph, edge₁::Tuple)
 		`edge₂`: A two-tuple of two-tuples of integers representing an inactive edge in `g`
 	"""
 	edge₂ = choose_edge(g)
+
 	if edge₂ ≠ edge₁ && edge₂ ≠ reverse(edge₁)
 		return edge₂
 	else

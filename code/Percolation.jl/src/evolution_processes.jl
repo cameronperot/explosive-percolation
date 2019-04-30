@@ -8,10 +8,12 @@ function erdos_renyi(g_::AbstractGraph, n_steps::Int)
 		`g`      : An evolved instance of `g_`
 	"""
 	g = copy(g_)
+
 	for t in 1:n_steps
 		edge = choose_edge(g)
 		add_edge!(g, edge)
 	end
+
 	return g
 end
 
@@ -29,6 +31,7 @@ function erdos_renyi!(g::AbstractGraph, n_steps::Int)
 		edge = choose_edge(g)
 		add_edge!(g, edge)
 	end
+
 	return g
 end
 
@@ -44,15 +47,18 @@ function bohman_frieze(g_::AbstractGraph, n_steps::Int, K::Int)
 		`g` : An evolved instance of `g_`
 	"""
 	g = copy(g_)
+
 	for t in 1:n_steps
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
+
 		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] < K && g.cluster_sizes[g.cluster_ids[edge₁[2]]] < K
 			add_edge!(g, edge₁)
 		else
 			add_edge!(g, edge₂)
 		end
 	end
+
 	return g
 end
 
@@ -70,12 +76,14 @@ function bohman_frieze!(g::AbstractGraph, n_steps::Int, K::Int)
 	for t in 1:n_steps
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
+
 		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] < K && g.cluster_sizes[g.cluster_ids[edge₁[2]]] < K
 			add_edge!(g, edge₁)
 		else
 			add_edge!(g, edge₂)
 		end
 	end
+
 	return g
 end
 
@@ -90,15 +98,19 @@ function product_rule(g_::AbstractGraph, n_steps::Int)
 		`g`      : An evolved instance of `g_`
 	"""
 	g = copy(g_)
+
 	for t in 1:n_steps
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
+
 		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] * g.cluster_sizes[g.cluster_ids[edge₁[2]]] < g.cluster_sizes[g.cluster_ids[edge₂[1]]] * g.cluster_sizes[g.cluster_ids[edge₂[2]]]
 			add_edge!(g, edge₁)
+
 		else
 			add_edge!(g, edge₂)
 		end
 	end
+
 	return g
 end
 
@@ -115,12 +127,14 @@ function product_rule!(g::AbstractGraph, n_steps::Int)
 	for t in 1:n_steps
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
+
 		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] * g.cluster_sizes[g.cluster_ids[edge₁[2]]] < g.cluster_sizes[g.cluster_ids[edge₂[1]]] * g.cluster_sizes[g.cluster_ids[edge₂[2]]]
 			add_edge!(g, edge₁)
 		else
 			add_edge!(g, edge₂)
 		end
 	end
+
 	return g
 end
 
@@ -136,17 +150,21 @@ function new_rule(g_::AbstractGraph, n_steps::Int, q::Float64)
 		`g` : An evolved instance of `g_`
 	"""
 	g = copy(g_)
+
 	for t in 1:n_steps
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
+
 		r = length(g.clusters[g.cluster_ids[edge₁[1]]] ∪ g.clusters[g.cluster_ids[edge₁[2]]]) / g.C[t]
 		p = maximum((1-r, q))
+
 		if rand(g.rng) < p
 			add_edge!(g, edge₁)
 		else
 			add_edge!(g, edge₂)
 		end
 	end
+
 	return g
 end
 
@@ -164,13 +182,16 @@ function new_rule!(g::AbstractGraph, n_steps::Int, q::Float64)
 	for t in 1:n_steps
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
+
 		r = length(g.clusters[g.cluster_ids[edge₁[1]]] ∪ g.clusters[g.cluster_ids[edge₁[2]]]) / g.C[t]
 		p = maximum((1-r, q))
+
 		if rand(g.rng) < p
 			add_edge!(g, edge₁)
 		else
 			add_edge!(g, edge₂)
 		end
 	end
+
 	return g
 end

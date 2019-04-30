@@ -59,6 +59,7 @@ function update_clusters!(g::AbstractGraph, edge::Tuple)
 		None, updates `g` in-place
 	"""
 	if g.cluster_ids[edge[1]] ≠ g.cluster_ids[edge[2]]
+			
 		if g.cluster_sizes[g.cluster_ids[edge[1]]] > g.cluster_sizes[g.cluster_ids[edge[2]]]
 			larger_cluster_id  = g.cluster_ids[edge[1]]
 			smaller_cluster_id = g.cluster_ids[edge[2]]
@@ -66,15 +67,20 @@ function update_clusters!(g::AbstractGraph, edge::Tuple)
 			larger_cluster_id  = g.cluster_ids[edge[2]]
 			smaller_cluster_id = g.cluster_ids[edge[1]]
 		end
+
 		union!(g.clusters[larger_cluster_id], g.clusters[smaller_cluster_id])
 		g.cluster_sizes[larger_cluster_id] = length(g.clusters[larger_cluster_id])
+
 		for node in g.clusters[smaller_cluster_id]
 			g.cluster_ids[node] = larger_cluster_id
 		end
+
 		delete!(g.clusters, smaller_cluster_id)
 		delete!(g.cluster_sizes, smaller_cluster_id)
+
 		push!(g.C, maximum((g.C[g.t], g.cluster_sizes[larger_cluster_id])))
 	else
+
 		push!(g.C, g.C[g.t])
 	end
 end
