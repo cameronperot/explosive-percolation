@@ -155,8 +155,25 @@ This leads us to the concept of a critical probability, $p_c$, such that when $p
 
 \paragraph{One-Dimension}
 We now consider the simplest case where $d = 1$, which allows us to analytically solve for some quantities of interest.
+Fig. \ref{fig:1d_site_clusters} illustrates a snippet of an infinite 1D lattice where the solid black sites are active and the white ones are inactive.
+There are a total of four clusters visible (highlighted in blue): two one-clusters, a three-cluster, and a four-cluster.
 
-% TODO image of 1D cluster
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=350pt]{images/1d-site-clusters.png}
+	\caption{1D Site Clusters}
+	\label{fig:1d_site_clusters}
+\end{figure}
+
+For comparison Fig. \ref{fig:1d_bond_clusters} illustrates a 1D lattice where all sites are active and only some of the bonds between them are active.
+There are a total of four clusters visible (highlighted in blue): two two-clusters, a three-cluster, and a four-cluster.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=350pt]{images/1d-bond-clusters.png}
+	\caption{1D Bond Clusters}
+	\label{fig:1d_bond_clusters}
+\end{figure}
 
 The probability that any given site is part of a cluster of size $s$ is then given by the product of the independent probabilities of the site to the left of the leftmost site in the cluster being unoccupied, $s$ consecutive sites being occupied, and the site to the right of the rightmost site in the cluster being unoccupied, i.e.:
 
@@ -199,8 +216,14 @@ This means that if just one site out of the entire chain is unoccupied there is 
 
 \paragraph{Multiple-Dimensions}
 Unfortunately it is not as straight forward in higher dimensions due to the many different arrangements and shapes that the clusters can take on.
+This is illustrated in Fig. \ref{fig:2d_site_clusters} where we can see four possible arrangements of a nine-cluster, each with different numbers of neighboring inactive sites.
 
-% TODO image of 2D clusters of different shapes
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=350pt]{images/2d-site-clusters.png}
+	\caption{2D Site Clusters}
+	\label{fig:2d_site_clusters}
+\end{figure}
 
 Therefore, we lose our ability to answer our questions through analytical methods and we must resort to numerical methods and simulations to study the system.
 This is where computer simulations and finite-size scaling analysis come in handy.
@@ -222,9 +245,15 @@ A (simplified) Hamiltonian of the system in the configuration $\{\sigma\}$ is th
 Where the sum is over all neighboring spin pairs, $J$ is the coupling constant between spins, and $h$ is a mean field per spin approximation.
 Using this combined with statistical and computational physics methods we are able to simulate how this system behaves as the size increases.
 One useful tool when modeling such a system is the use of periodic boundary conditions, which help reduce the finite-size effects of smaller lattice sizes.
-In Fig. \ref{fig:Ising_percolation} below we can see a percolating cluster of up (black) spins on a two-dimensional lattice with side-length $L = 64$.
+In Fig. \ref{fig:Ising_percolation} we can see a percolating cluster of up (black) spins at the critical temperature $T_c = 2 / \log(1 + \sqrt{2})$ on a 2D square lattice with side-length $L = 128$.
+Fig. \ref{fig:Ising_percolation} was generated using the Wolff single cluster algorithm with $5 \cdot 10^4$ update sweeps over the lattice.
 
-% TODO plot of Ising percolation cluster
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=350pt]{images/Ising-128-percolation.png}
+	\caption{2D Ising Model Percolating Cluster}
+	\label{fig:Ising_percolation}
+\end{figure}
 
 
 
@@ -235,11 +264,11 @@ In Fig. \ref{fig:Ising_percolation} below we can see a percolating cluster of up
 
 
 \subsection{Percolation on a Network}
-Networks can also percolate, so we will now discuss some of the basic ideas behind network percolation as a segue to the main topic of this paper: explosive percolation.
+Percolation can also be observed on networks, so we will now discuss some of the basic ideas behind network percolation as a segue to the next section.
 In the late 1950s and early 1960s Paul Erdős and Alfréd Rényi published several papers on random networks, leading to the creation of what is known today as the Erdős-Rényi model (ER) \cite{ER1} \cite{ER2}.
 
-To get an idea of how it works we can think of a graph at $t = 0$ which has a set of $n$ disconnected nodes and ${n \choose 2}$ possible connections between them.
-Then at each subsequent step two nodes are chosen at random and connected by an edge, thus after $t$ steps there are a total $t$ edges present in the graph.
+To get an idea of how it works we imagine a graph starting with a set of $n$ disconnected nodes at $t = 0$, giving us ${n \choose 2}$ possible connections between them.
+Then at each step in the evolution process two nodes are chosen at random and connected by an edge, thus after $t$ steps there are a total $t$ edges present in the graph.
 
 A cluster on a random network is a set of nodes connected by edges, either directly or indirectly.
 Being that some clusters in the graph will of course merge together over time, there exists an attractive potential of sorts between clusters corresponding to the likelihood that the clusters will merge together to form a larger one.
@@ -249,7 +278,15 @@ In a graph where each connection is equally probable, the probability that the f
 Therefore, there is a higher probability that the first cluster rather than the second merges with the third and we conclude that $\Phi_1 > \Phi_2$.
 
 In the a network, percolation occurs when a giant (macroscopically large) cluster appears.
+The order parameter here is defined as the largest cluster size divided by the network size, i.e. $|C| / n$.
 Let $n$ be the number of nodes, $t$ be the number of edges present in the graph, and take $r = t/n$.
-If $r > 0.5$ then there will exist a percolating cluster within the graph, but not if $r < 0.5$ \cite{ER2}.
+If $r > 0.5$ then there will exist a percolating cluster within the graph, but not if $r < 0.5$ \cite{ER2}, thus $r = 0.5$ is the critical point where the system transitions from the disconnected state to the state of large scale connectivity.
 Letting $|C|$ be the size of the largest cluster, it can be shown that for $r < 0.5$ the largest cluster size scales as $C \sim \log n$, and for $r > 0.5$ $C \sim n$, and more specifically if $r \gtrsim 0.5$ one finds $C \approx (4r - 2)n$ \cite{ER2}.
 Therefore, the ER model exhibits a continuous phase transition when the number of edges exceeds half the number of nodes in the graph.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=350pt]{images/ER-1e7-transition.png}
+	\caption{Erdős-Rényi Model Order Parameter Phase Transition}
+	\label{fig:ER_transition}
+\end{figure}
