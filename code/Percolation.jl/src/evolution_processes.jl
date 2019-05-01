@@ -36,13 +36,14 @@ function erdos_renyi!(g::AbstractGraph, n_steps::Int)
 end
 
 
-function bohman_frieze(g_::AbstractGraph, n_steps::Int, K::Int)
+function bohman_frieze(g_::AbstractGraph, n_steps::Int; K::Int=2)
 	"""
 	Achlioptas process, implementation of Bohman-Frieze bounded size rule
 	Arguments
 		`g_`     : An instance of type AbstractGraph
 		`n_steps`: Number of edges to add to the AbstractGraph
-		`K`      : Bounded size of clusters upon which to determine edge acceptance
+	Keyword Arguments
+		`K`      : Bounded size of clusters upon which to determine edge acceptance (default = 2)
 	Return
 		`g` : An evolved instance of `g_`
 	"""
@@ -63,13 +64,14 @@ function bohman_frieze(g_::AbstractGraph, n_steps::Int, K::Int)
 end
 
 
-function bohman_frieze!(g::AbstractGraph, n_steps::Int, K::Int)
+function bohman_frieze!(g::AbstractGraph, n_steps::Int; K::Int=2)
 	"""
 	Achlioptas process, implementation of Bohman-Frieze bounded size rule
 	Arguments
 		`g`      : An instance of type AbstractGraph
 		`n_steps`: Number of edges to add to the AbstractGraph
-		`K`      : Bounded size of clusters upon which to determine edge acceptance
+	Keyword Arguments
+		`K`      : Bounded size of clusters upon which to determine edge acceptance (default = 2)
 	Return
 		None, updates `g` in-place
 	"""
