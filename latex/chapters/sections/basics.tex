@@ -283,10 +283,11 @@ Let $n$ be the number of nodes, $t$ be the number of edges present in the graph,
 If $r > 0.5$ then there will exist a percolating cluster within the graph, but not if $r < 0.5$ \cite{ER2}, thus $r = 0.5$ is the critical point where the system transitions from the disconnected state to the state of large scale connectivity.
 Letting $|C|$ be the size of the largest cluster, it can be shown that for $r < 0.5$ the largest cluster size scales as $C \sim \log n$, and for $r > 0.5$ $C \sim n$, and more specifically if $r \gtrsim 0.5$ one finds $C \approx (4r - 2)n$ \cite{ER2}.
 Therefore, the ER model exhibits a continuous phase transition when the number of edges exceeds half the number of nodes in the graph.
+Looking at Fig. \ref{ER_transition} we can see that the order parameter is zero up until $r = 0.5$ when it transitions to the state of large scale connectivity.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=350pt]{images/ER-1e7-transition.png}
-	\caption{Erdős-Rényi Model Order Parameter Phase Transition}
+	\includegraphics[width=350pt]{images/ER-1e6-order-param.png}
+	\caption{Erdős-Rényi Model Order Parameter, $n = 10^6$}
 	\label{fig:ER_transition}
 \end{figure}
