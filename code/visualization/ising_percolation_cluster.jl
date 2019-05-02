@@ -132,4 +132,4 @@ heatmap(I.σ.*-1,
 	yaxis=false)
 
 savepath = "/home/user/rsync/education/uni-leipzig/semester-6/thesis/latex/images/"
-savefig(string(savepath, "Ising-128-percolation.png"))
+savefig(string(savepath, "Ising_128_percolation.png"))

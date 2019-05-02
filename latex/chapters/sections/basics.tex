@@ -160,7 +160,7 @@ There are a total of four clusters visible (highlighted in blue): two one-cluste
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=350pt]{images/1d-site-clusters.png}
+	\includegraphics[width=350pt]{images/1d_site_clusters.png}
 	\caption{1D Site Clusters}
 	\label{fig:1d_site_clusters}
 \end{figure}
@@ -170,7 +170,7 @@ There are a total of four clusters visible (highlighted in blue): two two-cluste
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=350pt]{images/1d-bond-clusters.png}
+	\includegraphics[width=350pt]{images/1d_bond_clusters.png}
 	\caption{1D Bond Clusters}
 	\label{fig:1d_bond_clusters}
 \end{figure}
@@ -220,7 +220,7 @@ This is illustrated in Fig. \ref{fig:2d_site_clusters} where we can see four pos
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=350pt]{images/2d-site-clusters.png}
+	\includegraphics[width=350pt]{images/2d_site_clusters.png}
 	\caption{2D Site Clusters}
 	\label{fig:2d_site_clusters}
 \end{figure}
@@ -250,7 +250,7 @@ Fig. \ref{fig:Ising_percolation} was generated using the Wolff single cluster al
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=350pt]{images/Ising-128-percolation.png}
+	\includegraphics[width=350pt]{images/Ising_128_percolation.png}
 	\caption{2D Ising Model Percolating Cluster}
 	\label{fig:Ising_percolation}
 \end{figure}
@@ -280,14 +280,14 @@ Therefore, there is a higher probability that the first cluster rather than the 
 In the a network, percolation occurs when a giant (macroscopically large) cluster appears.
 The order parameter here is defined as the largest cluster size divided by the network size, i.e. $|C| / n$.
 Let $n$ be the number of nodes, $t$ be the number of edges present in the graph, and take $r = t/n$.
-If $r > 0.5$ then there will exist a percolating cluster within the graph, but not if $r < 0.5$ \cite{ER2}, thus $r = 0.5$ is the critical point where the system transitions from the disconnected state to the state of large scale connectivity.
+If $r > 0.5$ then there will exist a percolating cluster within the graph, but not if $r < 0.5$ \cite{ER2}, thus $r_c = 0.5$ is the critical point where the system transitions from the disconnected state to the state of large scale connectivity.
 Letting $|C|$ be the size of the largest cluster, it can be shown that for $r < 0.5$ the largest cluster size scales as $C \sim \log n$, and for $r > 0.5$ $C \sim n$, and more specifically if $r \gtrsim 0.5$ one finds $C \approx (4r - 2)n$ \cite{ER2}.
 Therefore, the ER model exhibits a continuous phase transition when the number of edges exceeds half the number of nodes in the graph.
-Looking at Fig. \ref{ER_transition} we can see that the order parameter is zero up until $r = 0.5$ when it transitions to the state of large scale connectivity.
+Looking at Fig. \ref{fig:ER_transition} we can see that the order parameter is zero up until $r = 0.5$ when it transitions to the state of large scale connectivity.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=350pt]{images/ER-1e6-order-param.png}
+	\includegraphics[width=350pt]{images/ER_1e6_order_param.png}
 	\caption{Erdős-Rényi Model Order Parameter, $n = 10^6$}
 	\label{fig:ER_transition}
 \end{figure}

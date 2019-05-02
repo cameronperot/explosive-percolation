@@ -40,9 +40,9 @@ plot_ER = plot(legend=:right, dpi=300);
 scatter!(x_ER, y_ER,
 	label="ER",
 	marker=(2, :blue, :circle, 0.7, stroke(0)),
-	xaxis=(latexstring("t/n"), (0, 1.5), 0:0.5:1.5),
+	xaxis=(latexstring("r"), (0, 1.5), 0:0.5:1.5),
 	yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1))
-savefig(plot_ER, string(savepath, "ER-1e6-order-param.png"))
+savefig(plot_ER, string(savepath, "ER_1e6_order_param.png"))
 
 # %% ER-BF plot
 
@@ -51,9 +51,9 @@ y_BF = g_BF.C ./ g_BF.n;
 scatter!(x_BF, y_BF,
 	label="BF",
 	marker=(2, :green, :diamond, 0.7, stroke(0)),
-	xaxis=(latexstring("t/n"), (0, 1.5), 0:0.5:1.5),
+	xaxis=(latexstring("r"), (0, 1.5), 0:0.5:1.5),
 	yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1))
-savefig(plot_ER, string(savepath, "ER-BF-1e6-order-param.png"))
+savefig(plot_ER, string(savepath, "ER_BF_1e6_order_param.png"))
 
 # %% ER-BF-PR plot
 
@@ -62,6 +62,6 @@ y_PR = g_PR.C ./ g_PR.n;
 scatter!(x_PR, y_PR,
 	label="PR",
 	marker=(2, :red, :hex, 0.7, stroke(0)),
-	xaxis=(latexstring("t/n"), (0, 1.5), 0:0.5:1.5),
+	xaxis=(latexstring("r"), (0, 1.5), 0:0.5:1.5),
 	yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1))
-savefig(plot_ER, string(savepath, "ER-BF-PR-1e6-order-param.png"))
+savefig(plot_ER, string(savepath, "ER_BF_PR_1e6_order_param.png"))
