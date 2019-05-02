@@ -36,14 +36,14 @@ function erdos_renyi!(g::AbstractGraph, n_steps::Int)
 end
 
 
-function bohman_frieze(g_::AbstractGraph, n_steps::Int; K::Int=2)
+function bohman_frieze(g_::AbstractGraph, n_steps::Int; K::Int=1)
 	"""
 	Achlioptas process, implementation of Bohman-Frieze bounded size rule
 	Arguments
 		`g_`     : An instance of type AbstractGraph
 		`n_steps`: Number of edges to add to the AbstractGraph
 	Keyword Arguments
-		`K`      : Bounded size of clusters upon which to determine edge acceptance (default = 2)
+		`K`      : Bounded size of clusters upon which to determine edge acceptance (default = 1)
 	Return
 		`g` : An evolved instance of `g_`
 	"""
@@ -53,7 +53,7 @@ function bohman_frieze(g_::AbstractGraph, n_steps::Int; K::Int=2)
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
-		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] < K && g.cluster_sizes[g.cluster_ids[edge₁[2]]] < K
+		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] ≤ K && g.cluster_sizes[g.cluster_ids[edge₁[2]]] ≤ K
 			add_edge!(g, edge₁)
 		else
 			add_edge!(g, edge₂)
@@ -64,14 +64,14 @@ function bohman_frieze(g_::AbstractGraph, n_steps::Int; K::Int=2)
 end
 
 
-function bohman_frieze!(g::AbstractGraph, n_steps::Int; K::Int=2)
+function bohman_frieze!(g::AbstractGraph, n_steps::Int; K::Int=1)
 	"""
 	Achlioptas process, implementation of Bohman-Frieze bounded size rule
 	Arguments
 		`g`      : An instance of type AbstractGraph
 		`n_steps`: Number of edges to add to the AbstractGraph
 	Keyword Arguments
-		`K`      : Bounded size of clusters upon which to determine edge acceptance (default = 2)
+		`K`      : Bounded size of clusters upon which to determine edge acceptance (default = 1)
 	Return
 		None, updates `g` in-place
 	"""
@@ -79,7 +79,7 @@ function bohman_frieze!(g::AbstractGraph, n_steps::Int; K::Int=2)
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
-		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] < K && g.cluster_sizes[g.cluster_ids[edge₁[2]]] < K
+		if g.cluster_sizes[g.cluster_ids[edge₁[1]]] ≤ K && g.cluster_sizes[g.cluster_ids[edge₁[2]]] ≤ K
 			add_edge!(g, edge₁)
 		else
 			add_edge!(g, edge₂)
