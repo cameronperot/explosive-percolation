@@ -1,7 +1,9 @@
 abstract type AbstractGraph end
+abstract type AbstractNetwork <: AbstractGraph end
+abstract type AbstractLattice <: AbstractGraph end
 
 
-mutable struct Network <: AbstractGraph
+mutable struct Network <: AbstractNetwork
 	"""
 	Type to house the nodes, edges, and clusters of a network
 	Arguments
@@ -41,7 +43,7 @@ mutable struct Network <: AbstractGraph
 end
 
 
-mutable struct Lattice2D <: AbstractGraph
+mutable struct Lattice2D <: AbstractLattice
 	"""
 	Type to house the nodes, edges, and clusters of a 2D lattice
 	Arguments
@@ -86,7 +88,7 @@ mutable struct Lattice2D <: AbstractGraph
 end
 
 
-mutable struct Lattice3D <: AbstractGraph
+mutable struct Lattice3D <: AbstractLattice
 	"""
 	Type to house the nodes, edges, and clusters of a 3D lattice
 	Arguments
