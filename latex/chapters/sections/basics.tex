@@ -265,7 +265,7 @@ Fig. \ref{fig:Ising_percolation} was generated using the Wolff single cluster al
 
 \subsection{Percolation on a Network}
 Percolation can also be observed on networks, so we will now discuss some of the basic ideas behind network percolation as a segue to the next section.
-In the late 1950s and early 1960s Paul Erdős and Alfréd Rényi published several papers on random networks, leading to the creation of what is known today as the Erdős-Rényi model (ER) \cite{ER1} \cite{ER2}.
+In the late 1950s and early 1960s Paul Erdős and Alfréd Rényi published several papers on random networks, leading to the creation of what is known today as the Erdős-Rényi model (ER) \cite{ER_1} \cite{ER_2}.
 
 To get an idea of how it works we imagine a graph starting with a set of $n$ disconnected nodes at $t = 0$, giving us ${n \choose 2}$ possible connections between them.
 Then at each step in the evolution process two nodes are chosen at random and connected by an edge, thus after $t$ steps there are a total $t$ edges present in the graph.
@@ -280,8 +280,8 @@ Therefore, there is a higher probability that the first cluster rather than the 
 In the a network, percolation occurs when a giant (macroscopically large) cluster appears.
 The order parameter here is defined as the largest cluster size divided by the network size, i.e. $|C| / n$.
 Let $n$ be the number of nodes, $t$ be the number of edges present in the graph, and take $r = t/n$.
-If $r > 0.5$ then there will exist a percolating cluster within the graph, but not if $r < 0.5$ \cite{ER2}, thus $r_c = 0.5$ is the critical point where the system transitions from the disconnected state to the state of large scale connectivity.
-Letting $|C|$ be the size of the largest cluster, it can be shown that for $r < 0.5$ the largest cluster size scales as $C \sim \log n$, and for $r > 0.5$ $C \sim n$, and more specifically if $r \gtrsim 0.5$ one finds $C \approx (4r - 2)n$ \cite{ER2}.
+If $r > 0.5$ then there will exist a percolating cluster within the graph, but not if $r < 0.5$ \cite{ER_2}, thus $r_c = 0.5$ is the critical point where the system transitions from the disconnected state to the state of large scale connectivity.
+Letting $|C|$ be the size of the largest cluster, it can be shown that for $r < 0.5$ the largest cluster size scales as $C \sim \log n$, and for $r > 0.5$ $C \sim n$, and more specifically if $r \gtrsim 0.5$ one finds $C \approx (4r - 2)n$ \cite{ER_2}.
 Therefore, the ER model exhibits a continuous phase transition when the number of edges exceeds half the number of nodes in the graph.
 Looking at Fig. \ref{fig:ER_transition} we can see that the order parameter is zero up until $r = 0.5$ when it transitions to the state of large scale connectivity.
 

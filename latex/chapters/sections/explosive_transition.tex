@@ -46,6 +46,10 @@ It has been hypothesized that all bounded-size rules produce exhibit continuous 
 
 
 
+\subsubsection{A Second Take}
+20040316
+
+
 
 
 
@@ -53,7 +57,7 @@ It has been hypothesized that all bounded-size rules produce exhibit continuous 
 
 
 \subsection{A Discontinuous Transition?}
-The first mention of explosive percolation appeared in 2009 in the paper "Explosive Percolation in Random Networks" \cite{Achlioptas} by Dimitris Achlioptas, Raissa M. D’Souza, and Joel Spencer, which will henceforth be referred to as Achlioptas et al.
+The first mention of explosive percolation appeared in 2009 in the paper "Explosive Percolation in Random Networks" \cite{Achlioptas_1} by Dimitris Achlioptas, Raissa M. D’Souza, and Joel Spencer, which will henceforth be referred to as Achlioptas et al.
 In this paper they laid out a method of choosing edges called the product rule (PR).
 At each step in the PR evolution process two edges are selected at random and evaluated based on the product of the cluster sizes that the edges would connect.
 More specifically, if edge $e_1$ connects clusters $C_1$ and $C_2$ and edge $e_2$ connects clusters $C_3$ and $C_4$, then $e_1$ is accepted if $|C_1| \cdot |C_2| < |C_3| \cdot |C_4|$, otherwise $e_2$ is accepted.
@@ -70,7 +74,7 @@ If we were looking at Fig. \ref{fig:edge_selection} from within the framework of
 \end{figure}
 
 Fig. \ref{fig:ER_BF_PR_transition} shows the order parameters for the ER, BF, and PR models, making it clear just how drastically different the PR model transition is than in the ER/BF models.
-As can be seen the order parameter remains near zero for much longer until the critical point $r_c \approx 0.888...$ \cite{Achlioptas}, which is much later than the critical point in the ER model of $r_c = 0.5$.
+As can be seen the order parameter remains near zero for much longer until the critical point $r_c \approx 0.888...$ \cite{Achlioptas_1}, which is much later than the critical point in the ER model of $r_c = 0.5$.
 Not long after the critical point is reached the order parameter appears to jump up discontinuously, which was a surprising find.
 
 \begin{figure}[H]
@@ -84,18 +88,65 @@ In their paper they analyzed the scaling behavior of their model, defining the q
 $\Delta$ is linear in $n$ for continuous transitions (i.e. an extensive quantity), however, their analysis indicated otherwise that $\Delta < 2n^{2/3}$ and $\Delta / n^{2/3} \rightarrow 1$ in their simulations for sizes up to $6.4 \cdot 10^7$.
 To arrive at these results they took an ensemble average of 50 different independent and identically distributed observations and fit a curve to determine the relation between $\Delta$ and $n$.
 Their findings are illustrated in Fig. \ref{fig:achlioptas_plots}.
-\cite{Achlioptas}
+\cite{Achlioptas_1}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=400pt]{images/achlioptas_plots.png}
-	\caption{Achlioptas et al. Simulation Results, Source: \cite{Achlioptas}}
+	\caption{Achlioptas et al. Simulation Results, Source: \cite{Achlioptas_1}}
 	\label{fig:achlioptas_plots}
 \end{figure}
 
-They ended their paper by saying: "We have demonstrated that small changes in edge formation have the ability to fundamentally alter the nature of percolation transitions. Our findings call for the comprehensive study of this phenomenon, and of its potential use in bringing phase transitions under control."
-Indeed their message seemed to resonate, leading to a debate in the academic community about the nature and continuity of the transition.
+They ended their paper by saying: "We have demonstrated that small changes in edge formation have the ability to fundamentally alter the nature of percolation transitions. Our findings call for the comprehensive study of this phenomenon, and of its potential use in bringing phase transitions under control." \cite{Achlioptas_1}
+% Indeed their message seemed to resonate, leading to a wave of papers from around the globe exploring the subject \cite{Ziff_1, Cho_1, Radicchi_1, Friedman_1, Ziff_2, Radicchi_2, D_Souza_1, da_Costa_1, Rozenfeld_1, Araujo_1, Moreira_1, Cho_2, Cho_3, Nagler_1, Manna_1, Grassberger_1, Lee_1, Riordan_1, Hooyberghs_1, Nagler_2, Chen_1, Panagiotou_1, Pan_1, Cho_4, Gomez_1, Tian_1, Riordan_2, Riordan_3, Boettcher_1, Chen_2, Angst_1, Bizhani_1, Cho_5, Schroeder_1, Chen_3, Chen_4, Squires_1, Do_1, Chen_5, Bastas_1, Cho_6, da_Costa_2, Riordan_4, Guan_1, da_Costa_3, da_Costa_4, D_Souza_2, Hayasaka_1, Clusella_1, Boccaletti_1, Gedik_1, Rahman_1, Waagen_1, Zhu_1, Sabbir_1, Trevelyan_1, Sabbir_1}.
 
 
 
-\subsubsection{}
+\subsubsection{No, It's Actually Continuous!}
+20100915
+
+
+
+\subsubsection{Well, Maybe Not...}
+20110315
+
+
+
+\subsubsection{Continuity With Unusual Finite-Size Scaling Behavior}
+20110322
+
+
+
+\subsubsection{Large Scale Simulations}
+20110616
+
+
+
+\subsubsection{The Power of Mathematical Statistics}
+20120821
+
+
+
+\subsubsection{Supercritical BFW Phase Transitions}
+20130524
+
+
+
+\subsubsection{Critical Exponents in Explosive Percolation}
+20140505
+
+
+
+\subsubsection{"Solution of the explosive percolation quest"}
+20150212
+20150331
+
+
+
+\subsubsection{A Look At the Developments}
+20150701
+
+
+
+\subsubsection{Two Types of Discontinuous Percolation}
+20150710
