@@ -15,9 +15,11 @@ For certain evolution processes it has been heavily debated whether or not the p
 
 
 \subsection{A Selective Process}
-This all started in the year 2000 when Dimitris Achlioptas brought forth an interesting take on adding edges to a random graph.
-The basic question was what would happen if instead of randomly adding an edge at each step like in the ER model, one evaluated two edges $\{e_1, e_2\}$ and then added one edge and discarded the other according to some selection criteria.
-This process of evaluating $m \ge 2$ edges at each step is referred to as an Achlioptas process.
+This all started in the year 2000 when Dimitris Achlioptas raised an interesting question about how a graph of $n$ nodes would evolve under certain conditions \cite{BF}.
+First we suppose that at each step $t$ in the evolution process two edges $e_t$ and $e_t'$ are evaluated, but only one of them is selected to be added to the graph.
+Which of the proposed edges is selected is based only on the information contained in $e_1, e_1', ... e_{t-1}, e_{t-1}'$.
+Does there exist an algorithm for adding edges to the graph such that with high probability a giant component does not appear until $t/n > 0.5$?
+This process of evaluating $m \ge 2$ edges at each step is now referred to as an $m$-edge Achlioptas process.
 In the next few sections we will see how a small change to the way edges are added can have a big impact on the evolution of the system.
 
 
@@ -28,14 +30,11 @@ In the next few sections we will see how a small change to the way edges are add
 
 
 
+
 \subsection{The First Look}
-In 2001 Tom Bohman and Alan Frieze were the first to design and analyze an Achlioptas process in their paper "Avoiding a Giant component" \cite{BF}, which laid out the Bohman-Frieze (BF) model for delaying the appearance of a giant cluster.
-At each step edge $e_1$ is added and $e_2$ discarded if $e_1$ connects two clusters of size smaller than or equal to $K$, if not $e_2$ is added and $e_1$ discarded.
-In their paper they took $K = 1$, thus the algorithm favors connecting isolated nodes rather than connecting clusters containing two or more nodes.
-This is known as a "bounded-size" rule which essentially views all clusters of size greater than $K$ as equivalent.
-They were able to show that this method (using $K = 1$) leads to a delayed onset of percolation when compared to the ER model.
+In 2001 Tom Bohman and Alan Frieze were the first to design and analyze an Achlioptas process in their paper "Avoiding a Giant Component" \cite{BF}, where they set out to answer Achlioptas' question.
+This paper laid out the framework for the Bohman-Frieze (BF) model of graph evolution and showed that there does exist a process in which the appearance of a giant cluster is delayed; so the answer to Achlioptas' question is yes!
 This can be seen in Fig. \ref{fig:ER_BF_transition} where the order parameter for the BF model remains smaller than for the ER model, but a little after $r = 0.5$ it begins to rise at a faster rate than in the ER model, eventually overtaking the ER model.
-It has been hypothesized that all bounded-size rules produce exhibit continuous phase transitions \cite{Spencer_Wormald}.
 
 \begin{figure}[H]
 	\centering
@@ -44,27 +43,113 @@ It has been hypothesized that all bounded-size rules produce exhibit continuous 
 	\label{fig:ER_BF_transition}
 \end{figure}
 
+The algorithm they came up with randomly/uniformly samples and evaluates two edges $e_t$ and $e_t'$ at each step $t$, adding $e_t$ if it connects two isolated nodes and discarding $e_t'$, otherwise adding $e_t'$ and discarding $e_t$.
+This is known as a bounded-size rule, which has since been generalized to a $K$ bounded-size rule where $e_t$ is added if it connects clusters of size smaller than $K$, otherwise $e_t'$ is added.
+What this process does is equally discriminate against clusters of size greater than or equal to $K$.
+It has been hypothesized that all bounded-size rules exhibit continuous phase transitions \cite{Spencer_Wormald}.
 
+A form of the algorithm can be written in pseudocode as follows:
+\begin{itemize}
+	\item Let $T$ be the total number of edges to add to the graph.
+	\item Let $A_t = \{e_1, e_2, ..., e_t\}$ be the set of accepted edges at step $t$.
+	\item Let $e_t^1$ and $e_t^2$ be the two nodes which edge $e_t$ would connect.
+	\item Let $C(e_t^i)$ be the cluster which $e_t^i$ belongs to.
+\end{itemize}
 
-\subsubsection{A Second Take}
-20040316
+\begin{algorithm}
+	\caption{Bohman-Frieze}\label{Bohman-Frieze}
+	\begin{algorithmic}[1]
+		\Procedure{BF}{$T, K=2$}
+		\State $A \gets \emptyset$
+		\State $t \gets 1$
+		\While{$t \le T$}
+			\If{$|C(e_t^1)| < K$ and $|C(e_t^2)| < K$}
+				\State $A \gets A \cup \{e_t\}$
+			\Else
+				\State $A \gets A \cup \{e_t'\}$
+			\EndIf
+			\State $t \gets t+1$
+		\EndWhile
+	\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
 
+A few years after their original paper, Bohman and Frieze published another paper with Nicholas Wormald titled "Avoidance of a giant component in half the edge set of a random graph" \cite{BFW}.
+In this paper they designed a new algorithm (BFW) for adding edges to a graph that runs in phases beginning at $k = 2$.
+Starting with $n$ isolated nodes, edges are randomly/uniformly sampled and evaluated one at a time.
+If the edge being evaluated would create a cluster of size less than or equal to $k$ then the edge is accepted, otherwise the edge is rejected.
+If edge is rejected and the ratio of accepted edges is less than the function $g(k) = 1/2 + \sqrt{1/(2k)}$, then the algorithm moves to the next phase.
 
+A form of the algorithm can be written in pseudocode as follows:
+\begin{itemize}
+	\item Let $T$ be the total number of edges to add to the graph.
+	\item Let $A_i = \{e_1, e_2, ..., e_i\}$ be the set of accepted edges at step $i$.
+	\item Let $C(A)$ be the largest cluster in $A$.
+\end{itemize}
 
+\begin{algorithm}
+	\caption{Bohman-Frieze-Wormald}\label{Bohman-Frieze-Wormald}
+	\begin{algorithmic}[1]
+		\Procedure{BFW}{$T$}
+		\State $A \gets \emptyset$
+		\State $k \gets 2$
+		\State $t \gets 1$
+		\State $i \gets 1$
 
-
+		\While{$t \le T$}
+			\If{$|C(A \cup \{e_i\})| \le k$}
+				\State $A \gets A \cup \{e_i\}$
+				\State $t \gets t+1$
+				\State $i \gets i+1$
+			\ElsIf{$|A|/i < g(k)$}
+				\State $k \gets k+1$
+			\Else
+				\State $i \gets i+1$
+			\EndIf
+		\EndWhile
+	\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
 
 
 
 \subsection{A Discontinuous Transition?}
 The first mention of explosive percolation appeared in 2009 in the paper "Explosive Percolation in Random Networks" \cite{Achlioptas_1} by Dimitris Achlioptas, Raissa M. D’Souza, and Joel Spencer, which will henceforth be referred to as Achlioptas et al.
 In this paper they laid out a method of choosing edges called the product rule (PR).
-At each step in the PR evolution process two edges are selected at random and evaluated based on the product of the cluster sizes that the edges would connect.
-More specifically, if edge $e_1$ connects clusters $C_1$ and $C_2$ and edge $e_2$ connects clusters $C_3$ and $C_4$, then $e_1$ is accepted if $|C_1| \cdot |C_2| < |C_3| \cdot |C_4|$, otherwise $e_2$ is accepted.
+At each step $t$ in the evolution process two edges are selected randomly/uniformly and evaluated based on the product of the cluster sizes that the edges would connect.
+More specifically, if edge $e_t$ connects clusters $C(e_t^1)$ and $C(e_t^2)$ and edge $e_t'$ connects clusters $C(e_t'^1)$ and $C(e_t'^2)$, then $e_t$ is accepted if $|C(e_t^1)| \cdot |C(e_t^2)| < |C(e_t'^1)| \cdot |C(e_t'^2)|$, otherwise $e_t'$ is accepted.
 
-This is illustrated in Fig. \ref{fig:edge_selection} where the first proposed edge $e_1$ would connect the blue cluster of size 5 to the red cluster of size 3 and the second proposed edge $e_2$ would connect the orange cluster of size 2 to the green cluster of size 4.
-The product corresponding to $e_1$ is $5 \cdot 3 = 15$ whereas the product corresponding to $e_2$ is $2 \cdot 4 = 8$, so $e_1$ is rejected and $e_2$ accepted.
-If we were looking at Fig. \ref{fig:edge_selection} from within the framework of the BF model with $K = 1$, then $e_1$ would be rejected and $e_2$ accepted even though both the orange and green clusters are of size greater than $K$.
+A form of the algorithm can be written in pseudocode as follows:
+\begin{itemize}
+	\item Let $T$ be the total number of edges to add to the graph.
+	\item Let $A_t = \{e_1, e_2, ..., e_t\}$ be the set of accepted edges at step $t$.
+	\item Let $e_t^1$ and $e_t^2$ be the two nodes which edge $e_t$ would connect.
+	\item Let $C(e_t^i)$ be the cluster which $e_t^i$ belongs to.
+\end{itemize}
+
+\begin{algorithm}
+	\caption{Product Rule}\label{Product-Rule}
+	\begin{algorithmic}[1]
+		\Procedure{PR}{$T$}
+		\State $A \gets \emptyset$
+		\State $t \gets 1$
+
+		\While{$t \le T$}
+			\If{$|C(e_t^1)| \cdot |C(e_t^2)| < |C(e_t'^1)| \cdot |C(e_t'^2)|$}
+				\State $A \gets A \cup \{e_t\}$
+				\State $t \gets t+1$
+			\Else
+				\State $A \gets A \cup \{e_t'\}$
+				\State $t \gets t+1$
+			\EndIf
+		\EndWhile
+	\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+This is illustrated in Fig. \ref{fig:edge_selection} where the first proposed edge $e_t$ would connect the blue cluster of size 5 to the red cluster of size 3 and the second proposed edge $e_t'$ would connect the orange cluster of size 2 to the green cluster of size 4.
+The product corresponding to $e_t$ is $5 \cdot 3 = 15$ whereas the product corresponding to $e_t$ is $2 \cdot 4 = 8$, so $e_t$ is rejected and $e_t'$ accepted.
+If we were looking at Fig. \ref{fig:edge_selection} from within the framework of the BF model with $K = 1$, then $e_t$ would be rejected and $e_t$ accepted even though both the orange and green clusters are of size greater than $K$.
 
 \begin{figure}[H]
 	\centering
