@@ -18,7 +18,7 @@ mutable struct Network <: AbstractNetwork
 		`edges`        : Set of edges present in the network
 		`cluster_ids`  : Array with nodes as indices and cluster IDs as values
 		`clusters`     : Dictionary with cluster IDs as keys and clusters as values
-		`cluster_sizes`: Dictionary with cluster IDs as keys and clusters sizes as values
+		`cluster_sizes`: Dictionary with cluster sizes as keys and cluster counts as values, i.e. cluster size distribution
 		`C`            : Array where `C[t]` is the largest cluster size at step `t-1`
 		`rng`          : Random number generator
 	"""
@@ -37,7 +37,7 @@ mutable struct Network <: AbstractNetwork
 		edges         = Set()
 		cluster_ids   = collect(1:n)
 		clusters      = Dict(1:n .=> Set.(1:n))
-		cluster_sizes = Dict(1:n .=> 1)
+		cluster_sizes = Dict(1 => n)
 		C             = [1]
 		rng           = MersenneTwister(seed)
 
@@ -62,7 +62,7 @@ mutable struct Lattice2D <: AbstractLattice
 		`edges`        : Set of edges present in the lattice
 		`cluster_ids`  : Array with nodes as indices and cluster IDs as values
 		`clusters`     : Dictionary with cluster IDs as keys and clusters as values
-		`cluster_sizes`: Dictionary with cluster IDs as keys and clusters sizes as values
+		`cluster_sizes`: Dictionary with cluster sizes as keys and cluster counts as values, i.e. cluster size distribution
 		`C`            : Array where `C[t]` is the largest cluster size at step `t-1`
 		`rng`          : Random number generator
 	"""
@@ -70,9 +70,9 @@ mutable struct Lattice2D <: AbstractLattice
 	L            ::Int
 	n            ::Int
 	t            ::Int
-	edges        ::Set{Tuple{Tuple{Int, Int}, Tuple{Int, Int}}}
+	edges        ::Set{Tuple{Int, Int}}
 	cluster_ids  ::Array{Int, 2}
-	clusters     ::Dict{Int, Set{Tuple{Int, Int}}}
+	clusters     ::Dict{Int, Set{Int}}
 	cluster_sizes::Dict{Int, Int}
 	C            ::Array{Int, 1}
 	rng          ::MersenneTwister
@@ -82,9 +82,8 @@ mutable struct Lattice2D <: AbstractLattice
 		t             = 0
 		edges         = Set()
 		cluster_ids   = reshape(collect(1:n), (L, L))
-		clusters      = Dict(1:n .=> Set.([[i] for i in
-			Tuple.(reshape(CartesianIndices(cluster_ids), n))]))
-		cluster_sizes = Dict(1:n .=> 1)
+		clusters      = Dict(1:n .=> Set.(1:n))
+		cluster_sizes = Dict(1 => n)
 		C             = [1]
 		rng           = MersenneTwister(seed)
 
@@ -109,7 +108,7 @@ mutable struct Lattice3D <: AbstractLattice
 		`edges`        : Set of edges present in the lattice
 		`cluster_ids`  : Array with nodes as indices and cluster IDs as values
 		`clusters`     : Dictionary with cluster IDs as keys and clusters as values
-		`cluster_sizes`: Dictionary with cluster IDs as keys and clusters sizes as values
+		`cluster_sizes`: Dictionary with cluster sizes as keys and cluster counts as values, i.e. cluster size distribution
 		`C`            : Array where `C[t]` is the largest cluster size at step `t-1`
 		`rng`          : Random number generator
 	"""
@@ -117,9 +116,9 @@ mutable struct Lattice3D <: AbstractLattice
 	L            ::Int
 	n            ::Int
 	t            ::Int
-	edges        ::Set{Tuple{Tuple{Int, Int, Int}, Tuple{Int, Int, Int}}}
+	edges        ::Set{Tuple{Int, Int}}
 	cluster_ids  ::Array{Int, 3}
-	clusters     ::Dict{Int, Set{Tuple{Int, Int, Int}}}
+	clusters     ::Dict{Int, Set{Int}}
 	cluster_sizes::Dict{Int, Int}
 	C            ::Array{Int, 1}
 	rng          ::MersenneTwister
@@ -129,9 +128,8 @@ mutable struct Lattice3D <: AbstractLattice
 		t             = 0
 		edges         = Set()
 		cluster_ids   = reshape(collect(1:n), (L, L, L))
-		clusters      = Dict(1:n .=> Set.([[i] for i in
-			Tuple.(reshape(CartesianIndices(cluster_ids), n))]))
-		cluster_sizes = Dict(1:n .=> 1)
+		clusters      = Dict(1:n .=> Set.(1:n))
+		cluster_sizes = Dict(1 => n)
 		C             = [1]
 		rng           = MersenneTwister(seed)
 

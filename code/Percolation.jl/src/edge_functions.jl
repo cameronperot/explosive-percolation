@@ -8,7 +8,7 @@ function choose_edge(g::Network)
 	"""
 	edge = (rand(g.rng, 1:g.n), rand(g.rng, 1:g.n))
 
-	if edge[1] ≠ edge[2] && edge ∉ g.edges
+	if edge[1] ≠ edge[2] && edge ∉ g.edges && reverse(edge) ∉ g.edges
 		return edge
 	else
 		choose_edge(g)
@@ -26,9 +26,9 @@ function choose_edge(g::Lattice2D)
 	"""
 	node     = (rand(g.rng, 1:g.L), rand(g.rng, 1:g.L))
 	neighbor = nearest_neighbors(g, node)[rand(g.rng, 1:4)]
-	edge     = (node, neighbor)
+	edge     = (cart2lin(node, g.L), cart2lin(neighbor, g.L))
 
-	if edge ∉ g.edges
+	if edge ∉ g.edges && reverse(edge) ∉ g.edges
 		return edge
 	else
 		choose_edge(g)
@@ -46,9 +46,9 @@ function choose_edge(g::Lattice3D)
 	"""
 	node     = (rand(g.rng, 1:g.L), rand(g.rng, 1:g.L), rand(g.rng, 1:g.L))
 	neighbor = nearest_neighbors(g, node)[rand(g.rng, 1:6)]
-	edge     = (node, neighbor)
+	edge     = (cart2lin(node, g.L), cart2lin(neighbor, g.L))
 
-	if edge ∉ g.edges
+	if edge ∉ g.edges && reverse(edge) ∉ g.edges
 		return edge
 	else
 		choose_edge(g)
@@ -85,14 +85,18 @@ function add_edge!(g::AbstractGraph, edge::Tuple)
 		None, updates `g` in-place
 	"""
 	push!(g.edges, edge)
-	push!(g.edges, reverse(edge))
 	g.t += 1
 	update_clusters!(g, edge)
 end
 
 
 """
-Functions plus and minus are an implementation of periodic boundary conditions for use in the `nearest_neighbors` functions below
+Functions below this point are for determining nearest-neighbors with periodic boundary conditions in hyper-cubic lattices and converting the indices from Cartesian to linear
+"""
+
+
+"""
+`plus` and `minus` are an implementation of periodic boundary conditions for use in the `nearest_neighbors` functions below
 """
 function plus(L::Int, i::Int)
 	i == L ? 1 : i+1
@@ -133,4 +137,21 @@ function nearest_neighbors(g::Lattice3D, node::Tuple{Int, Int, Int})
 			(node[1], plus(g.L, node[2]), node[3]),
 			(node[1], node[2], minus(g.L, node[3])),
 			(node[1], node[2], plus(g.L, node[3])))
+end
+
+
+function cart2lin(cart::Tuple, L::Int)
+	"""
+	Converts d-dimensional Cartesian index (d-tuple) to linear index
+	Arguments
+		`cart` : d-Tuple representing Cartesian index, d ∈ {2, 3}
+		`L`    : Linear lattice size
+	Return
+		`lin`  : Linear index in the lattice corresponding to cart
+	"""
+	if length(cart) == 2
+		return (cart[2] - 1) * L + cart[1]
+	elseif length(cart) == 3
+		return (cart[3] - 1) * L^2 + (cart[2] - 1) * L + cart[1]
+	end
 end

@@ -16,6 +16,7 @@ Lattice3D,
 # edge_functions
 choose_edge,
 add_edge!,
+cart2lin,
 
 # cluster_functions
 get_cluster,
@@ -31,8 +32,9 @@ bohman_frieze,
 bohman_frieze!,
 product_rule,
 product_rule!,
-new_rule,
-new_rule!,
+
+# analysis_functions
+compute_Δ_achlioptas,
 
 # plot_functions
 plot_order_parameter
@@ -41,6 +43,7 @@ include("./AbstractGraphs.jl")
 include("./edge_functions.jl")
 include("./cluster_functions.jl")
 include("./evolution_processes.jl")
+include("./analysis_functions.jl")
 include("./plot_functions.jl")
 include("./animation_functions.jl")
 
