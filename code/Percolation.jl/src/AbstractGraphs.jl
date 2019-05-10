@@ -35,6 +35,7 @@ mutable struct Network <: AbstractNetwork
 	rng          ::MersenneTwister
 
 	function Network(n::Int; seed::Int=8)
+
 		t             = 0
 		edges         = Set()
 		cluster_ids   = collect(1:n)
@@ -45,7 +46,9 @@ mutable struct Network <: AbstractNetwork
 		rng           = MersenneTwister(seed)
 
 		new(n, t, edges, cluster_ids, clusters, cluster_sizes, heterogeneity, C, rng)
+
 	end
+
 end
 
 
@@ -83,6 +86,7 @@ mutable struct Lattice2D <: AbstractLattice
 	rng          ::MersenneTwister
 
 	function Lattice2D(L::Int; seed::Int=8)
+
 		n             = L^2
 		t             = 0
 		edges         = Set()
@@ -94,7 +98,9 @@ mutable struct Lattice2D <: AbstractLattice
 		rng           = MersenneTwister(seed)
 
 		new(L, n, t, edges, cluster_ids, clusters, cluster_sizes, heterogeneity, C, rng)
+
 	end
+
 end
 
 
@@ -132,6 +138,7 @@ mutable struct Lattice3D <: AbstractLattice
 	rng          ::MersenneTwister
 
 	function Lattice3D(L::Int; seed::Int=8)
+
 		n             = L^3
 		t             = 0
 		edges         = Set()
@@ -143,7 +150,9 @@ mutable struct Lattice3D <: AbstractLattice
 		rng           = MersenneTwister(seed)
 
 		new(L, n, t, edges, cluster_ids, clusters, cluster_sizes, heterogeneity, C, rng)
+
 	end
+
 end
 
 

@@ -6,6 +6,7 @@ function choose_edge(g::Network)
 	Return
 		`edge`: A two-tuple of integers representing an inactive edge in `g`
 	"""
+
 	edge = (rand(g.rng, 1:g.n), rand(g.rng, 1:g.n))
 
 	if edge[1] ≠ edge[2] && edge ∉ g.edges && reverse(edge) ∉ g.edges
@@ -13,6 +14,7 @@ function choose_edge(g::Network)
 	else
 		choose_edge(g)
 	end
+
 end
 
 
@@ -24,6 +26,7 @@ function choose_edge(g::Lattice2D)
 	Return
 		`edge`: A two-tuple of two-tuples of integers representing an inactive edge in `g`
 	"""
+
 	node     = (rand(g.rng, 1:g.L), rand(g.rng, 1:g.L))
 	neighbor = nearest_neighbors(g, node)[rand(g.rng, 1:4)]
 	edge     = (cart2lin(node, g.L), cart2lin(neighbor, g.L))
@@ -33,6 +36,7 @@ function choose_edge(g::Lattice2D)
 	else
 		choose_edge(g)
 	end
+
 end
 
 
@@ -44,6 +48,7 @@ function choose_edge(g::Lattice3D)
 	Return
 		`edge`: A two-tuple of three-tuples of integers representing an inactive edge in `g`
 	"""
+
 	node     = (rand(g.rng, 1:g.L), rand(g.rng, 1:g.L), rand(g.rng, 1:g.L))
 	neighbor = nearest_neighbors(g, node)[rand(g.rng, 1:6)]
 	edge     = (cart2lin(node, g.L), cart2lin(neighbor, g.L))
@@ -53,6 +58,7 @@ function choose_edge(g::Lattice3D)
 	else
 		choose_edge(g)
 	end
+
 end
 
 
@@ -65,6 +71,7 @@ function choose_edge(g::AbstractGraph, edge₁::Tuple)
 	Return
 		`edge₂`: A two-tuple of two-tuples of integers representing an inactive edge in `g`
 	"""
+
 	edge₂ = choose_edge(g)
 
 	if edge₂ ≠ edge₁ && edge₂ ≠ reverse(edge₁)
@@ -72,6 +79,7 @@ function choose_edge(g::AbstractGraph, edge₁::Tuple)
 	else
 		choose_edge(g, edge₁)
 	end
+
 end
 
 
@@ -84,9 +92,11 @@ function add_edge!(g::AbstractGraph, edge::Tuple)
 	Return
 		None, updates `g` in-place
 	"""
+
 	push!(g.edges, edge)
 	g.t += 1
 	update_clusters!(g, edge)
+
 end
 
 
@@ -115,10 +125,12 @@ function nearest_neighbors(g::Lattice2D, node::Tuple{Int, Int})
 	Return
 		`neighbors`: A four-tuple of two-tuples of integers representing the cartesian indices of the (up, down, left, right) neighbors
 	"""
+
 	return ((minus(g.L, node[1]), node[2]),
 			(plus(g.L, node[1]), node[2]),
 			(node[1], minus(g.L, node[2])),
 			(node[1], plus(g.L, node[2])))
+
 end
 
 
@@ -131,12 +143,14 @@ function nearest_neighbors(g::Lattice3D, node::Tuple{Int, Int, Int})
 	Return
 		`neighbors`: A four-tuple of three-tuples of integers representing the cartesian indices of the (up, down, left, right, front, back) neighbors
 	"""
+
 	return ((minus(g.L, node[1]), node[2], node[3]),
 			(plus(g.L, node[1]), node[2], node[3]),
 			(node[1], minus(g.L, node[2]), node[3]),
 			(node[1], plus(g.L, node[2]), node[3]),
 			(node[1], node[2], minus(g.L, node[3])),
 			(node[1], node[2], plus(g.L, node[3])))
+
 end
 
 
@@ -149,9 +163,11 @@ function cart2lin(cart::Tuple, L::Int)
 	Return
 		`lin`  : Linear index in the lattice corresponding to cart
 	"""
+
 	if length(cart) == 2
 		return (cart[2] - 1) * L + cart[1]
 	elseif length(cart) == 3
 		return (cart[3] - 1) * L^2 + (cart[2] - 1) * L + cart[1]
 	end
+
 end

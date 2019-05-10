@@ -7,6 +7,7 @@ function erdos_renyi(g_::AbstractGraph, n_steps::Int)
 	Return
 		`g`      : An evolved instance of `g_`
 	"""
+
 	g = copy(g_)
 
 	for t in 1:n_steps
@@ -15,6 +16,7 @@ function erdos_renyi(g_::AbstractGraph, n_steps::Int)
 	end
 
 	return g
+
 end
 
 
@@ -27,12 +29,14 @@ function erdos_renyi!(g::AbstractGraph, n_steps::Int)
 	Return
 		None, updates `g` in-place
 	"""
+
 	for t in 1:n_steps
 		edge = choose_edge(g)
 		add_edge!(g, edge)
 	end
 
 	return g
+
 end
 
 
@@ -47,9 +51,11 @@ function bohman_frieze(g_::AbstractGraph, n_steps::Int; K::Int=2)
 	Return
 		`g` : An evolved instance of `g_`
 	"""
+	
 	g = copy(g_)
 
 	for t in 1:n_steps
+
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
@@ -58,9 +64,11 @@ function bohman_frieze(g_::AbstractGraph, n_steps::Int; K::Int=2)
 		else
 			add_edge!(g, edge₂)
 		end
+
 	end
 
 	return g
+
 end
 
 
@@ -75,7 +83,9 @@ function bohman_frieze!(g::AbstractGraph, n_steps::Int; K::Int=2)
 	Return
 		None, updates `g` in-place
 	"""
+
 	for t in 1:n_steps
+
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
@@ -84,9 +94,11 @@ function bohman_frieze!(g::AbstractGraph, n_steps::Int; K::Int=2)
 		else
 			add_edge!(g, edge₂)
 		end
+
 	end
 
 	return g
+
 end
 
 
@@ -99,9 +111,11 @@ function product_rule(g_::AbstractGraph, n_steps::Int)
 	Return
 		`g`      : An evolved instance of `g_`
 	"""
+
 	g = copy(g_)
 
 	for t in 1:n_steps
+
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
@@ -110,9 +124,11 @@ function product_rule(g_::AbstractGraph, n_steps::Int)
 		else
 			add_edge!(g, edge₂)
 		end
+
 	end
 
 	return g
+
 end
 
 
@@ -125,7 +141,9 @@ function product_rule!(g::AbstractGraph, n_steps::Int)
 	Return
 		None, updates `g` in-place
 	"""
+
 	for t in 1:n_steps
+
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
@@ -134,9 +152,11 @@ function product_rule!(g::AbstractGraph, n_steps::Int)
 		else
 			add_edge!(g, edge₂)
 		end
+
 	end
 
 	return g
+
 end
 
 
@@ -150,7 +170,9 @@ function p_rule_1!(g::AbstractGraph, n_steps::Int, q::Float64)
 	Return
 		None, updates `g` in-place
 	"""
+
 	for t in 1:n_steps
+
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
@@ -162,9 +184,11 @@ function p_rule_1!(g::AbstractGraph, n_steps::Int, q::Float64)
 		else
 			add_edge!(g, edge₂)
 		end
+
 	end
 
 	return g
+
 end
 
 
@@ -178,7 +202,9 @@ function p_rule_2!(g::AbstractGraph, n_steps::Int)
 	Return
 		None, updates `g` in-place
 	"""
+
 	for t in 1:n_steps
+
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
@@ -197,7 +223,9 @@ function p_rule_2!(g::AbstractGraph, n_steps::Int)
 				add_edge(g, edge₂)
 			end
 		end
+
 	end
 
 	return g
+
 end

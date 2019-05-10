@@ -7,7 +7,9 @@ function get_cluster(g::AbstractGraph, node)
 	Return
 		Set of nodes representing the cluster which `node` is a member of
 	"""
+
 	return g.clusters[g.cluster_ids[node]]
+
 end
 
 
@@ -19,7 +21,9 @@ function get_largest_cluster_size(g::AbstractGraph)
 	Return
 		Integer representing the number of nodes in the largest cluster in `g`
 	"""
+
 	return maximum(keys(g.cluster_sizes))
+
 end
 
 
@@ -31,7 +35,9 @@ function get_avg_cluster_size(g::AbstractGraph)
 	Return
 		Float64 representing the average cluster size in `g`
 	"""
+
 	return mean([length(cluster) for cluster in values(g.clusters)])
+
 end
 
 
@@ -44,7 +50,9 @@ function get_largest_clusters(g::AbstractGraph, n_clusters::Int)
 	Return
 		Sorted (descending) array of the `n_clusters` largest clusters in `g`
 	"""
+
 	return sort!(collect(values(g.clusters)), by=length, rev=true)[1:n_clusters]
+
 end
 
 
