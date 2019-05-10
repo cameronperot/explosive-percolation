@@ -57,45 +57,102 @@ function update_clusters!(g::AbstractGraph, edge::Tuple)
 	Return
 		None, updates `g` in-place
 	"""
-	if g.cluster_ids[edge[1]] ≠ g.cluster_ids[edge[2]]
 
-		if length(g.clusters[g.cluster_ids[edge[1]]]) > length(g.clusters[g.cluster_ids[edge[2]]])
-			larger_cluster_id  = g.cluster_ids[edge[1]]
-			smaller_cluster_id = g.cluster_ids[edge[2]]
-		else
-			larger_cluster_id  = g.cluster_ids[edge[2]]
-			smaller_cluster_id = g.cluster_ids[edge[1]]
-		end
-
-		if g.cluster_sizes[length(g.clusters[smaller_cluster_id])] ≠ 1
-			g.cluster_sizes[length(g.clusters[smaller_cluster_id])] -= 1
-		else
-			delete!(g.cluster_sizes, length(g.clusters[smaller_cluster_id]))
-		end
-
-		if g.cluster_sizes[length(g.clusters[larger_cluster_id])] ≠ 1
-			g.cluster_sizes[length(g.clusters[larger_cluster_id])] -= 1
-		else
-			delete!(g.cluster_sizes, length(g.clusters[larger_cluster_id]))
-		end
-
-		union!(g.clusters[larger_cluster_id], g.clusters[smaller_cluster_id])
-
-		for node in g.clusters[smaller_cluster_id]
-			g.cluster_ids[node] = larger_cluster_id
-		end
-
-		if haskey(g.cluster_sizes, length(g.clusters[larger_cluster_id]))
-			g.cluster_sizes[length(g.clusters[larger_cluster_id])] += 1
-		else
-			g.cluster_sizes[length(g.clusters[larger_cluster_id])] = 1
-		end
-
-		delete!(g.clusters, smaller_cluster_id)
-
-		push!(g.C, maximum((g.C[g.t], length(g.clusters[larger_cluster_id]))))
+	if length(g.clusters[g.cluster_ids[edge[1]]]) > length(g.clusters[g.cluster_ids[edge[2]]])
+		larger_cluster_id  = g.cluster_ids[edge[1]]
+		smaller_cluster_id = g.cluster_ids[edge[2]]
 	else
-
-		push!(g.C, g.C[g.t])
+		larger_cluster_id  = g.cluster_ids[edge[2]]
+		smaller_cluster_id = g.cluster_ids[edge[1]]
 	end
+
+	if g.cluster_ids[edge[1]] ≠ g.cluster_ids[edge[2]]
+		update_cluster_sizes!(g, larger_cluster_id, smaller_cluster_id)
+		update_cluster_ids!(g, larger_cluster_id, smaller_cluster_id)
+		merge_clusters!(g, larger_cluster_id, smaller_cluster_id)
+		update_observables!(g, larger_cluster_id, smaller_cluster_id)
+	else
+		update_observables!(g, larger_cluster_id, smaller_cluster_id)
+	end
+
+end
+
+function update_cluster_sizes!(g::AbstractGraph, larger_cluster_id::Int, smaller_cluster_id::Int)
+	"""
+	Updates the cluster size distribution dictionary
+	Arguments
+	`g`                 : An instance of type AbstractGraph
+	`larger_cluster_id` : Cluster ID of the larger cluster
+	`smaller_cluster_id`: Cluster ID of the smaller cluster
+	Return
+	None, updates `g` in-place
+	"""
+
+	if g.cluster_sizes[length(g.clusters[smaller_cluster_id])] ≠ 1
+		g.cluster_sizes[length(g.clusters[smaller_cluster_id])] -= 1
+	else
+		delete!(g.cluster_sizes, length(g.clusters[smaller_cluster_id]))
+	end
+
+	if g.cluster_sizes[length(g.clusters[larger_cluster_id])] ≠ 1
+		g.cluster_sizes[length(g.clusters[larger_cluster_id])] -= 1
+	else
+		delete!(g.cluster_sizes, length(g.clusters[larger_cluster_id]))
+	end
+
+	if haskey(g.cluster_sizes, (length(g.clusters[larger_cluster_id]) + length(g.clusters[smaller_cluster_id])))
+		g.cluster_sizes[(length(g.clusters[larger_cluster_id]) + length(g.clusters[smaller_cluster_id]))] += 1
+	else
+		g.cluster_sizes[(length(g.clusters[larger_cluster_id]) + length(g.clusters[smaller_cluster_id]))] = 1
+	end
+
+end
+
+function update_cluster_ids!(g::AbstractGraph, larger_cluster_id::Int, smaller_cluster_id::Int)
+	"""
+	Updates the cluster IDs of the nodes in the smaller cluster to that of the larger cluster it is being merged into
+	Arguments
+	`g`                 : An instance of type AbstractGraph
+	`larger_cluster_id` : Cluster ID of the larger cluster
+	`smaller_cluster_id`: Cluster ID of the smaller cluster
+	Return
+	None, updates `g` in-place
+	"""
+
+	for node in g.clusters[smaller_cluster_id]
+		g.cluster_ids[node] = larger_cluster_id
+	end
+
+end
+
+function merge_clusters!(g::AbstractGraph, larger_cluster_id::Int, smaller_cluster_id::Int)
+	"""
+	Mergers the smaller cluster into the larger cluster in-place
+	Arguments
+		`g`                 : An instance of type AbstractGraph
+		`larger_cluster_id` : Cluster ID of the larger cluster
+		`smaller_cluster_id`: Cluster ID of the smaller cluster
+	Return
+		None, updates `g` in-place
+	"""
+
+	union!(g.clusters[larger_cluster_id], g.clusters[smaller_cluster_id])
+	delete!(g.clusters, smaller_cluster_id)
+
+end
+
+function update_observables!(g::AbstractGraph, larger_cluster_id::Int, smaller_cluster_id::Int)
+	"""
+	Updates the largest cluster size and cluster heterogeneity
+	Arguments
+		`g`                 : An instance of type AbstractGraph
+		`larger_cluster_id` : Cluster ID of the larger cluster
+		`smaller_cluster_id`: Cluster ID of the smaller cluster
+	Return
+		None, updates `g` in-place
+	"""
+
+	push!(g.C, maximum((g.C[g.t], length(g.clusters[larger_cluster_id]))))
+	push!(g.heterogeneity, length(g.cluster_sizes))
+
 end

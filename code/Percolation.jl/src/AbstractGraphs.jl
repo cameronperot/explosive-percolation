@@ -19,6 +19,7 @@ mutable struct Network <: AbstractNetwork
 		`cluster_ids`  : Array with nodes as indices and cluster IDs as values
 		`clusters`     : Dictionary with cluster IDs as keys and clusters as values
 		`cluster_sizes`: Dictionary with cluster sizes as keys and cluster counts as values, i.e. cluster size distribution
+		`heterogeneity`: Array where `heterogeneity[t]` is the number of unique cluster sizes at step `t-1`
 		`C`            : Array where `C[t]` is the largest cluster size at step `t-1`
 		`rng`          : Random number generator
 	"""
@@ -29,6 +30,7 @@ mutable struct Network <: AbstractNetwork
 	cluster_ids  ::Array{Int, 1}
 	clusters     ::Dict{Int, Set{Int}}
 	cluster_sizes::Dict{Int, Int}
+	heterogeneity::Array{Int, 1}
 	C            ::Array{Int, 1}
 	rng          ::MersenneTwister
 
@@ -38,10 +40,11 @@ mutable struct Network <: AbstractNetwork
 		cluster_ids   = collect(1:n)
 		clusters      = Dict(1:n .=> Set.(1:n))
 		cluster_sizes = Dict(1 => n)
+		heterogeneity = [1]
 		C             = [1]
 		rng           = MersenneTwister(seed)
 
-		new(n, t, edges, cluster_ids, clusters, cluster_sizes, C, rng)
+		new(n, t, edges, cluster_ids, clusters, cluster_sizes, heterogeneity, C, rng)
 	end
 end
 
@@ -63,6 +66,7 @@ mutable struct Lattice2D <: AbstractLattice
 		`cluster_ids`  : Array with nodes as indices and cluster IDs as values
 		`clusters`     : Dictionary with cluster IDs as keys and clusters as values
 		`cluster_sizes`: Dictionary with cluster sizes as keys and cluster counts as values, i.e. cluster size distribution
+		`heterogeneity`: Array where `heterogeneity[t]` is the number of unique cluster sizes at step `t-1`
 		`C`            : Array where `C[t]` is the largest cluster size at step `t-1`
 		`rng`          : Random number generator
 	"""
@@ -74,6 +78,7 @@ mutable struct Lattice2D <: AbstractLattice
 	cluster_ids  ::Array{Int, 2}
 	clusters     ::Dict{Int, Set{Int}}
 	cluster_sizes::Dict{Int, Int}
+	heterogeneity::Array{Int, 1}
 	C            ::Array{Int, 1}
 	rng          ::MersenneTwister
 
@@ -84,10 +89,11 @@ mutable struct Lattice2D <: AbstractLattice
 		cluster_ids   = reshape(collect(1:n), (L, L))
 		clusters      = Dict(1:n .=> Set.(1:n))
 		cluster_sizes = Dict(1 => n)
+		heterogeneity = [1]
 		C             = [1]
 		rng           = MersenneTwister(seed)
 
-		new(L, n, t, edges, cluster_ids, clusters, cluster_sizes, C, rng)
+		new(L, n, t, edges, cluster_ids, clusters, cluster_sizes, heterogeneity, C, rng)
 	end
 end
 
@@ -109,6 +115,7 @@ mutable struct Lattice3D <: AbstractLattice
 		`cluster_ids`  : Array with nodes as indices and cluster IDs as values
 		`clusters`     : Dictionary with cluster IDs as keys and clusters as values
 		`cluster_sizes`: Dictionary with cluster sizes as keys and cluster counts as values, i.e. cluster size distribution
+		`heterogeneity`: Array where `heterogeneity[t]` is the number of unique cluster sizes at step `t-1`
 		`C`            : Array where `C[t]` is the largest cluster size at step `t-1`
 		`rng`          : Random number generator
 	"""
@@ -120,6 +127,7 @@ mutable struct Lattice3D <: AbstractLattice
 	cluster_ids  ::Array{Int, 3}
 	clusters     ::Dict{Int, Set{Int}}
 	cluster_sizes::Dict{Int, Int}
+	heterogeneity::Array{Int, 1}
 	C            ::Array{Int, 1}
 	rng          ::MersenneTwister
 
@@ -130,10 +138,11 @@ mutable struct Lattice3D <: AbstractLattice
 		cluster_ids   = reshape(collect(1:n), (L, L, L))
 		clusters      = Dict(1:n .=> Set.(1:n))
 		cluster_sizes = Dict(1 => n)
+		heterogeneity = [1]
 		C             = [1]
 		rng           = MersenneTwister(seed)
 
-		new(L, n, t, edges, cluster_ids, clusters, cluster_sizes, C, rng)
+		new(L, n, t, edges, cluster_ids, clusters, cluster_sizes, heterogeneity, C, rng)
 	end
 end
 
