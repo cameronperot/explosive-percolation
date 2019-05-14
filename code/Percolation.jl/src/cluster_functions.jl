@@ -36,7 +36,7 @@ function get_avg_cluster_size(g::AbstractGraph)
 		Float64 representing the average cluster size in `g`
 	"""
 
-	return mean([length(cluster) for cluster in values(g.clusters)])
+	return sum([key * value for (key, value) in g.cluster_sizes]) / length(g.clusters)
 
 end
 
@@ -89,9 +89,9 @@ function update_cluster_sizes!(g::AbstractGraph, larger_cluster_id::Int, smaller
 	"""
 	Updates the cluster size distribution dictionary
 	Arguments
-	`g`                 : An instance of type AbstractGraph
-	`larger_cluster_id` : Cluster ID of the larger cluster
-	`smaller_cluster_id`: Cluster ID of the smaller cluster
+		`g`                 : An instance of type AbstractGraph
+		`larger_cluster_id` : Cluster ID of the larger cluster
+		`smaller_cluster_id`: Cluster ID of the smaller cluster
 	Return
 	None, updates `g` in-place
 	"""
@@ -120,9 +120,9 @@ function update_cluster_ids!(g::AbstractGraph, larger_cluster_id::Int, smaller_c
 	"""
 	Updates the cluster IDs of the nodes in the smaller cluster to that of the larger cluster it is being merged into
 	Arguments
-	`g`                 : An instance of type AbstractGraph
-	`larger_cluster_id` : Cluster ID of the larger cluster
-	`smaller_cluster_id`: Cluster ID of the smaller cluster
+		`g`                 : An instance of type AbstractGraph
+		`larger_cluster_id` : Cluster ID of the larger cluster
+		`smaller_cluster_id`: Cluster ID of the smaller cluster
 	Return
 	None, updates `g` in-place
 	"""
@@ -160,7 +160,8 @@ function update_observables!(g::AbstractGraph, larger_cluster_id::Int, smaller_c
 		None, updates `g` in-place
 	"""
 
-	push!(g.C, maximum((g.C[g.t], length(g.clusters[larger_cluster_id]))))
+	push!(g.avg_cluster_size, get_avg_cluster_size(g))
 	push!(g.heterogeneity, length(g.cluster_sizes))
+	push!(g.C, maximum((g.C[g.t], length(g.clusters[larger_cluster_id]))))
 
 end
