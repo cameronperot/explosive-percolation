@@ -53,7 +53,7 @@ Attributes
 * `cluster_sizes`   : Dictionary with cluster sizes as keys and cluster counts as values, i.e. cluster size distribution
 * `avg_cluster_size`: Array where `avg_cluster_size[t]` is the average cluster size at step `t-1`
 * `heterogeneity`   : Array where `heterogeneity[t]` is the number of unique cluster sizes at step `t-1`
-* `C`               : Array where `C[t]` is the largest cluster size at step* `t-1`
+* `C`               : Array where `C[t]` is the largest cluster size at step `t-1`
 * `rng`             : Random number generator
 """
 mutable struct Network <: AbstractNetwork
