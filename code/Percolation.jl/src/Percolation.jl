@@ -1,9 +1,6 @@
 module Percolation
 
 using Random
-import Plots; Plots.gr()
-import LaTeXStrings: latexstring
-import Statistics: mean
 
 export
 
