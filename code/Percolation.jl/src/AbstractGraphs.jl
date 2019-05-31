@@ -87,7 +87,7 @@ end
 """
 	Lattice2D(L::Int; seed::Int=8)
 
-Type to house the nodes, edges, clusters, and associated observables of a 2D lattice
+Houses the nodes, edges, clusters, and associated observables of a 2D lattice
 
 Arguments
 * `L`               : Side length of the square lattice
@@ -141,7 +141,7 @@ end
 """
 	Lattice3D(L::Int; seed::Int=8)
 
-Type to house the nodes, edges, clusters, and associated observables of a 3D lattice
+Houses the nodes, edges, clusters, and associated observables of a 3D lattice
 
 Arguments
 * `L`               : Side length of the cubic lattice
