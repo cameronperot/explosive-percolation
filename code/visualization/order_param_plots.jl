@@ -5,7 +5,7 @@ path = "/home/user/rsync/education/uni-leipzig/semester-6/thesis/code/Percolatio
 	using BenchmarkTools
 	using Profile
 	using ProfileView
-	using Plots; gr(); using LaTeXStrings
+	using Plots; pyplot(); using LaTeXStrings
 	using JLD
 	using Statistics
 	using Plots; gr()
