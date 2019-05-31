@@ -1,13 +1,15 @@
+"""
+	erdos_renyi(g_::AbstractGraph, n_steps::Int)
+
+Erdos-Renyi style graph evolution, adds edges randomly at each step
+
+Arguments
+* `g_`     : An instance of type AbstractGraph
+* `n_steps`: Number of edges to add to the AbstractGraph
+Returns
+* `g`      : An evolved instance of `g_`
+"""
 function erdos_renyi(g_::AbstractGraph, n_steps::Int)
-	"""
-	Erdos-Renyi style graph evolution, adds edges randomly at each step
-	Arguments
-		`g_`     : An instance of type AbstractGraph
-		`n_steps`: Number of edges to add to the AbstractGraph
-	Return
-		`g`      : An evolved instance of `g_`
-	"""
-
 	g = copy(g_)
 
 	for t in 1:n_steps
@@ -16,46 +18,47 @@ function erdos_renyi(g_::AbstractGraph, n_steps::Int)
 	end
 
 	return g
-
 end
 
 
+"""
+	erdos_renyi!(g::AbstractGraph, n_steps::Int)
+
+Erdos-Renyi style graph evolution, adds edges randomly at each step
+
+Arguments
+* `g`      : An instance of type AbstractGraph
+* `n_steps`: Number of edges to add to the AbstractGraph
+Returns
+* None, updates `g` in-place
+"""
 function erdos_renyi!(g::AbstractGraph, n_steps::Int)
-	"""
-	Erdos-Renyi style graph evolution, adds edges randomly at each step
-	Arguments
-		`g`      : An instance of type AbstractGraph
-		`n_steps`: Number of edges to add to the AbstractGraph
-	Return
-		None, updates `g` in-place
-	"""
-
 	for t in 1:n_steps
 		edge = choose_edge(g)
 		add_edge!(g, edge)
 	end
 
 	return g
-
 end
 
 
+"""
+	bohman_frieze(g_::AbstractGraph, n_steps::Int; K::Int=2)
+
+Achlioptas process, implementation of Bohman-Frieze bounded size rule
+
+Arguments
+* `g_`     : An instance of type AbstractGraph
+* `n_steps`: Number of edges to add to the AbstractGraph
+Keyword Arguments
+* `K`      : Bounded size of clusters upon which to determine edge acceptance (default = 1)
+Returns
+* `g`      : An evolved instance of `g_`
+"""
 function bohman_frieze(g_::AbstractGraph, n_steps::Int; K::Int=2)
-	"""
-	Achlioptas process, implementation of Bohman-Frieze bounded size rule
-	Arguments
-		`g_`     : An instance of type AbstractGraph
-		`n_steps`: Number of edges to add to the AbstractGraph
-	Keyword Arguments
-		`K`      : Bounded size of clusters upon which to determine edge acceptance (default = 1)
-	Return
-		`g` : An evolved instance of `g_`
-	"""
-	
 	g = copy(g_)
 
 	for t in 1:n_steps
-
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
@@ -64,28 +67,27 @@ function bohman_frieze(g_::AbstractGraph, n_steps::Int; K::Int=2)
 		else
 			add_edge!(g, edge₂)
 		end
-
 	end
 
 	return g
-
 end
 
 
+"""
+	bohman_frieze!(g::AbstractGraph, n_steps::Int; K::Int=2)
+
+Achlioptas process, implementation of Bohman-Frieze bounded size rule
+
+Arguments
+* `g`      : An instance of type AbstractGraph
+* `n_steps`: Number of edges to add to the AbstractGraph
+Keyword Arguments
+* `K`      : Bounded size of clusters upon which to determine edge acceptance (default = 1)
+Returns
+* None, updates `g` in-place
+"""
 function bohman_frieze!(g::AbstractGraph, n_steps::Int; K::Int=2)
-	"""
-	Achlioptas process, implementation of Bohman-Frieze bounded size rule
-	Arguments
-		`g`      : An instance of type AbstractGraph
-		`n_steps`: Number of edges to add to the AbstractGraph
-	Keyword Arguments
-		`K`      : Bounded size of clusters upon which to determine edge acceptance (default = 1)
-	Return
-		None, updates `g` in-place
-	"""
-
 	for t in 1:n_steps
-
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
@@ -94,28 +96,27 @@ function bohman_frieze!(g::AbstractGraph, n_steps::Int; K::Int=2)
 		else
 			add_edge!(g, edge₂)
 		end
-
 	end
 
 	return g
-
 end
 
 
-function product_rule(g_::AbstractGraph, n_steps::Int)
-	"""
-	Achlioptas process, implementation of the product rule
-	Arguments
-		`g_`     : An instance of type AbstractGraph
-		`n_steps`: Number of edges to add to the AbstractGraph
-	Return
-		`g`      : An evolved instance of `g_`
-	"""
+"""
+	product_rule(g_::AbstractGraph, n_steps::Int)
 
+Achlioptas process, implementation of the product rule
+
+Arguments
+* `g_`     : An instance of type AbstractGraph
+* `n_steps`: Number of edges to add to the AbstractGraph
+Returns
+* `g`      : An evolved instance of `g_`
+"""
+function product_rule(g_::AbstractGraph, n_steps::Int)
 	g = copy(g_)
 
 	for t in 1:n_steps
-
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
@@ -124,26 +125,25 @@ function product_rule(g_::AbstractGraph, n_steps::Int)
 		else
 			add_edge!(g, edge₂)
 		end
-
 	end
 
 	return g
-
 end
 
 
+"""
+	product_rule!(g::AbstractGraph, n_steps::Int)
+
+Achlioptas process, implementation of the product rule
+
+Arguments
+* `g`      : An instance of type AbstractGraph
+* `n_steps`: Number of edges to add to the AbstractGraph
+Returns
+* None, updates `g` in-place
+"""
 function product_rule!(g::AbstractGraph, n_steps::Int)
-	"""
-	Achlioptas process, implementation of the product rule
-	Arguments
-		`g`      : An instance of type AbstractGraph
-		`n_steps`: Number of edges to add to the AbstractGraph
-	Return
-		None, updates `g` in-place
-	"""
-
 	for t in 1:n_steps
-
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
@@ -152,27 +152,26 @@ function product_rule!(g::AbstractGraph, n_steps::Int)
 		else
 			add_edge!(g, edge₂)
 		end
-
 	end
 
 	return g
-
 end
 
 
+"""
+	p_rule_1!(g::AbstractGraph, n_steps::Int, q::Float64)
+
+Achlioptas process, a probability based rule for accepting edges
+
+Arguments
+* `g`      : An instance of type AbstractGraph
+* `n_steps`: Number of edges to add to the AbstractGraph
+* `q`      : Minimum probability that edge₁ is accepted
+Returns
+* None, updates `g` in-place
+"""
 function p_rule_1!(g::AbstractGraph, n_steps::Int, q::Float64)
-	"""
-	Achlioptas process, a probability based rule for accepting edges
-	Arguments
-		`g`      : An instance of type AbstractGraph
-		`n_steps`: Number of edges to add to the AbstractGraph
-		`q`      : Minimum probability that edge₁ is accepted
-	Return
-		None, updates `g` in-place
-	"""
-
 	for t in 1:n_steps
-
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
@@ -184,27 +183,26 @@ function p_rule_1!(g::AbstractGraph, n_steps::Int, q::Float64)
 		else
 			add_edge!(g, edge₂)
 		end
-
 	end
 
 	return g
-
 end
 
 
+"""
+	p_rule_2!(g::AbstractGraph, n_steps::Int)
+
+Achlioptas process, a probability based rule for accepting edges
+
+Arguments
+* `g`      : An instance of type AbstractGraph
+* `n_steps`: Number of edges to add to the AbstractGraph
+* `q`      : Minimum probability that edge₁ is accepted
+Returns
+* None, updates `g` in-place
+"""
 function p_rule_2!(g::AbstractGraph, n_steps::Int)
-	"""
-	Achlioptas process, a probability based rule for accepting edges
-	Arguments
-		`g`      : An instance of type AbstractGraph
-		`n_steps`: Number of edges to add to the AbstractGraph
-		`q`      : Minimum probability that edge₁ is accepted
-	Return
-		None, updates `g` in-place
-	"""
-
 	for t in 1:n_steps
-
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
@@ -223,9 +221,7 @@ function p_rule_2!(g::AbstractGraph, n_steps::Int)
 				add_edge(g, edge₂)
 			end
 		end
-
 	end
 
 	return g
-
 end
