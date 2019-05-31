@@ -12,14 +12,14 @@ Network,
 Lattice2D,
 Lattice3D,
 
-# edge_functions
+# edge_methods
 choose_edge,
 add_edge!,
 cart2lin,
 nearest_neighbors,
 cart2lin,
 
-# cluster_functions
+# cluster_methods
 get_cluster,
 get_largest_cluster_size,
 get_avg_cluster_size,
@@ -30,7 +30,7 @@ update_cluster_ids!,
 merge_clusters!,
 update_observables!,
 
-# evolution_processes
+# evolution_methods
 erdos_renyi,
 erdos_renyi!,
 bohman_frieze,
@@ -40,14 +40,16 @@ product_rule!,
 p_rule_1!,
 p_rule_2!,
 
-# analysis_functions
+# analysis_methods
 compute_Δ_achlioptas
 
+# includes
 include("./AbstractGraphs.jl")
-include("./edge_functions.jl")
-include("./cluster_functions.jl")
-include("./evolution_processes.jl")
-include("./analysis_functions.jl")
-include("./animation_functions.jl")
+include("./edge_methods.jl")
+include("./cluster_methods.jl")
+include("./evolution_methods.jl")
+include("./analysis_methods.jl")
+include("./plot_methods.jl")
+include("./animation_methods.jl")
 
 end # module
