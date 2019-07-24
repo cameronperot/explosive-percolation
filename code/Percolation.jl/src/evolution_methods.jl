@@ -17,6 +17,7 @@ function erdos_renyi(g_::AbstractGraph, n_steps::Int)
 		add_edge!(g, edge)
 	end
 
+	finalize_observables!(g)
 	return g
 end
 
@@ -38,6 +39,7 @@ function erdos_renyi!(g::AbstractGraph, n_steps::Int)
 		add_edge!(g, edge)
 	end
 
+	finalize_observables!(g)
 	return g
 end
 
@@ -69,6 +71,7 @@ function bohman_frieze(g_::AbstractGraph, n_steps::Int; K::Int=2)
 		end
 	end
 
+	finalize_observables!(g)
 	return g
 end
 
@@ -98,6 +101,7 @@ function bohman_frieze!(g::AbstractGraph, n_steps::Int; K::Int=2)
 		end
 	end
 
+	finalize_observables!(g)
 	return g
 end
 
@@ -127,6 +131,7 @@ function product_rule(g_::AbstractGraph, n_steps::Int)
 		end
 	end
 
+	finalize_observables!(g)
 	return g
 end
 
@@ -154,6 +159,7 @@ function product_rule!(g::AbstractGraph, n_steps::Int)
 		end
 	end
 
+	finalize_observables!(g)
 	return g
 end
 
@@ -177,14 +183,14 @@ function p_rule_1!(g::AbstractGraph, n_steps::Int, q::Float64)
 
 		if g.cluster_ids[edge₁[1]] == g.cluster_ids[edge₁[2]]
 			add_edge!(g, edge₁)
-		elseif maximum((1 - (length(g.clusters[g.cluster_ids[edge₁[1]]]) +
-			length(g.clusters[g.cluster_ids[edge₁[2]]])) / g.C[t], q)) < rand(g.rng)
+		elseif maximum((1 - (length(g.clusters[g.cluster_ids[edge₁[1]]]) + length(g.clusters[g.cluster_ids[edge₁[2]]])) / g.observables.largest_cluster_size[t], q)) < rand(g.rng)
 			add_edge!(g, edge₁)
 		else
 			add_edge!(g, edge₂)
 		end
 	end
 
+	finalize_observables!(g)
 	return g
 end
 
@@ -223,5 +229,6 @@ function p_rule_2!(g::AbstractGraph, n_steps::Int)
 		end
 	end
 
+	finalize_observables!(g)
 	return g
 end
