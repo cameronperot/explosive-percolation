@@ -124,7 +124,11 @@ function product_rule(g_::AbstractGraph, n_steps::Int)
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
-		if length(g.clusters[g.cluster_ids[edge₁[1]]]) * length(g.clusters[g.cluster_ids[edge₁[2]]]) < length(g.clusters[g.cluster_ids[edge₂[1]]]) * length(g.clusters[g.cluster_ids[edge₂[2]]])
+		if g.cluster_ids[edge₁[1]] == g.cluster_ids[edge₁[2]]
+			add_edge!(g, edge₁)
+		elseif g.cluster_ids[edge₂[1]] == g.cluster_ids[edge₂[2]]
+			add_edge!(g, edge₂)
+		elseif length(g.clusters[g.cluster_ids[edge₁[1]]]) * length(g.clusters[g.cluster_ids[edge₁[2]]]) < length(g.clusters[g.cluster_ids[edge₂[1]]]) * length(g.clusters[g.cluster_ids[edge₂[2]]])
 			add_edge!(g, edge₁)
 		else
 			add_edge!(g, edge₂)
@@ -152,7 +156,11 @@ function product_rule!(g::AbstractGraph, n_steps::Int)
 		edge₁ = choose_edge(g)
 		edge₂ = choose_edge(g, edge₁)
 
-		if length(g.clusters[g.cluster_ids[edge₁[1]]]) * length(g.clusters[g.cluster_ids[edge₁[2]]]) < length(g.clusters[g.cluster_ids[edge₂[1]]]) * length(g.clusters[g.cluster_ids[edge₂[2]]])
+		if g.cluster_ids[edge₁[1]] == g.cluster_ids[edge₁[2]]
+			add_edge!(g, edge₁)
+		elseif g.cluster_ids[edge₂[1]] == g.cluster_ids[edge₂[2]]
+			add_edge!(g, edge₂)
+		elseif length(g.clusters[g.cluster_ids[edge₁[1]]]) * length(g.clusters[g.cluster_ids[edge₁[2]]]) < length(g.clusters[g.cluster_ids[edge₂[1]]]) * length(g.clusters[g.cluster_ids[edge₂[2]]])
 			add_edge!(g, edge₁)
 		else
 			add_edge!(g, edge₂)
