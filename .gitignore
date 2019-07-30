@@ -358,3 +358,5 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
+
+.remote-sync.json
