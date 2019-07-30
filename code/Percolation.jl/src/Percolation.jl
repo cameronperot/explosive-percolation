@@ -15,9 +15,8 @@ Lattice3D,
 # edge_methods
 choose_edge,
 add_edge!,
-cart2lin,
 nearest_neighbors,
-cart2lin,
+cart_to_lin,
 
 # cluster_methods
 get_cluster,

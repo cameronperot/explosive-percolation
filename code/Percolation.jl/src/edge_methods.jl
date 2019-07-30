@@ -32,7 +32,7 @@ Returns
 function choose_edge(g::Lattice2D)
 	node     = (rand(g.rng, 1:g.L), rand(g.rng, 1:g.L))
 	neighbor = nearest_neighbors(g, node)[rand(g.rng, 1:4)]
-	edge     = (cart2lin(node, g.L), cart2lin(neighbor, g.L))
+	edge     = (cart_to_lin(node, g.L), cart_to_lin(neighbor, g.L))
 
 	if edge ∉ g.edges && reverse(edge) ∉ g.edges
 		return edge
@@ -55,7 +55,7 @@ Returns
 function choose_edge(g::Lattice3D)
 	node     = (rand(g.rng, 1:g.L), rand(g.rng, 1:g.L), rand(g.rng, 1:g.L))
 	neighbor = nearest_neighbors(g, node)[rand(g.rng, 1:6)]
-	edge     = (cart2lin(node, g.L), cart2lin(neighbor, g.L))
+	edge     = (cart_to_lin(node, g.L), cart_to_lin(neighbor, g.L))
 
 	if edge ∉ g.edges && reverse(edge) ∉ g.edges
 		return edge
@@ -162,7 +162,7 @@ end
 
 
 """
-	cart2lin(cart::Tuple, L::Int)
+	cart_to_lin(cart::Tuple, L::Int)
 
 Converts d-dimensional Cartesian index (d-tuple) to linear index
 
@@ -172,7 +172,7 @@ Arguments
 Returns
 * `lin`  : Linear index in the lattice corresponding to cart
 """
-function cart2lin(cart::Tuple, L::Int)
+function cart_to_lin(cart::Tuple, L::Int)
 	if length(cart) == 2
 		return (cart[2] - 1) * L + cart[1]
 	elseif length(cart) == 3
