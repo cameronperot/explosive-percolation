@@ -230,9 +230,9 @@ function p_rule_2!(g::AbstractGraph, n_steps::Int)
 			p = (1 / C₁) / (1 / C₁ + 1 / C₂)
 
 			if p > rand(g.rng)
-				add_edge(g, edge₁)
+				add_edge!(g, edge₁)
 			else
-				add_edge(g, edge₂)
+				add_edge!(g, edge₂)
 			end
 		end
 	end
