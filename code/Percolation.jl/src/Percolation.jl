@@ -40,9 +40,9 @@ p_rule_1!,
 p_rule_2!,
 
 # analysis_methods
-compute_Δ_method_1,
-compute_Δ_method_2,
-finalize_observables
+compute_Δ_method_1!,
+compute_Δ_method_2!,
+finalize_observables!
 
 # includes
 include("./AbstractGraphs.jl")
