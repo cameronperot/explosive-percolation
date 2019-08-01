@@ -2,6 +2,9 @@
 
 A Julia package for simulating percolation on networks and lattices.
 
+```@contents
+```
+
 ## About
 
 I am currently writing my bachelor's thesis in the computational physics group at Universität Leipzig under the supervision of Prof. Dr. Wolfhard Janke.

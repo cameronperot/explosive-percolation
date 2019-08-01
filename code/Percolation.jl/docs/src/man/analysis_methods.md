@@ -6,5 +6,6 @@
 ```
 
 ```@docs
-compute_Δ_achlioptas(g::AbstractGraph)
+compute_Δ_method_1!(g::AbstractGraph)
+compute_Δ_method_2!(g::AbstractGraph)
 ```
