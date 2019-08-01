@@ -13,7 +13,8 @@ path = "/home/user/rsync/education/uni-leipzig/semester-6/thesis/code/Percolatio
 # %%
 
 savepath = "/home/user/rsync/education/uni-leipzig/semester-6/thesis/latex/images/";
-dpi = 300
+save_bool = true
+save_bool ? dpi = 300 : dpi = 144
 n = 10^6;
 n_steps = Int(1.5n);
 
@@ -30,38 +31,70 @@ n_steps = Int(1.5n);
 # %%
 
 @time g_PR = Network(n);
-@time product_rule_modified!(g_PR, n_steps);
+@time product_rule!(g_PR, n_steps);
+
+# %%
+
+@time g_SEA = Network(n);
+@time p_rule_2!(g_SEA, n_steps);
+
+# %%
+
+plot_ = plot(legend=:right, dpi=dpi);
 
 # %% ER plot
 
-x_ER = collect(0:g_ER.t) ./ g_ER.n;
-y_ER = g_ER.observables.largest_cluster_size ./ g_ER.n;
-plot_ER = plot(legend=:right, dpi=dpi);
-scatter!(x_ER, y_ER,
+g = g_ER
+x = collect(0:g.t) ./ g.n;
+y = g.observables.largest_cluster_size ./ g.n;
+scatter!(x, y,
 	label="ER",
-	marker=(2, :blue, :circle, 0.7, stroke(0)),
+	marker=(2, :orange1, :circle, 0.9, stroke(0)),
 	xaxis=(latexstring("r"), (0, 1.5), 0:0.5:1.5),
-	yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1))
-savefig(plot_ER, joinpath(savepath, "ER_1e6_order_param.png"))
+	yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1)
+)
+
+save_bool ? savefig(plot_, joinpath(savepath, "ER_1e6_order_param.png")) : nothing
 
 # %% ER-BF plot
 
-x_BF = collect(0:g_BF.t) ./ g_BF.n;
-y_BF = g_BF.observables.largest_cluster_size ./ g_BF.n;
-scatter!(x_BF, y_BF,
+g = g_BF
+x = collect(0:g.t) ./ g.n;
+y = g.observables.largest_cluster_size ./ g.n;
+scatter!(x, y,
 	label="BF",
-	marker=(2, :green, :diamond, 0.7, stroke(0)),
+	marker=(2, :forestgreen, :circle, 0.9, stroke(0)),
 	xaxis=(latexstring("r"), (0, 1.5), 0:0.5:1.5),
-	yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1))
-savefig(plot_ER, joinpath(savepath, "ER_BF_1e6_order_param.png"))
+	yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1)
+)
+
+save_bool ? savefig(plot_, joinpath(savepath, "ER_BF_1e6_order_param.png")) : nothing
 
 # %% ER-BF-PR plot
 
-x_PR = collect(0:g_PR.t) ./ g_PR.n;
-y_PR = g_PR.observables.largest_cluster_size ./ g_PR.n;
-scatter!(x_PR, y_PR,
+g = g_PR
+x = collect(0:g.t) ./ g.n;
+y = g.observables.largest_cluster_size ./ g.n;
+scatter!(x, y,
 	label="PR",
-	marker=(2, :red, :hex, 0.7, stroke(0)),
+	marker=(2, :firebrick1, :circle, 0.9, stroke(0)),
 	xaxis=(latexstring("r"), (0, 1.5), 0:0.5:1.5),
-	yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1))
-savefig(plot_ER, joinpath(savepath, "ER_BF_PR_1e6_order_param.png"))
+	yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1)
+)
+
+save_bool ? savefig(plot_, joinpath(savepath, "ER_BF_PR_1e6_order_param.png")) : nothing
+
+# %% ER-BF-PR plot
+
+g = g_SEA
+x = collect(0:g.t) ./ g.n;
+y = g.observables.largest_cluster_size ./ g.n;
+scatter!(x, y,
+	label="SEA",
+	marker=(2, :dodgerblue, :circle, 0.9, stroke(0)),
+	xaxis=(latexstring("r"), (0, 1.5), 0:0.5:1.5),
+	yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1)
+)
+
+save_bool ? savefig(plot_, joinpath(savepath, "ER_BF_PR_SEA_1e6_order_param.png")) : nothing
+plot_
