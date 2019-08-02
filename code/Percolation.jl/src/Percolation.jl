@@ -30,14 +30,11 @@ merge_clusters!,
 update_observables!,
 
 # evolution_methods
-erdos_renyi,
 erdos_renyi!,
-bohman_frieze,
 bohman_frieze!,
-product_rule,
 product_rule!,
+stochastic_edge_acceptance!,
 p_rule_1!,
-p_rule_2!,
 
 # analysis_methods
 compute_Δ_method_1!,

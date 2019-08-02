@@ -21,7 +21,7 @@ n_steps = Int(1.5n);
 # %%
 
 @time g = Network(n);
-@time p_rule_2!(g, n_steps);
+@time stochastic_edge_acceptance!(g, n_steps);
 O = g.observables;
 O.Δ_method_2
 

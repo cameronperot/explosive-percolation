@@ -36,7 +36,7 @@ n_steps = Int(1.5n);
 # %%
 
 @time g_SEA = Network(n);
-@time p_rule_2!(g_SEA, n_steps);
+@time stochastic_edge_acceptance!(g_SEA, n_steps);
 
 # %%
 
