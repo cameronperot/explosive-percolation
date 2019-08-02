@@ -34,7 +34,6 @@ erdos_renyi!,
 bohman_frieze!,
 product_rule!,
 stochastic_edge_acceptance!,
-p_rule_1!,
 
 # analysis_methods
 compute_Δ_method_1!,
