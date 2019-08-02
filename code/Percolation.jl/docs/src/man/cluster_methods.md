@@ -1,10 +1,5 @@
 # Cluster Methods
 
-## Index
-
-```@index
-```
-
 ```@docs
 get_cluster(g::AbstractGraph, node::Int)
 get_largest_cluster_size(g::AbstractGraph)

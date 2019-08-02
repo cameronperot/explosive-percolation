@@ -1,6 +1,6 @@
 # Explosive Percolation
 
-I am currently writing my bachelor's thesis in the computational physics group at Universität Leipzig under the supervision of Prof. Dr. Wolfhard Janke.
+I am currently writing my bachelor's thesis in the computational physics group at Universität Leipzig under the supervision of Prof. Dr. Wolfhard Janke and Dr. Stefan Schnabel.
 Percolation theory is a subject with a range of applications, and can be used to help model phase transitions in systems where there is an underlying graph, e.g. a lattice or random network.
 Phase transitions are of great interest in physics as we often study systems which have different phases, such as a ferromagnets which have an ordered ferromagnetic phase at low temperatures and a disordered phase at high temperatures.
 

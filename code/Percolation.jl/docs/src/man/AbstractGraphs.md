@@ -1,10 +1,5 @@
 # Graph Types
 
-## Index
-
-```@index
-```
-
 ```@docs
 AbstractGraph
 AbstractNetwork

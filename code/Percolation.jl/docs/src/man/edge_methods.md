@@ -1,10 +1,5 @@
 # Edge Methods
 
-## Index
-
-```@index
-```
-
 ```@docs
 choose_edge(g::Network)
 choose_edge(g::Lattice2D)

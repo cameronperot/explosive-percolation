@@ -88,6 +88,7 @@ Attributes
 * `clusters`        : Dictionary with cluster IDs as keys and clusters as values
 * `cluster_sizes`   : Dictionary with cluster sizes as keys and cluster counts as values, i.e. cluster size distribution
 * `rng`             : Random number generator
+* `observables`     : Custom type containing observables associated with `g`
 """
 mutable struct Network <: AbstractNetwork
 	n               ::Int
@@ -141,6 +142,7 @@ Attributes
 * `clusters`        : Dictionary with cluster IDs as keys and clusters as values
 * `cluster_sizes`   : Dictionary with cluster sizes as keys and cluster counts as values, i.e. cluster size distribution
 * `rng`             : Random number generator
+* `observables`     : Custom type containing observables associated with `g`
 """
 mutable struct Lattice2D <: AbstractLattice
 	L               ::Int
@@ -197,6 +199,7 @@ Attributes
 * `clusters`        : Dictionary with cluster IDs as keys and clusters as values
 * `cluster_sizes`   : Dictionary with cluster sizes as keys and cluster counts as values, i.e. cluster size distribution
 * `rng`             : Random number generator
+* `observables`     : Custom type containing observables associated with `g`
 """
 mutable struct Lattice3D <: AbstractLattice
 	L               ::Int

@@ -8,7 +8,7 @@ makedocs(sitename = "Percolation.jl",
 		"Home" => "index.md"
 		"Manual" => Any[
 			"man/getting_started.md",
-			"man/examples.md",
+			# "man/examples.md",
 			"man/AbstractGraphs.md",
 			"man/evolution_methods.md",
 			"man/edge_methods.md",
