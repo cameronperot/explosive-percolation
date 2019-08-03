@@ -16,7 +16,7 @@ abstract type AbstractGraph end
 Abstract subtype of AbstractGraph
 
 Subtypes
-* AbstractNetwork
+* Network
 """
 abstract type AbstractNetwork <: AbstractGraph end
 
