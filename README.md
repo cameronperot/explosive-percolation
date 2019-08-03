@@ -6,7 +6,10 @@ Phase transitions are of great interest in physics as we often study systems whi
 
 To be a bit more specific, I am working on explosive percolation, which entails processes where the graph evolves in such a way that the onset of percolation is delayed until a critical point where there is a sudden onset of large scale connectivity.
 I have designed and am in the process of analyzing a model for accepting edges called stochastic edge acceptance, or SEA for short.
-The underlying framework for the simulations can be found in the Julia package [GraphEvolve.jl](https://github.com/cameronperot/GraphEvolve.jl).
+The latest version of my thesis can be found [here](latex/main.pdf).
+
+The simulations are done using a Julia package I created called [GraphEvolve.jl](https://github.com/cameronperot/GraphEvolve.jl).
+The code used to produce all data used in my thesis can be found [here](code).
 
 Illustrated in the plot below (system size $n = 10^6$) we can see the order parameter $|C| / n$ plotted against the relative number of edges present in the graph $r = t / n$ where $t$ is the total number of edges present.
 * ER = Erdos-Renyi Model
