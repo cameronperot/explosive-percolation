@@ -54,13 +54,13 @@ Another benefit of this coupled with the type system is that when we have a func
 This allows for consistency, e.g. we can call \texttt{product\_rule!(Network(Int(1e6)))} and similarly \texttt{product\_rule!(Lattice2D(Int(1e3)))} and the code will decide based on the type which functions to use.
 
 \subsection{Running a Simulation}
-Running a simulation is simple, one must first download the \texttt{Percolation.jl} library, which can be found on GitHub under the MIT license.
+Running a simulation is simple, one must first download the \texttt{GraphEvolve.jl} library, which can be found on GitHub under the MIT license.
 Then, to run a simulation on a \texttt{Network} with $10^6$ nodes using the product rule to add $1.5 \cdot 10^6$ edges, and view the largest cluster size time series data we would run:
 
 \begin{lstlisting}
 # add the library to the load path and import it
-push!(LOAD_PATH, "/path/to/Percolation.jl/src")
-using Percolation
+push!(LOAD_PATH, "/path/to/GraphEvolve.jl/src")
+using GraphEvolve
 
 # instantiate the Network
 g = Network(Int(1e6))

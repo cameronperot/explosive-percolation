@@ -1,6 +1,6 @@
-path = "/home/user/rsync/education/uni-leipzig/semester-6/thesis/code/Percolation.jl/src";
+path = "/home/user/rsync/education/uni-leipzig/semester-6/thesis/code/GraphEvolve.jl/src";
 	push!(LOAD_PATH, path);
-	using Percolation;
+	using GraphEvolve;
 	using Revise
 	using BenchmarkTools
 	using Profile

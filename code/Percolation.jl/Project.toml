@@ -1,7 +1,0 @@
-name = "Percolation"
-uuid = "c9124f72-6d2f-11e9-3ff0-175f49d4262f"
-authors = ["Cameron Perot <cameron.perot+percolation@protonmail.ch>"]
-version = "0.2.0"
-
-[deps]
-Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"

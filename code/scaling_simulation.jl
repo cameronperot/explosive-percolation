@@ -1,9 +1,9 @@
-# path = "~/thesis/code/Percolation.jl/src";
+# path = "~/thesis/code/GraphEvolve.jl/src";
 # savepath = "/tmp"
-path = "/home/perot/julia/Percolation.jl/src";
+path = "/home/perot/julia/GraphEvolve.jl/src";
 savepath = "/home/perot/julia/scaling";
 	push!(LOAD_PATH, path);
-	using Percolation;
+	using GraphEvolve;
 	using DataFrames;
 	using Dates;
 
