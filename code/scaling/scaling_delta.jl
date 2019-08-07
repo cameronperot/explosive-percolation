@@ -20,9 +20,11 @@ function simulate_parallel_seeds(graph_type, evolution_method, system_size, n_si
 		g.observables.Δ_method_1[1],
 		g.observables.Δ_method_1[2],
 		g.observables.Δ_method_1[3],
+		g.observables.Δ_method_1[4],
 		g.observables.Δ_method_2[1],
 		g.observables.Δ_method_2[2],
-		g.observables.Δ_method_2[3]
+		g.observables.Δ_method_2[3],
+		g.observables.Δ_method_2[4],
 	]
 
 	t₀ = now()
@@ -41,6 +43,7 @@ function simulate_parallel_seeds(graph_type, evolution_method, system_size, n_si
 
 	t₁ = now()
 	runtime = Dates.value(t₁ - t₀) / 1000
+	println("Time to run k = $(Int(log2(system_size))): $(runtime)s")
 
 	return rows, runtime
 end
@@ -61,12 +64,14 @@ function simulate_system_sizes(graph_type, evolution_method, system_sizes, n_sim
 		"n",
 		"t",
 		"seed",
-		"Δ_method_1",
-		"Δ_method_1_t_0",
-		"Δ_method_1_t_1",
-		"Δ_method_2",
-		"Δ_method_2_t_0",
-		"Δ_method_2_t_1"
+		"r_0_method_1",
+		"r_1_method_1",
+		"m_0_method_1",
+		"m_1_method_1",
+		"r_0_method_2",
+		"r_1_method_2",
+		"m_0_method_2",
+		"m_1_method_2"
 	]
 
 	open(file_name, "w") do f
@@ -110,6 +115,14 @@ function parse_commandline()
 			help = "Inital seed value with which to seed the rng"
 			arg_type = Int
 			default = 1
+		"--k_min"
+			help = "Minimum system size 2^k"
+			arg_type = Int
+			default = 15
+		"--k_max"
+			help = "Maximum system size 2^k"
+			arg_type = Int
+			default = 22
 	end
 	return parse_args(s)
 end
@@ -135,6 +148,8 @@ parsed_args   = parse_commandline()
 
 graph_type       = graph_types[parsed_args["graph_type"]]
 evolution_method = evolution_methods[parsed_args["evolution_method"]]
+k_min            = parsed_args["k_min"]
+k_max            = parsed_args["k_max"]
 n_sims           = parsed_args["n_sims"]
 starting_seed    = parsed_args["starting_seed"]
 
@@ -145,7 +160,7 @@ println(string("Availabe memory [GB]: ", free_mem))
 simulate_system_sizes(
 	graph_type,
 	evolution_method,
-	2 .^ [24],
+	2 .^ collect(k_min:k_max),
 	n_sims,
 	starting_seed,
 	joinpath(
@@ -153,7 +168,9 @@ simulate_system_sizes(
 		string(
 			parsed_args["graph_type"], "_",
 			parsed_args["evolution_method"], "_",
-			Dates.now(),
+			k_min, ":", k_max, "_",
+			starting_seed, "_",
+			Dates.today(),
 			".csv"
 		)
 	)
