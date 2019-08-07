@@ -183,55 +183,107 @@ Their findings are illustrated in Fig. \ref{fig:achlioptas_plots}.
 \end{figure}
 
 They ended their paper by saying: "We have demonstrated that small changes in edge formation have the ability to fundamentally alter the nature of percolation transitions. Our findings call for the comprehensive study of this phenomenon, and of its potential use in bringing phase transitions under control." \cite{Achlioptas_1}
-% Indeed their message seemed to resonate, leading to a wave of papers from around the globe exploring the subject \cite{Ziff_1, Cho_1, Radicchi_1, Friedman_1, Ziff_2, Radicchi_2, D_Souza_1, da_Costa_1, Rozenfeld_1, Araujo_1, Moreira_1, Cho_2, Cho_3, Nagler_1, Manna_1, Grassberger_1, Lee_1, Riordan_1, Hooyberghs_1, Nagler_2, Chen_1, Panagiotou_1, Pan_1, Cho_4, Gomez_1, Tian_1, Riordan_2, Riordan_3, Boettcher_1, Chen_2, Angst_1, Bizhani_1, Cho_5, Schroeder_1, Chen_3, Chen_4, Squires_1, Do_1, Chen_5, Bastas_1, Cho_6, da_Costa_2, Riordan_4, Guan_1, da_Costa_3, da_Costa_4, D_Souza_2, Hayasaka_1, Clusella_1, Boccaletti_1, Gedik_1, Rahman_1, Waagen_1, Zhu_1, Sabbir_1, Trevelyan_1, Sabbir_1}.
+% Indeed their message seemed to resonate, leading to a wave of papers from around the world exploring the subject \cite{Ziff_1, Cho_1, Radicchi_1, Friedman_1, Ziff_2, Radicchi_2, D_Souza_1, da_Costa_1, Rozenfeld_1, Araujo_1, Moreira_1, Cho_2, Cho_3, Nagler_1, Manna_1, Grassberger_1, Lee_1, Riordan_1, Hooyberghs_1, Nagler_2, Chen_1, Panagiotou_1, Pan_1, Cho_4, Gomez_1, Tian_1, Riordan_2, Riordan_3, Boettcher_1, Chen_2, Angst_1, Bizhani_1, Cho_5, Schroeder_1, Chen_3, Chen_4, Squires_1, Do_1, Chen_5, Bastas_1, Cho_6, da_Costa_2, Riordan_4, Guan_1, da_Costa_3, da_Costa_4, D_Souza_2, Hayasaka_1, Clusella_1, Boccaletti_1, Gedik_1, Rahman_1, Waagen_1, Zhu_1, Sabbir_1, Trevelyan_1, Sabbir_1}.
 
 
 
 \subsubsection{No, It's Actually Continuous!}
-20100915
+In 2010 Rui da Costa, Sergey Dorogovtsev, Alexander Goltsev, and Jose Fernando Mendes published \cite{da_Costa_1} wherein they dispute that the explosive percolation transition is actually continuous.
+They used an edge selection rule which would choose two nodes, select that which belongs to the smaller cluster, select another two nodes, select that which belongs to the smaller cluster, then connect the two selected nodes, thus in the process minimizing the largest cluster size.
+They were able to show power law behavior of the largest cluster size:
+
+\begin{equation}
+	|C| \propto \delta^\beta
+\end{equation}
+where $\delta = |r - r_c|$, with $t_c = 0.923207508(2)$ and $\beta = 0.0555(1)$ which is close to $1/18 = 0.055\overline{5}$.
+
+They then show that if the cluster size distribution is power law distributed at the critical point then the transition must be continuous.
+Their paper concludes by saying reason it is difficult to distinguish this transition from a discontinuous one is due to the small value of $\beta$, and that due to the irreversibility of the process that it is an attractive subject to further develop.
 
 
 
 \subsubsection{Well, Maybe Not...}
-20110315
+In their paper "Explosive Percolation with Multiple Giant Components" \cite{Chen_1}, Wei Chen and Raissa M. D’Souza took a modified version of the BFW model mentioned above.
+They took the parameter $\alpha$ which is the asymptotic fraction of accepted edges and demonstrated that changing $\alpha$ determines the number of stable giant clusters.
+The smaller the value of $\alpha$ the longer the transition will be delayed and the more explosive it will be.
+This is shown in Fig. \ref{fig:bfw_alpha_comparison}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=350pt]{images/bfw_alpha_comparison.png}
+	\caption{Phase Transition Dependence on $\alpha$, Source: \cite{Chen_1}}
+	\label{fig:bfw_alpha_comparison}
+\end{figure}
+
+Their analysis shows that it is possible to have multiple stable giant components emerge at the same critical point.
+Furthermore they finish their paper by stating that the BFW model is strongly discontinuous.
 
 
 
 \subsubsection{Continuity With Unusual Finite-Size Scaling Behavior}
-20110322
+In 2011 Grassberger et al. published "Explosive Percolation is Continuous, but with Unusual Finite Size Behavior" \cite{Grassberger_1} in which they studied the phase transitions of four different Achlioptas processes.
+They specifically look at the distribution $P_{r, n}(m)$ of the order parameter $m = |C| / n$, and at criticality it scales as:
+
+\begin{equation}
+	P_{r=r_c, n}(m) \sim n^\eta f(m n^\eta)
+\end{equation}
+In the Ising model (continuous transition) the function $f(z)$ has two peaks and as $n \rightarrow \infty$ the peaks move closer together to form a single peak, whereas in a first order transition $f(z)$ is double peaked and the peaks move further apart as $n \rightarrow \infty$.
+The finite size scaling of $\langle m \rangle$ is given by:
+
+\begin{equation}
+	\langle m \rangle \sim (r - r_c)^\beta g((r - r_c) N^\Theta)
+\end{equation}
+$g(z)$ is analytic for all $z \in \mathbb{R}$.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=350pt]{images/grassberger_scaling.png}
+	\caption{Scaling of $P_{r=r_c, n}(m)$, Source: \cite{Grassberger_1}}
+	\label{fig:grassberger_scaling}
+\end{figure}
+
+Their results, shown in Fig. \ref{fig:grassberger_scaling} showed that $P_{r=r_c, n}(m)$ was indeed double peaked, however, they say that this does not prove it is continuous, rather it reflects how abruptly the system transitions.
+They then go on to show (through the use of FSS of $\langle m \rangle$) that the transitions of the studied four models are indeed continuous, yet are each in a different universality class and all exhibit unusual finite size scaling behavior.
 
 
 
 \subsubsection{Large Scale Simulations}
 20110616
+\cite{Lee_1}
 
 
 
 \subsubsection{The Power of Mathematical Statistics}
 20120821
+\cite{Riordan_1}
 
 
 
 \subsubsection{Supercritical BFW Phase Transitions}
 20130524
+\cite{Chen_3}
 
 
 
 \subsubsection{Critical Exponents in Explosive Percolation}
 20140505
+\cite{da_Costa_5}
 
 
 
 \subsubsection{"Solution of the explosive percolation quest"}
 20150212
+\cite{da_Costa_2}
 20150331
+\cite{da_Costa_3}
 
 
 
 \subsubsection{A Look At the Developments}
 20150701
-
+\cite{D_Souza_2}
 
 
 \subsubsection{Two Types of Discontinuous Percolation}
 20150710
+\cite{Cho_6}

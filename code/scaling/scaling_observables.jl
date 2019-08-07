@@ -5,6 +5,7 @@ using GraphEvolve;
 using Plots; gr(fmt="png");
 using LaTeXStrings
 using Printf
+using Dates
 
 # %%
 
@@ -15,19 +16,19 @@ function plot_Network(ns, evolution_method, savepath)
 
 	plot_C = plot(dpi=300,
 		legend=:topleft,
-		xaxis=(L"r"),
-		yaxis=(L"|C|/n"))
+		xaxis=(L"r", (0, 1.5), 0:0.5:1.5),
+		yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1))
 	plot_S = plot(dpi=300,
 		legend=false,
-		xaxis=(L"r"),
+		xaxis=(L"r", (0, 1.5), 0:0.5:1.5),
 		yaxis=(L"\overline{s}"))
 	plot_H = plot(dpi=300,
 		legend=false,
-		xaxis=(L"r"),
-		yaxis=(L"H"))
+		xaxis=(L"r", (0, 1.5), 0:0.5:1.5),
+		yaxis=(L"H/n"))
 
 	for (i, n) in enumerate(ns)
-		println(Int(log2(n)))
+		t₀ = now()
 		g = Network(n)
 		evolution_method(g, Int(floor(1.5 * n)))
 
@@ -35,15 +36,19 @@ function plot_Network(ns, evolution_method, savepath)
 		n_string = Int(log2(n))
 		x = collect(0:g.t) ./ n
 
-		scatter!(plot_C, x, g.observables.largest_cluster_size ./n,
+		scatter!(plot_C, x, g.observables.largest_cluster_size ./ n,
 			label=latexstring("\$\\log_2 n = $(n_string)\$"),
 			marker=(2, colors[i], :circle, stroke(0)))
 		scatter!(plot_S, x, g.observables.avg_cluster_size,
 			label=latexstring("\$\\log_2 n = $(n_string)\$"),
 			marker=(2, colors[i], :circle, stroke(0)))
-		scatter!(plot_H, x, g.observables.heterogeneity,
+		scatter!(plot_H, x, g.observables.heterogeneity ./ n,
 			label=latexstring("\$\\log_2 n = $(n_string)\$"),
 			marker=(2, colors[i], :circle, stroke(0)))
+
+		t₁ = now()
+		runtime = Dates.value(t₁ - t₀) / 1000
+		println("k = $(n_string), time to run: $(runtime)s")
 	end
 
 	# savefig(plot_C, joinpath(savepath, "Network_C.png"))
@@ -54,7 +59,7 @@ function plot_Network(ns, evolution_method, savepath)
 	plot_ = plot(plot_C, plot_H, plot_S, layout=l)
 	savefig(plot_,
 		joinpath(savepath,
-			string("Network",
+			string("Network_",
 				replace(replace(string(evolution_method), "GraphEvolve." => ""), "!" => ""),
 				"_observables.png"
 			)
