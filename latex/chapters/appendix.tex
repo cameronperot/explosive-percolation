@@ -46,6 +46,8 @@ We then look and determine which cluster is smaller and merge the smaller cluste
 
 After the clusters are merged the associated observables are updated, which currently includes the largest cluster size, the average cluster size, the cluster heterogeneity (number of unique cluster sizes), and some post-simulation analysis quantities for identifying where the phase transitions and if it is continuous.
 
+
+
 \subsection{Making Use of Multiple Dispatch}
 Multiple dispatch allows us to define multiple functions with the same name, yet different code depending on the input type.
 This is extremely useful for dealing with differences between networks and lattices such as when selecting an edge, because for example in a \texttt{Network} we can select any inactive edge between nodes, whereas in a \texttt{LatticedD} we can only select an inactive edge between nearest neighbors (this can be seen implemented in \texttt{edge\_methods.jl}).
@@ -53,21 +55,41 @@ This is extremely useful for dealing with differences between networks and latti
 Another benefit of this coupled with the type system is that when we have a function that is generic enough to act on both \texttt{Network}s and \texttt{LatticedD}s then we can set the input type for that function to \texttt{AbstractGraph} or if it's general enough to act on all \texttt{LatticedD}s but not \texttt{Network}s then we can set the input type to \texttt{AbstractLattice}.
 This allows for consistency, e.g. we can call \texttt{product\_rule!(Network(Int(1e6)))} and similarly \texttt{product\_rule!(Lattice2D(Int(1e3)))} and the code will decide based on the type which functions to use.
 
+
+
+\subsection{Making Use of Parallelization}
+Currently when a single simulation is run it is run on a single core.
+For the data used in this thesis I use a script which has a parallel for loop which takes advantage of all threads that are enabled to run the ensemble averages.
+Recently the Julia developers published an article talking about "composable multi-threaded parallelism", which is currently in the early stages, but looks promising and could make future parallelization very easy.
+Once stable it can be implemented in GraphEvolve.jl to run the updating of the observables in a separate thread, i.e. if we would like to gather information about an observable that takes too much time to run on the single thread we could spawn a new thread to compute this in parallel with the rest of the simulation.
+
+
+
 \subsection{Running a Simulation}
 Running a simulation is simple, one must first download the \texttt{GraphEvolve.jl} library, which can be found on GitHub under the MIT license.
 Then, to run a simulation on a \texttt{Network} with $10^6$ nodes using the product rule to add $1.5 \cdot 10^6$ edges, and view the largest cluster size time series data we would run:
 
 \begin{lstlisting}
-# add the library to the load path and import it
-push!(LOAD_PATH, "/path/to/GraphEvolve.jl/src")
-using GraphEvolve
+julia> using GraphEvolve
 
-# instantiate the Network
-g = Network(Int(1e6))
+julia> using Plots; gr(fmt="png")
 
-# run the evolution process
-product_rule!(g, Int(1.5e6))
+julia> g = Network(10^6);
 
-# show the largest cluster size time series data
-g.observables.largest_cluster_size
+julia> stochastic_edge_acceptance!(g, Int(1.5*10^6));
+
+julia> x = collect(0:g.t) ./ g.n;
+
+julia> y = g.observables.largest_cluster_size ./ g.n;
+
+julia> plot_ = plot(dpi=300);
+
+julia> scatter!(x, y,
+		legend=false,
+		marker=(2, :dodgerblue, :circle, 0.9, stroke(0)),
+		xaxis=(latexstring("r"), (0, 1.5), 0:0.5:1.5),
+		yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1)
+	);
+
+julia> savefig(plot_, "/tmp/order_param.png")
 \end{lstlisting}

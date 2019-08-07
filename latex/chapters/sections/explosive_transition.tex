@@ -1,3 +1,6 @@
+%---------------------------------------------------------------------------------------
+% An Explosive Transition
+%---------------------------------------------------------------------------------------
 \section{An "Explosive" Transition}
 In this paper we are going to take a deeper look into a specific type of percolation called explosive percolation, where the underlying concept is that the onset of percolation is delayed until a certain point where it then occurs at an accelerated rate.
 This occurs when the underlying evolution process works in such a way that the largest cluster size $|C|$ is controlled.
@@ -8,29 +11,22 @@ For certain evolution processes it has been heavily debated whether or not the p
 
 
 
-
-
-
-
-
-
+%---------------------------------------------------------------------------------------
+% A Selective Process
+%---------------------------------------------------------------------------------------
 \subsection{A Selective Process}
 This all started in the year 2000 when Dimitris Achlioptas raised an interesting question about how a graph of $n$ nodes would evolve under certain conditions \cite{BF}.
 First we suppose that at each step $t$ in the evolution process two edges $e_t$ and $e_t'$ are evaluated, but only one of them is selected to be added to the graph.
 Which of the proposed edges is selected is based only on the information contained in $e_1, e_1', ... e_{t-1}, e_{t-1}'$.
 Does there exist an algorithm for adding edges to the graph such that with high probability a giant component does not appear until $t/n > 0.5$?
-This process of evaluating $m \ge 2$ edges at each step is now referred to as an $m$-edge Achlioptas process.
+This process of evaluating $m \ge 2$ edges at each step is now referred to as an $q$-edge Achlioptas process.
 In the next few sections we will see how a small change to the way edges are added can have a big impact on the evolution of the system.
 
 
 
-
-
-
-
-
-
-
+%---------------------------------------------------------------------------------------
+% The First Look
+%---------------------------------------------------------------------------------------
 \subsection{The First Look}
 In 2001 Tom Bohman and Alan Frieze were the first to design and analyze an Achlioptas process in their paper "Avoiding a Giant Component" \cite{BF}, where they set out to answer Achlioptas' question.
 This paper laid out the framework for the Bohman-Frieze (BF) model of graph evolution and showed that there does exist a process in which the appearance of a giant cluster is delayed; so the answer to Achlioptas' question is yes!
@@ -113,6 +109,9 @@ A form of the algorithm can be written in pseudocode as follows:
 
 
 
+%---------------------------------------------------------------------------------------
+% A Discontinuous Transition
+%---------------------------------------------------------------------------------------
 \subsection{A Discontinuous Transition?}
 The first mention of explosive percolation appeared in 2009 in the paper "Explosive Percolation in Random Networks" \cite{Achlioptas_1} by Dimitris Achlioptas, Raissa M. D’Souza, and Joel Spencer, which will henceforth be referred to as Achlioptas et al.
 In this paper they laid out a method of choosing edges called the product rule (PR).
@@ -159,7 +158,7 @@ If we were looking at Fig. \ref{fig:edge_selection} from within the framework of
 \end{figure}
 
 Fig. \ref{fig:ER_BF_PR_transition} shows the order parameters for the ER, BF, and PR models, making it clear just how drastically different the PR model transition is than in the ER/BF models.
-As can be seen the order parameter remains near zero for much longer until the critical point $r_c \approx 0.888...$ \cite{Achlioptas_1}, which is much later than the critical point in the ER model of $r_c = 0.5$.
+As can be seen the order parameter remains near zero for much longer until the critical point $r_c \approx 0.888...$, which is much later than the critical point in the ER model of $r_c = 0.5$.
 Not long after the critical point is reached the order parameter appears to jump up discontinuously, which was a surprising find.
 
 \begin{figure}[H]
@@ -173,7 +172,6 @@ In their paper they analyzed the scaling behavior of their model, defining the q
 $\Delta$ is linear in $n$ for continuous transitions (i.e. an extensive quantity), however, their analysis indicated otherwise that $\Delta < 2n^{2/3}$ and $\Delta / n^{2/3} \rightarrow 1$ in their simulations for sizes up to $6.4 \cdot 10^7$.
 To arrive at these results they took an ensemble average of 50 different independent and identically distributed observations and fit a curve to determine the relation between $\Delta$ and $n$.
 Their findings are illustrated in Fig. \ref{fig:achlioptas_plots}.
-\cite{Achlioptas_1}
 
 \begin{figure}[H]
 	\centering
@@ -182,15 +180,15 @@ Their findings are illustrated in Fig. \ref{fig:achlioptas_plots}.
 	\label{fig:achlioptas_plots}
 \end{figure}
 
-They ended their paper by saying: "We have demonstrated that small changes in edge formation have the ability to fundamentally alter the nature of percolation transitions. Our findings call for the comprehensive study of this phenomenon, and of its potential use in bringing phase transitions under control." \cite{Achlioptas_1}
-% Indeed their message seemed to resonate, leading to a wave of papers from around the world exploring the subject \cite{Ziff_1, Cho_1, Radicchi_1, Friedman_1, Ziff_2, Radicchi_2, D_Souza_1, da_Costa_1, Rozenfeld_1, Araujo_1, Moreira_1, Cho_2, Cho_3, Nagler_1, Manna_1, Grassberger_1, Lee_1, Riordan_1, Hooyberghs_1, Nagler_2, Chen_1, Panagiotou_1, Pan_1, Cho_4, Gomez_1, Tian_1, Riordan_2, Riordan_3, Boettcher_1, Chen_2, Angst_1, Bizhani_1, Cho_5, Schroeder_1, Chen_3, Chen_4, Squires_1, Do_1, Chen_5, Bastas_1, Cho_6, da_Costa_2, Riordan_4, Guan_1, da_Costa_3, da_Costa_4, D_Souza_2, Hayasaka_1, Clusella_1, Boccaletti_1, Gedik_1, Rahman_1, Waagen_1, Zhu_1, Sabbir_1, Trevelyan_1, Sabbir_1}.
+They ended their paper by saying: "We have demonstrated that small changes in edge formation have the ability to fundamentally alter the nature of percolation transitions. Our findings call for the comprehensive study of this phenomenon, and of its potential use in bringing phase transitions under control."
+Indeed their message seemed to resonate, leading to a wave of papers from around the world exploring the subject \cite{Ziff_1, Cho_1, Radicchi_1, Friedman_1, Ziff_2, Radicchi_2, D_Souza_1, da_Costa_1, Rozenfeld_1, Araujo_1, Moreira_1, Cho_2, Cho_3, Nagler_1, Manna_1, Grassberger_1, Lee_1, Riordan_1, Hooyberghs_1, Nagler_2, Chen_1, Panagiotou_1, Pan_1, Cho_4, Gomez_1, Tian_1, Riordan_2, Riordan_3, Boettcher_1, Chen_2, Angst_1, Bizhani_1, Cho_5, Schroeder_1, Chen_3, Chen_4, Squires_1, Do_1, Chen_5, Bastas_1, Cho_6, da_Costa_2, Riordan_4, Guan_1, da_Costa_5, da_Costa_3, da_Costa_4, D_Souza_2, Hayasaka_1, Clusella_1, Boccaletti_1, Gedik_1, Rahman_1, Waagen_1, Zhu_1, Sabbir_1, Trevelyan_1, Sabbir_1}.
 
 
 
 \subsubsection{No, It's Actually Continuous!}
 In 2010 Rui da Costa, Sergey Dorogovtsev, Alexander Goltsev, and Jose Fernando Mendes published \cite{da_Costa_1} wherein they dispute that the explosive percolation transition is actually continuous.
-They used an edge selection rule which would choose two nodes, select that which belongs to the smaller cluster, select another two nodes, select that which belongs to the smaller cluster, then connect the two selected nodes, thus in the process minimizing the largest cluster size.
-They were able to show power law behavior of the largest cluster size:
+They used an edge selection rule which at each step chooses two sets of $q$ nodes, determines for each set the node belonging to the smallest cluster, then activates the edge between those to thus favoring the merging of smaller clusters and minimizing the largest cluster in the process.
+They were able to show power law behavior of the largest cluster size for $m = 2$:
 
 \begin{equation}
 	|C| \propto \delta^\beta
@@ -247,43 +245,47 @@ They then go on to show (through the use of FSS of $\langle m \rangle$) that the
 
 
 
-\subsubsection{Large Scale Simulations}
-20110616
-\cite{Lee_1}
+\subsubsection{Large Scale Simulations Show It's Continuous}
+The 2011 paper "Continuity of the Explosive Percolation Transition" \cite{Lee_1} by Hyun Keun Lee, Beom Jun Kim, and Hyunggyu Park analyzed the finite-size scaling of the product rule in depth, using data from simulations of system sizes up to $2^{37} \approx 1.4 \cdot 10^{11}$.
+They use a fairly straightforward method for determining the continuity of the transition:
+
+\begin{enumerate}
+	\item Set $t_0(n) < t_c$ and $t_1(n) > t_c$ with the expectation that as $n \rightarrow \infty$, $t_0 \rightarrow t_c$ and $t_1 \rightarrow t_c$.
+	\item Find an upper bound for the change in the largest cluster size $\Delta |C|$.
+	\item Show that $\Delta |C|$ scales sublinearly with $n$.
+\end{enumerate}
+
+Near the end they arrive at:
+
+\begin{equation}
+	\Delta m = \frac{\Delta |C|}{n} \lesssim n^{-0.022}
+\end{equation}
+Which means that as $n \rightarrow \infty$, $\Delta m \rightarrow 0$ and they conclude that the transition is indeed continuous.
 
 
 
-\subsubsection{The Power of Mathematical Statistics}
-20120821
-\cite{Riordan_1}
-
-
-
-\subsubsection{Supercritical BFW Phase Transitions}
-20130524
-\cite{Chen_3}
-
-
-
-\subsubsection{Critical Exponents in Explosive Percolation}
-20140505
-\cite{da_Costa_5}
+\subsubsection{Proof of Continuity Emerges}
+Oliver Riordan and Lutz Warnke published "Achlioptas Process Phase Transitions Are
+Continuous" \cite{Riordan_1} in 2012, wherein they lay out several theorems and proofs to show that all Achlioptas processes result in a continuous phase transition.
+Due to the long and detailed nature of the proofs I will refer the reader to their work for further information.
 
 
 
 \subsubsection{"Solution of the explosive percolation quest"}
-20150212
-\cite{da_Costa_2}
-20150331
-\cite{da_Costa_3}
+In 2014 and 2015 Rui da Costa, Sergey Dorogovtsev, Alexander Goltsev, and Jose Fernando Mendes published three more papers \cite{da_Costa_5, da_Costa_2, da_Costa_3} where they performed a significant amount of research on the explosive percolation transition of the $q$-edge model laid out in their previous paper (see above \textbf{No, It's Actually Continuous!}).
+
+In "Critical exponents of the explosive percolation transition" \cite{da_Costa_5} they study extensively the critical exponents and how they scale as $q$ changes, wherein they observe that as $q$ increases $\beta$ quickly declines, with $\beta(q = 4) \approx \beta(q = 2) / 20$.
+They talk about how models that only use local information, i.e. they do not require knowledge of all of the clusters within the graph but only those corresponding to the candidate edges, lead to a continuous transition, but models that take global information into account might lead to discontinuities.
+
+In "Solution of the explosive percolation quest: Scaling functions and critical exponents" \cite{da_Costa_2}
+and "Solution of the explosive percolation quest. II. Infinite-order transition produced by the initial distributions of clusters" \cite{da_Costa_3} they develop a thorough theory of finite-size scaling that explains the continuity of the transition.
+Their theory is quite extensive, therefore, I must refer the reader to their work for more information.
 
 
 
 \subsubsection{A Look At the Developments}
-20150701
-\cite{D_Souza_2}
-
-
-\subsubsection{Two Types of Discontinuous Percolation}
-20150710
-\cite{Cho_6}
+After seeing a number of papers stating that the transition is actually continuous, it looked like the debate had been settled.
+$q$-edge Achlioptas processes are always continuous if they only take local information into account, but there exist some processes that take global information into account that lead to a discontinuous transition.
+A lot of different rules for selecting, evaluating, and adding edges were created and in the 2015 paper "Explosive Percolation: Novel critical and supercritical phenomena" \cite{D_Souza_2} by Raissa M. D’Souza and Jan Nagler summarized a lot of the developments and findings in the field up to that point.
+They discussed similarities and differences between some of the well known explosive percolation models and tied it all together nicely some real world applications and future directions for the field.
+Overall it is an excellent paper to read to get acquainted with how the field developed from 2009 to 2015.
