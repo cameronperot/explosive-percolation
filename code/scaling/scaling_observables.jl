@@ -1,5 +1,5 @@
-# path = "/home/user/GraphEvolve.jl/src"
-path = "/home/perot/julia/GraphEvolve.jl/src";
+path = "/home/user/GraphEvolve.jl/src"
+# path = "/home/perot/julia/GraphEvolve.jl/src";
 push!(LOAD_PATH, path);
 using GraphEvolve;
 using Plots; pyplot(fmt="png");
@@ -161,11 +161,11 @@ end
 # %%
 
 evolution_method = stochastic_edge_acceptance!
-Ns = 2 .^ collect(15:24);
+Ns = 2 .^ collect(15:23);
 Ls_2D = Int.(floor.(collect(range(200, stop=8000, length=11))));
 Ls_3D = Int.(floor.(collect(range(40, stop=400, length=11))));
-# savepath = "/home/user/thesis/latex/images"
-savepath = "/home/perot/julia/scaling"
+savepath = "/home/user/thesis/latex/images"
+# savepath = "/home/perot/julia/scaling"
 
 plot_Network(Ns, evolution_method, savepath)
 # plot_Lattice2D(Ls_2D, evolution_method, savepath)

@@ -1,27 +1,29 @@
 \section{Stochastic Edge Acceptance}
-After reading a lot about other models for evolving graphs I decided to come up with a new model for adding edges with an added element of randomness.
-The working name for the model is Stochastic Edge Acceptance or SEA for short.
-In most models the edges selected for evaluation are random but which edge is actually chosen to be added to the graph is deterministic.
-Random processes occur all the time in the natural world around us, therefore, I believe that this added element of randomness helps better represent a natural system.
-One might wonder what sort of system this could represent, so let us consider a network where a node considers joining a cluster and usually prefers to join the smaller cluster but there is still a probability that it instead chooses to join the larger cluster.
+After reading a lot about other models for evolving graphs I decided to come up with a new model for adding edges with an extra element of randomness.
+The model is called Stochastic Edge Acceptance or SEA for short.
+In most models the edges selected for evaluation are random but which of those edges is added to the graph is deterministic like in the product rule where the one with the smallest product is always accepted.
 
-The underlying idea is to have a process which favors the minimization of the largest cluster through considering multiple edges at each step in the evolution algorithm, therefore, it is an Achlioptas process.
-This is a local rule, i.e. it only considers local information such as the size of the clusters to which the nodes in the considered edge belong.
+The underlying idea is to have a process which favors the minimization of the largest cluster through considering multiple edges at each step in the evolution algorithm, making it an Achlioptas process.
+This is a local rule, i.e. it only considers local information such as the size of the clusters to which the nodes corresponding to the considered edges belong.
 I wanted to create a simple probability using only the sizes of the clusters corresponding to the considered edges.
-Also note in the algorithm below that intra-cluster edges are always accepted.
+Using just the cluster size information it is easy to create a set of probabilities that decrease as the cluster size increases.
+The way it is designed actually allows us to generalize this algorithm to evaluate $q$ edges at once, with corresponding probabilities $p_i$, $i \in \{1, 2, ..., q\}$:
 
-A form of the algorithm can be written in pseudocode as follows:
+\begin{equation}
+	p_i = \frac{\frac{1}{|C_i|}}{\sum_j \frac{1}{|C_j|}}
+\end{equation}
+
+A form of the algorithm for $q = 2$ can be written in pseudocode as follows:
 \begin{itemize}
 	\item Let $T$ be the total number of edges to add to the graph.
 	\item Let $A_t = \{e_1, e_2, ..., e_t\}$ be the set of accepted edges at step $t$.
 	\item Let $e_t^1$ and $e_t^2$ be the two nodes which edge $e_t$ would connect.
 	\item Let $C(e_t^i)$ be the cluster which $e_t^i$ belongs to.
 	\item Let $C(e_t)$ be the cluster which would be formed by activating $e_t$.
-	\item Let $r \in [0, 1)$ be a randomly generated number.
-	\item Let $p = \frac{C(e_t)^{-1}}{C(e_t)^{-1} + C(e_t')^{-1}}$
+	\item Let $R \in [0, 1)$ be a randomly generated number.
 \end{itemize}
 
-\begin{algorithm}
+\begin{algorithm}[H]
 	\caption{Stochastic Edge Acceptance}\label{Stochastic-Edge-Acceptance}
 	\begin{algorithmic}[1]
 		\Procedure{SEA}{$T$}
@@ -35,7 +37,7 @@ A form of the algorithm can be written in pseudocode as follows:
 			\ElsIf{$C(e_t'^1) = C(e_t'^2)$}
 				\State $A \gets A \cup \{e_t'\}$
 				\State $t \gets t+1$
-			\ElsIf{$p$ < r}
+			\ElsIf{$p$ < R}
 				\State $A \gets A \cup \{e_t\}$
 				\State $t \gets t+1$
 			\Else
@@ -47,7 +49,23 @@ A form of the algorithm can be written in pseudocode as follows:
 	\end{algorithmic}
 \end{algorithm}
 
-Fig. \ref{fig:ER_BF_PR_SEA_transition} below illustrates the SEA model in comparison with ER, BF, and PR models.
+The $q$-edge algorithm is similar except it would use a cumulative probability $P_i = \sum\limits_{j=1}^{i} p_i$ (much like in the $q$-state Potts model) and loop over $i \in \{1, 2, ..., q\}$ until $R < P_i$, and then once that is satisfied accept the edge and move to the next step.
+
+
+
+%---------------------------------------------------------------------------------------
+% Simulation and Analysis
+%---------------------------------------------------------------------------------------
+\subsection{Simulation and Analysis}
+In order to study the model we must first generate data to analyze.
+All data in this section was generated using GraphEvolve.jl (see appendix for more information).
+System sizes of $2^k$, $k \in \{15, 16, ..., 24\}$ were studied, and for each system size 1000 simulations were run with different random number generator seed values, thus creating a statistical ensemble to take averages of.
+It would be ideal to run simulations for larger system sizes to get a more representative sample, and is something which can be investigated further in the future.
+All code and the associated generated data used for this is publicly available on the corresponding GitHub page \url{https://github.com/cameronperot/explosive-percolation}.
+
+Fig. \ref{fig:ER_BF_PR_SEA_transition} illustrates the order parameter of the SEA model in comparison with the ER, BF, and PR models.
+The SEA model experiences a transition later than the ER and BF models, but before the PR model.
+The order parameter shows a sharp increase at the point of phase transition with an almost vertical slope similar to that of the PR.
 
 \begin{figure}[H]
 	\centering
@@ -56,31 +74,139 @@ Fig. \ref{fig:ER_BF_PR_SEA_transition} below illustrates the SEA model in compar
 	\label{fig:ER_BF_PR_SEA_transition}
 \end{figure}
 
-Fig. \ref{fig:delta_scaling_2} (uses data from an ensemble average of 1000 simulations) shows two curves corresponding to steps in the evolution process.
-$r = t_0$ represents the point where the cluster heterogeneity peaks and $r = t_1$ represents the point where the order parameter jumps by the largest amount.
-The data tells us that the system undergoes a phase transition around $r = 0.718655 \pm 0.002862848$.
+Now that we've seen it exhibits interesting behavior at the point of phase transition we would like to learn more such as where does it transition, and most importantly, is it continuous?
+In order to answer these questions we will use the framework laid out in \cite{Lee_1}.
+First we need to find two points, one before the transition ($t_0$) and one after the transition ($t_1$).
+We set $t_0$ as the point at which the cluster heterogeneity peaks, i.e. when the number of unique cluster sizes is at its highest.
+We set $t_1$ as the point at which the order parameter experiences its largest increase.
+Let $r_i = t_i / N$ represent the relative number of edges in the system at step $t_i$ (because at step $t_i$ there are $t_i$ edges present in the graph), and $m_i = m(r_i)$ be the order parameter at step $t_i$.
+We will define two quantities which we would like to study the behavior of:
+
+\begin{equation}
+\begin{split}
+	\Delta r &= r_1 - r_0 \\
+	\Delta m &= m_1 - m_0
+\end{split}
+\end{equation}
+
+Fig. \ref{fig:r_scaling} shows the scaling behavior of $r_0$ and $r_1$ as a function of the system size $N$.
+As the system size increases the two curves appear to be to be converging to the exact point of phase transition.
+The obtained data tells us that the system transitions phases around $r = 0.718(4)$.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=350pt, clip]{images/delta_scaling_2.png}
-	\caption{Stochastic Edge Acceptance Phase Transition Point Identification, $N = 10^6$}
-	\label{fig:delta_scaling_2}
+	\includegraphics[width=350pt, clip]{images/r_scaling.png}
+	\caption{The curves for $r_0$ and $r_1$ appear to be converging to the point of phase transition.}
+	\label{fig:r_scaling}
 \end{figure}
 
-Fig. \ref{fig:Network_stochastic_edge_acceptance_observables} shows how the observables scale as a function of the system size $N = 2^k, k \in \{15, 16, ..., 23, 24\}$.
+When looking at the scaling behavior of certain quantities it often helps to view them on $\log-\log$ plots to identify any power law scaling behavior.
+Fig. \ref{fig:delta_r_scaling} shows $\Delta r$ as a function of the system size, and as we can see it exhibits power law scaling behavior of the form:
+
+\begin{equation}
+	\Delta r \sim N^{-\delta}
+\end{equation}
+with $\delta = 0.302(2)$.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=350pt, clip]{images/Network_stochastic_edge_acceptance_observables.png}
-	\caption{Stochastic Edge Acceptance Model, $N = 10^6$}
-	\label{fig:Network_stochastic_edge_acceptance_observables}
+	\includegraphics[width=350pt, clip]{images/delta_r_scaling.png}
+	\caption{$\Delta r$ exhibits power law scaling in $N$.}
+	\label{fig:delta_r_scaling}
 \end{figure}
 
-Now one might wonder how do these models look when applied to a lattice.
-The way the simulation library was designed makes it easy to run the same simulations on a different lattice, so we're in luck.
+There is a lot of information contained in the cluster size distributions at $t_0$ and $t_1$.
+We first start by analyzing the distribution at $t_0$, shown in Fig. \ref{fig:n_s_t_0}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=350pt, clip]{images/n_s_t_0.png}
+	\caption{Scaling behavior of the cluster size distribution at $t_0$.}
+	\label{fig:n_s_t_0}
+\end{figure}
+When plotted on a $\log_{10}-\log_{10}$ scale we see linear scaling up to a certain cutoff cluster size $s_f$ where $n_s(t_0)$ then drops off exponentially.
+Large statistical errors are visible for higher values of $s$, but nevertheless the overall message of the plot is clear.
+Fitting a line to the linear part we arrive at the relation:
+
+\begin{equation}
+	n_s(t_0) \sim s^{-\tau}
+\end{equation}
+with $\tau \approx 2.165$.
+
+Looking at the data for the cluster size distribution at $t_1$ (Fig. \ref{fig:n_s_t_1}) we see the same power law scaling relation, except with a slightly different exponent $\tau \approx 2.228$.
+I believe the discrepancy in the exponents here is due to the size of the simulations, and that if simulated with larger system sizes (such as up to $2^{37}$ seen in \cite{Lee_1}) that the values would converge to the true value of $\tau$.
+In Fig. \ref{fig:n_s_t_1} we see $\log_{10}(n_s(t_1))$ versus $\log_{10}(s/N)$ rather than just $\log(s)$, where we again observe this linear scaling up to a point ($s_f$) where it then dips and breaks the linear trend (once again large statistical errors for larger values of $s/N$).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=350pt, clip]{images/n_s_t_1.png}
+	\caption{Scaling behavior of the cluster size distribution at $t_1$.}
+	\label{fig:n_s_t_1}
+\end{figure}
+
+In \cite{Lee_1} they determine $s_f$ by taking the ansatz $\sum_{s \ge s_f} \sim 1 / N_{C, 0}$ where $N_{C, 0}$ is the total number of clusters at $t_0$.
+Then through the use of several relations such as the the number of clusters scaling linearly with the system size they arrive at:
+
+\begin{equation}
+	s_f(N) \sim N^{1 / \tau}
+\end{equation}
+
+This can be verified by assuming a single characteristic cluster size and taking the finite-size scaling form of $n_s$ \cite{Lee_1}:
+
+\begin{equation}
+	n_s(t_0) = s^{-\tau} f(s / s_f) = s^{-\tau} f(s N^{-1 / \tau})
+\end{equation}
+
+Applying this same ideology to the stochastic edge acceptance method works quite well as seen in Fig. \ref{fig:fss_collapse_comparison}.
+This verifies that indeed $\tau \approx 2.228$ is a good estimation of $\tau$ as the plot shows that the data for all of the system sizes lines up well and exhibits this hump behavior also seen in \cite{Lee_1}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=350pt, clip]{images/fss_collapse_comparison.png}
+	\caption{$n_s(t_0)$ finite-size scaling shows a perfect overlay for the critical exponent value $\tau \approx 2.228$. The lower left plot shows how the overlay looks for a slightly lower value of $\tau$ and the lower right plot shows for a slightly higher value of $\tau$, and as can be seen the overlays do not fit as well.}
+	\label{fig:fss_collapse_comparison}
+\end{figure}
+
+Now that we have extracted some useful information, namely the values of the critical exponents, we want to show is that as the system size tends to infinity that the difference in the order parameter, $\Delta m$, tends to zero, i.e. $\lim_{N \rightarrow \infty} \Delta m = 0$.
+In order to show this we want to place an upper bound on $\Delta m$. In \cite{Lee_1} they laid out a clever method for setting an upper bound by starting with the cluster size distribution at $t_0$ and taking an ideal process to add edges in such a way as to maximize the largest cluster size from $t_0$ to $t_1$, thus any other process will produce a $\Delta m$ that is bounded above by the $\Delta m$ produced in the ideal process.
+This ideal process would seek to merge all clusters larger than some size $s_\delta$, which is determined by $\Delta t = t_1 - t_0$ and the cluster size distribution at $t_0$, i.e. $\Delta t = N_{C, 0} \sum_{s > s_\delta} n_s(t_0)$, where $N_{C, 0}$ is the total number of clusters at step $t_0$.
+What they arrived at is that \cite{Lee_1}:
+
+\begin{equation}
+	\Delta m \lesssim s_\delta^{2 - \tau} \sim N^{-\delta (\tau - 2) / (\tau - 1)}
+\end{equation}
+
+Plugging in our obtained values of $\delta$ and $\tau$ we find that $\Delta m \lesssim N^{-0.056}$, which implies that the transition of the stochastic edge acceptance model is continuous like other local information based models.
+Fig. \ref{fig:delta_m_scaling} shows $\log_2(\Delta m)$ versus $\log_2(N)$ and fitting a line we observe a decay exponent of $-0.152(2)$ and verify that this is indeed below the upper bound we arrived at.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=350pt, clip]{images/delta_m_scaling.png}
+	\caption{Plotting the change in the order parameter versus the system size on a $\log_2-\log_2$ scale shows that it is clearly below the upper bound we found.}
+	\label{fig:delta_m_scaling}
+\end{figure}
+
+
+
+%---------------------------------------------------------------------------------------
+% Possible Future Directions
+%---------------------------------------------------------------------------------------
+\subsection{Possible Future Directions}
+There are many different avenues we could go down in the future to further the analysis presented here and in the referenced sources.
+The most obvious are studying $q$-edge models for $q \ge 3$ and seeing how the system behaves as $q$ changes, as well as looking at systems other than random networks, such as a lattice.
+As a sneak peak, the Figs. below illustrate how the order parameter changes in these scenarios.
+
+Fig. \ref{fig:q_scaling} shows the order parameter for systems of size $N = 10^6$ and $q \in \{2, 3, ..., 7, 8\}$. As we can see, increasing the number of edges evaluated delays the transition even longer, which makes sense from a practical standpoint since at each step there are more possibilities to not choose an edge which would increase the size of the largest cluster.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=350pt, clip]{images/q_scaling.png}
+	\caption{Stochastic Edge Acceptance Model Dependence on $q$, $N = 10^6$}
+	\label{fig:q_scaling}
+\end{figure}
 
 Fig. \ref{fig:Lattice2D_ER_BF_PR_SEA_transition} illustrates what happens when we change the graph type to a 2D square lattice allowing only edges between nearest neighbors.
-Changing the graph to be a 2D lattice we see the order parameter shifts to a later point, which makes sense due to the fact that in a two dimensional lattice each point only has four neighbors thus only four possible edges it can be connected with.
+We see that doing so shifts order parameter to a later point, which makes sense due to the fact that in a two dimensional lattice each point only has four neighbors thus only four possible edges it can be connected with.
 
 \begin{figure}[H]
 	\centering
@@ -89,7 +215,7 @@ Changing the graph to be a 2D lattice we see the order parameter shifts to a lat
 	\label{fig:Lattice2D_ER_BF_PR_SEA_transition}
 \end{figure}
 
-Fig. \ref{fig:Lattice3D_ER_BF_PR_SEA_transition} illustrates the case of allowing only nearest neighbor edges on a 3D cubic lattice.
+Fig. \ref{fig:Lattice3D_ER_BF_PR_SEA_transition} illustrates the case of allowing only nearest neighbor edges on a 3D cubic lattice. The transition is delayed longer than that in a random network but is before that in a 2D lattice, which again makes sense because now we have six neighbors with which we can activate edges between.
 
 \begin{figure}[H]
 	\centering

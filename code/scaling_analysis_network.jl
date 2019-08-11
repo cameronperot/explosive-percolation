@@ -132,6 +132,16 @@ plot!(x, y_fit,
 	label=latexstring("\\mathrm{Fit: } $(round(α[1], digits=3)) ($(Int(round(σ[1] * 1e3, digits=0)))) \\cdot \\log_2(N) + $(round(α[2], digits=3)) ($(Int(round(σ[2] * 1e3, digits=0))))"),
 	line=(1, :black, 0.8)
 );
+
+δ = 0.302
+τ = 2.228
+exp_upper_bound = -δ * (τ - 2) / (τ - 1);
+α_upper_bound = [exp_upper_bound, -exp_upper_bound * x[1] + y[1]]
+plot!(x, f_linear(x, α_upper_bound),
+	label=latexstring("\\mathrm{Upper Bound: } \\sim $(round(exp_upper_bound, digits=3)) \\cdot \\log_2(N)"),
+	line=(1, :black, :dash)
+);
+
 scatter!(x, y,
 	label="Ensemble Average",
 	markerstrokecolor=:black,
@@ -139,6 +149,7 @@ scatter!(x, y,
 	xaxis=(L"\log_2 (N)", 15:1:24),
 	yaxis=(L"\log_2 (\Delta m)", (-3.8, -2), -3.8:0.2:-2)
 );
+
 
 if save_bool
 	savefig(plot_, joinpath(savepath, "delta_m_scaling.png"))
