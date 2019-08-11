@@ -39,13 +39,13 @@ In physics we often encounter systems which have different properties depending 
 Thus we are interested in how the system behaves around the critical point.
 A phase transition is usually characterized by an order parameter, which is a variable that is zero in one phase and non-zero in the other, giving us the ability to distinguish phases and identify phase transitions.
 
-In percolation theory we define the order parameter as the ratio of the largest cluster to the size of the system, i.e. if we have $n$ nodes total and the largest cluster $C$ contains $|C|$ nodes, then the order parameter $m$ is given by:
+In percolation theory we define the order parameter as the ratio of the largest cluster to the size of the system, i.e. if we have $N$ nodes total and the largest cluster $C$ contains $|C|$ nodes, then the order parameter $m$ is given by:
 
 \begin{equation}
 	\label{eqn:order_parameter}
-	m := \frac{|C|}{n}
+	m := \frac{|C|}{N}
 \end{equation}
-Of course the system is usually examined in the thermodynamic limit ($n \rightarrow \infty$), thus $m$ is zero unless there exists a macroscopic cluster.
+Of course the system is usually examined in the thermodynamic limit ($N \rightarrow \infty$), thus $m$ is zero unless there exists a macroscopic cluster.
 
 There are two main types of phase transitions: first- and second-order.
 In a first-order phase transition there is what we call a latent heat, i.e. energy that is either absorbed or emitted during a process where the temperature is fixed, e.g. the transition of water between the solid and liquid phases.
@@ -258,7 +258,7 @@ Fig. \ref{fig:Ising_percolation} was generated using the Wolff single cluster al
 Percolation can also be observed on networks, so we will now discuss some of the basic ideas behind network percolation as a segue to the next section.
 In the late 1950s and early 1960s Paul Erdős and Alfréd Rényi published several papers on random networks, leading to the creation of what is known today as the Erdős-Rényi model (ER) \cite{ER_1} \cite{ER_2}.
 
-To get an idea of how it works we imagine a graph starting with a set of $n$ disconnected nodes at $t = 0$, giving us ${n \choose 2}$ possible connections between them.
+To get an idea of how it works we imagine a graph starting with a set of $N$ disconnected nodes at $t = 0$, giving us ${N \choose 2}$ possible connections between them.
 Then at each step in the evolution process two nodes are chosen at random and connected by an edge, thus after $t$ steps there are a total $t$ edges present in the graph.
 
 A cluster on a random network is a set of nodes connected by edges, either directly or indirectly.
@@ -269,10 +269,10 @@ In a graph where each connection is equally probable, the probability that the f
 Therefore, there is a higher probability that the first cluster rather than the second merges with the third and we conclude that $\Phi_1 > \Phi_2$.
 
 In the a network, percolation occurs when a giant (macroscopically large) cluster appears.
-The order parameter here is defined as the largest cluster size divided by the network size, i.e. $|C| / n$.
-Let $n$ be the number of nodes, $t$ be the number of edges present in the graph, and take $r = t/n$.
+The order parameter here is defined as the largest cluster size divided by the network size, i.e. $|C| / N$.
+Let $N$ be the number of nodes, $t$ be the number of edges present in the graph, and take $r = t/N$.
 If $r > 0.5$ then there will exist a percolating cluster within the graph, but not if $r < 0.5$ \cite{ER_2}, thus $r_c = 0.5$ is the critical point where the system transitions from the disconnected state to the state of large scale connectivity.
-Letting $|C|$ be the size of the largest cluster, it can be shown that for $r < 0.5$ the largest cluster size scales as $C \sim \log n$, and for $r > 0.5$ $C \sim n$, and more specifically if $r \gtrsim 0.5$ one finds $C \approx (4r - 2)n$ \cite{ER_2}.
+Letting $|C|$ be the size of the largest cluster, it can be shown that for $r < 0.5$ the largest cluster size scales as $C \sim \log N$, and for $r > 0.5$ $C \sim N$, and more specifically if $r \gtrsim 0.5$ one finds $C \approx (4r - 2)N$ \cite{ER_2}.
 Therefore, the ER model exhibits a continuous phase transition when the number of edges exceeds half the number of nodes in the graph.
 Looking at Fig. \ref{fig:ER_transition} we can see that the order parameter is zero up until $r = 0.5$ when it transitions to the state of large scale connectivity.
 

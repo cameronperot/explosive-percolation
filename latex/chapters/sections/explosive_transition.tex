@@ -15,10 +15,10 @@ For certain evolution processes it has been heavily debated whether or not the p
 % A Selective Process
 %---------------------------------------------------------------------------------------
 \subsection{A Selective Process}
-This all started in the year 2000 when Dimitris Achlioptas raised an interesting question about how a graph of $n$ nodes would evolve under certain conditions \cite{BF}.
+This all started in the year 2000 when Dimitris Achlioptas raised an interesting question about how a graph of $N$ nodes would evolve under certain conditions \cite{BF}.
 First we suppose that at each step $t$ in the evolution process two edges $e_t$ and $e_t'$ are evaluated, but only one of them is selected to be added to the graph.
 Which of the proposed edges is selected is based only on the information contained in $e_1, e_1', ... e_{t-1}, e_{t-1}'$.
-Does there exist an algorithm for adding edges to the graph such that with high probability a giant component does not appear until $t/n > 0.5$?
+Does there exist an algorithm for adding edges to the graph such that with high probability a giant component does not appear until $t/N > 0.5$?
 This process of evaluating $m \ge 2$ edges at each step is now referred to as an $q$-edge Achlioptas process.
 In the next few sections we will see how a small change to the way edges are added can have a big impact on the evolution of the system.
 
@@ -35,7 +35,7 @@ This can be seen in Fig. \ref{fig:ER_BF_transition} where the order parameter fo
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=350pt]{images/Network_ER_BF_1e6_order_param.png}
-	\caption{Bohman-Frieze Model Order Parameter, $n = 10^6$}
+	\caption{Bohman-Frieze Model Order Parameter, $N = 10^6$}
 	\label{fig:ER_BF_transition}
 \end{figure}
 
@@ -72,7 +72,7 @@ A form of the algorithm can be written in pseudocode as follows:
 
 A few years after their original paper, Bohman and Frieze published another paper with Nicholas Wormald titled "Avoidance of a giant component in half the edge set of a random graph" \cite{BFW}.
 In this paper they designed a new algorithm (BFW) for adding edges to a graph that runs in phases beginning at $k = 2$.
-Starting with $n$ isolated nodes, edges are randomly/uniformly sampled and evaluated one at a time.
+Starting with $N$ isolated nodes, edges are randomly/uniformly sampled and evaluated one at a time.
 If the edge being evaluated would create a cluster of size less than or equal to $k$ then the edge is accepted, otherwise the edge is rejected.
 If edge is rejected and the ratio of accepted edges is less than the function $g(k) = 1/2 + \sqrt{1/(2k)}$, then the algorithm moves to the next phase.
 
@@ -164,13 +164,13 @@ Not long after the critical point is reached the order parameter appears to jump
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=350pt]{images/Network_ER_BF_PR_1e6_order_param.png}
-	\caption{Product Rule Model Order Parameter, $n = 10^6$}
+	\caption{Product Rule Model Order Parameter, $N = 10^6$}
 	\label{fig:ER_BF_PR_transition}
 \end{figure}
 
-In their paper they analyzed the scaling behavior of their model, defining the quantity $\Delta := t_1 - t_0$, where $t_0$ is the last step where $C < n^{1/2}$ and $t_1$ is the first step where $C > 0.5n$.
-$\Delta$ is linear in $n$ for continuous transitions (i.e. an extensive quantity), however, their analysis indicated otherwise that $\Delta < 2n^{2/3}$ and $\Delta / n^{2/3} \rightarrow 1$ in their simulations for sizes up to $6.4 \cdot 10^7$.
-To arrive at these results they took an ensemble average of 50 different independent and identically distributed observations and fit a curve to determine the relation between $\Delta$ and $n$.
+In their paper they analyzed the scaling behavior of their model, defining the quantity $\Delta := t_1 - t_0$, where $t_0$ is the last step where $C < N^{1/2}$ and $t_1$ is the first step where $C > 0.5N$.
+$\Delta$ is linear in $N$ for continuous transitions (i.e. an extensive quantity), however, their analysis indicated otherwise that $\Delta < 2N^{2/3}$ and $\Delta / N^{2/3} \rightarrow 1$ in their simulations for sizes up to $6.4 \cdot 10^7$.
+To arrive at these results they took an ensemble average of 50 different independent and identically distributed observations and fit a curve to determine the relation between $\Delta$ and $N$.
 Their findings are illustrated in Fig. \ref{fig:achlioptas_plots}.
 
 \begin{figure}[H]
@@ -220,12 +220,12 @@ Furthermore they finish their paper by stating that the BFW model is strongly di
 
 \subsubsection{Continuity With Unusual Finite-Size Scaling Behavior}
 In 2011 Grassberger et al. published "Explosive Percolation is Continuous, but with Unusual Finite Size Behavior" \cite{Grassberger_1} in which they studied the phase transitions of four different Achlioptas processes.
-They specifically look at the distribution $P_{r, n}(m)$ of the order parameter $m = |C| / n$, and at criticality it scales as:
+They specifically look at the distribution $P_{r, N}(m)$ of the order parameter $m = |C| / N$, and at criticality it scales as:
 
 \begin{equation}
-	P_{r=r_c, n}(m) \sim n^\eta f(m n^\eta)
+	P_{r=r_c, N}(m) \sim N^\eta f(m N^\eta)
 \end{equation}
-In the Ising model (continuous transition) the function $f(z)$ has two peaks and as $n \rightarrow \infty$ the peaks move closer together to form a single peak, whereas in a first order transition $f(z)$ is double peaked and the peaks move further apart as $n \rightarrow \infty$.
+In the Ising model (continuous transition) the function $f(z)$ has two peaks and as $N \rightarrow \infty$ the peaks move closer together to form a single peak, whereas in a first order transition $f(z)$ is double peaked and the peaks move further apart as $N \rightarrow \infty$.
 The finite size scaling of $\langle m \rangle$ is given by:
 
 \begin{equation}
@@ -236,11 +236,11 @@ $g(z)$ is analytic for all $z \in \mathbb{R}$.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=350pt]{images/grassberger_scaling.png}
-	\caption{Scaling of $P_{r=r_c, n}(m)$, Source: \cite{Grassberger_1}}
+	\caption{Scaling of $P_{r=r_c, N}(m)$, Source: \cite{Grassberger_1}}
 	\label{fig:grassberger_scaling}
 \end{figure}
 
-Their results, shown in Fig. \ref{fig:grassberger_scaling} showed that $P_{r=r_c, n}(m)$ was indeed double peaked, however, they say that this does not prove it is continuous, rather it reflects how abruptly the system transitions.
+Their results, shown in Fig. \ref{fig:grassberger_scaling} showed that $P_{r=r_c, N}(m)$ was indeed double peaked, however, they say that this does not prove it is continuous, rather it reflects how abruptly the system transitions.
 They then go on to show (through the use of FSS of $\langle m \rangle$) that the transitions of the studied four models are indeed continuous, yet are each in a different universality class and all exhibit unusual finite size scaling behavior.
 
 
@@ -250,17 +250,17 @@ The 2011 paper "Continuity of the Explosive Percolation Transition" \cite{Lee_1}
 They use a fairly straightforward method for determining the continuity of the transition:
 
 \begin{enumerate}
-	\item Set $t_0(n) < t_c$ and $t_1(n) > t_c$ with the expectation that as $n \rightarrow \infty$, $t_0 \rightarrow t_c$ and $t_1 \rightarrow t_c$.
+	\item Set $t_0(N) < t_c$ and $t_1(N) > t_c$ with the expectation that as $N \rightarrow \infty$, $t_0 \rightarrow t_c$ and $t_1 \rightarrow t_c$.
 	\item Find an upper bound for the change in the largest cluster size $\Delta |C|$.
-	\item Show that $\Delta |C|$ scales sublinearly with $n$.
+	\item Show that $\Delta |C|$ scales sublinearly with $N$.
 \end{enumerate}
 
 Near the end they arrive at:
 
 \begin{equation}
-	\Delta m = \frac{\Delta |C|}{n} \lesssim n^{-0.022}
+	\Delta m = \frac{\Delta |C|}{N} \lesssim N^{-0.022}
 \end{equation}
-Which means that as $n \rightarrow \infty$, $\Delta m \rightarrow 0$ and they conclude that the transition is indeed continuous.
+Which means that as $N \rightarrow \infty$, $\Delta m \rightarrow 0$ and they conclude that the transition is indeed continuous.
 
 
 
