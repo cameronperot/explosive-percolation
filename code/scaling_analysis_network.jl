@@ -14,7 +14,7 @@ evolution_method = "stochastic_edge_acceptance";
 data_file = string(path, graph_type, "_", evolution_method, ".csv");
 
 savepath = "/home/user/thesis/latex/images"
-save_bool = false
+save_bool = true
 dpi = 144
 if save_bool
 	dpi = 300
@@ -56,14 +56,14 @@ plot_ = plot(legend=:right, dpi=dpi);
 plot!(log2.(df[:, :N]), df[:, :r_0_mean], yerror=df[:, :r_0_std],
 	label=L"t_0/N",
 	line=(1, :black, 0.8),
-	marker=(5, :dodgerblue, :circle, 0.8, stroke(:dodgerblue)),
+	marker=(5, :dodgerblue, :circle, stroke(:dodgerblue)),
 	xaxis=(latexstring("\\log_2 (N)"), (x_min-border, x_max+border), x_min:Δ_x:x_max),
 	yaxis=(latexstring("t/N"), (y_min, y_max), y_min:Δ_y:y_max)
 );
 plot!(log2.(df[:, :N]), df[:, :r_1_mean], yerror=df[:, :r_1_std],
 	label=L"t_1/N",
 	line=(1, :black, 0.8),
-	marker=(5, :firebrick1, :circle, 0.8, stroke(:firebrick1)),
+	marker=(5, :firebrick1, :circle, stroke(:firebrick1)),
 );
 
 if save_bool
@@ -73,8 +73,7 @@ end
 plot_
 
 
-# %% plotting and fitting Δm
-
+# %% plotting and fitting Δr
 
 
 @. function f_linear(x, α)
@@ -93,15 +92,15 @@ y_fit = f_linear(x, fit.param);
 
 plot_ = plot(dpi=dpi);
 plot!(x, y_fit,
-	label=latexstring("$(round(α[1], digits=3)) ($(Int(round(σ[1] * 1e3, digits=0)))) \\cdot \\log_2(N) + $(round(α[2], digits=3)) ($(Int(round(σ[2] * 1e3, digits=0))))"),
+	label=latexstring("\\mathrm{Fit: } $(round(α[1], digits=3)) ($(Int(round(σ[1] * 1e3, digits=0)))) \\cdot \\log_2(N) + $(round(α[2], digits=3)) ($(Int(round(σ[2] * 1e3, digits=0))))"),
 	line=(1, :black, 0.8)
 );
 scatter!(x, y,
-	label="Observed",
+	label="Ensemble Average",
 	markerstrokecolor=:black,
-	marker=(6, :dodgerblue, :circle, 0.8, stroke(:dodgerblue)),
+	marker=(6, :dodgerblue, :circle, stroke(:dodgerblue)),
 	xaxis=(L"\log_2 (N)", 15:1:24),
-	yaxis=(L"\log_2 (\Delta m)", (-3.8, -2), -3.8:0.2:-2)
+	yaxis=(L"\log_2 (\Delta r)", (-8, -4.5))
 );
 
 if save_bool
@@ -130,13 +129,13 @@ y_fit = f_linear(x, fit.param);
 
 plot_ = plot(dpi=dpi);
 plot!(x, y_fit,
-	label=latexstring("$(round(α[1], digits=3)) ($(Int(round(σ[1] * 1e3, digits=0)))) \\cdot \\log_2(N) + $(round(α[2], digits=3)) ($(Int(round(σ[2] * 1e3, digits=0))))"),
+	label=latexstring("\\mathrm{Fit: } $(round(α[1], digits=3)) ($(Int(round(σ[1] * 1e3, digits=0)))) \\cdot \\log_2(N) + $(round(α[2], digits=3)) ($(Int(round(σ[2] * 1e3, digits=0))))"),
 	line=(1, :black, 0.8)
 );
 scatter!(x, y,
-	label="Observed",
+	label="Ensemble Average",
 	markerstrokecolor=:black,
-	marker=(6, :dodgerblue, :circle, 0.8, stroke(:dodgerblue)),
+	marker=(6, :dodgerblue, :circle, stroke(:dodgerblue)),
 	xaxis=(L"\log_2 (N)", 15:1:24),
 	yaxis=(L"\log_2 (\Delta m)", (-3.8, -2), -3.8:0.2:-2)
 );

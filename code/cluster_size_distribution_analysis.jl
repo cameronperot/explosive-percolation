@@ -10,7 +10,7 @@ using JLD
 
 data_dir = "/home/user/thesis/data/scaling";
 savepath = "/home/user/thesis/latex/images";
-save_bool = true
+save_bool = false
 dpi = 144
 if save_bool
 	dpi = 300
@@ -117,6 +117,7 @@ end
 end
 
 αs    = [];
+σs    = [];
 ratio = 0.1;
 for N in Ns
 	d = distribution_avg[N];
@@ -127,6 +128,7 @@ for N in Ns
 	y = y[order][1:Int(floor(ratio * length(y)))];
 	fit = curve_fit(f_linear, x, y, [-0.1, 0])
 	push!(αs, fit.param)
+	push!(σs, stderror(fit))
 end
 
 α = sum(αs) / length(αs)
@@ -172,7 +174,7 @@ for i in 1:length(Ns)
 		marker=(2, colors[i], markers[i], 0.8, stroke(colors[i])),
 		label=latexstring("N = 2^{$(Int(log2(N)))}"),
 	)
-	annotate!(-2, 0, text(latexstring("\\tau = $(round(τ, digits=3))")))
+	annotate!(-2, 0, text(latexstring("\\tau \\approx $(round(τ, digits=3))")))
 end
 
 if save_bool
@@ -185,7 +187,7 @@ plot_a
 # %% Plot FSS collapse under
 
 
-τ_under = τ - 0.1
+τ_under = τ - 0.05
 distribution_avg = distribution_avgs["t_0"]
 plot_b = plot(dpi=dpi);
 Ns = sort(collect(keys(distribution_avg)));
@@ -207,7 +209,7 @@ for i in 1:length(Ns)
 		marker=(2, colors[i], markers[i], 0.8, stroke(colors[i])),
 		label=latexstring("N = 2^{$(Int(log2(N)))}"),
 	)
-	annotate!(-2, 0, text(latexstring("\\tau = $(round(τ_under, digits=3))")))
+	annotate!(-2, 0, text(latexstring("\\tau - 0.05")))
 end
 
 if save_bool
@@ -220,7 +222,7 @@ plot_b
 # %% Plot FSS collapse over
 
 
-τ_over = τ + 0.1
+τ_over = τ + 0.05
 distribution_avg = distribution_avgs["t_0"]
 plot_c = plot(dpi=dpi);
 Ns = sort(collect(keys(distribution_avg)));
@@ -242,7 +244,7 @@ for i in 1:length(Ns)
 		marker=(2, colors[i], markers[i], 0.8, stroke(colors[i])),
 		label=latexstring("N = 2^{$(Int(log2(N)))}"),
 	)
-	annotate!(-2, 0, text(latexstring("\\tau = $(round(τ_over, digits=3))")))
+	annotate!(-2, 0, text(latexstring("\\tau + 0.05")))
 end
 
 if save_bool
