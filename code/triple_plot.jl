@@ -1,4 +1,4 @@
-path = "/home/user/rsync/education/uni-leipzig/semester-6/thesis/code/GraphEvolve.jl/src";
+path = "/home/user/GraphEvolve.jl/src";
 	push!(LOAD_PATH, path);
 	using GraphEvolve;
 	using Revise
@@ -15,49 +15,48 @@ path = "/home/user/rsync/education/uni-leipzig/semester-6/thesis/code/GraphEvolv
 
 savepath = "/home/user/rsync/education/uni-leipzig/semester-6/thesis/latex/images/";
 dpi = 144
-n = 10^6;
-n_steps = Int(1.5n);
+N = 10^6;
+n_steps = Int(1.5N);
 
 # %%
 
-@time g = Network(n);
+@time g = Network(N);
 @time stochastic_edge_acceptance!(g, n_steps);
 O = g.observables;
-O.Δ_method_2
 
 # %%
 
-x = collect(0:n_steps) ./ n;
-y = O.largest_cluster_size ./ n;
+x = collect(0:n_steps) ./ N;
+y = O.largest_cluster_size ./ N;
 plot_largest_cluster_size = plot(legend=:right, dpi=dpi);
 scatter!(x, y,
 	legend=false,
 	marker=(2, :dodgerblue, :circle, stroke(0)),
-	xaxis=(latexstring("r"), (0, 1.5), 0:0.5:1.5),
-	yaxis=(latexstring("|C|/n"), (0, 1), 0:0.2:1)
+	xaxis=(latexstring("t/N"), (0, 1.5), 0:0.5:1.5),
+	yaxis=(latexstring("|C|/N"), (0, 1), 0:0.2:1)
 )
 
 # %%
 
-x = collect(0:n_steps) ./ n;
+x = collect(0:n_steps) ./ N;
 y = O.heterogeneity;
 plot_heterogeneity = plot(legend=:right, dpi=dpi);
 scatter!(x, y,
 	legend=false,
 	marker=(2, :dodgerblue, :circle, stroke(0)),
-	xaxis=(latexstring("r"), (0, 1.5), 0:0.5:1.5),
+	xaxis=(latexstring("t/N"), (0, 1.5), 0:0.5:1.5),
 	yaxis=(latexstring("H"))
 )
 
 # %%
 
-x = collect(0:n_steps) ./ n;
+x = collect(0:n_steps) ./ N;
 y = O.avg_cluster_size;
 plot_avg_cluster_size = plot(legend=:right, dpi=dpi);
 scatter!(x, y,
 	legend=false,
 	marker=(2, :dodgerblue, :circle, stroke(0)),
-	xaxis=(latexstring("r"), (0, 1.5), 0:0.5:1.5),
+	xaxis=(latexstring("t/N"), (0, 1.5), 0:0.5:1.5),
 	yaxis=(latexstring("\\overline{s}"), (0, 10), 0:2:10)
 )
 
