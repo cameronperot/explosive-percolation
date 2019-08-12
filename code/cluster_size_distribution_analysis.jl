@@ -10,7 +10,7 @@ using JLD
 
 data_dir = "/home/user/thesis/data/scaling";
 savepath = "/home/user/thesis/latex/images";
-save_bool = false
+save_bool = true
 dpi = 144
 if save_bool
 	dpi = 300
@@ -57,7 +57,7 @@ end
 
 αs    = [];
 ratio = 0.01;
-for N in Ns
+for N in Ns[6:end]
 	d = distribution_avg[N];
 	x = log10.(collect(keys(d)));
 	y = log10.(collect(values(d)));
@@ -69,18 +69,20 @@ for N in Ns
 end
 
 α = sum(αs) / length(αs)
+τ₀ = -α[1]
 
-x = 0:0.1:2.5
-collect(x)
-y = f_linear(x, α .+ [0, -0.5])
-collect(y)
+d = distribution_avg[2^24];
+x = log10.(collect(keys(d)));
+order = sortperm(x);
+x = x[order][1:Int(floor(ratio * length(x)))];
+y = f_linear(x, α .+ [0, -0.5]);
 plot!(x, y,
 	label=latexstring("\\sim $(round(α[1], digits=3)) \\cdot \\log (s)"),
 	line=(1, :black),
 )
 
 if save_bool
-	savefig(plot_0, joinpath(savepath, "n_s_t_0.png"))
+	savefig(plot_0, joinpath(savepath, "n_s_t_0.png"));
 end
 
 plot_0
@@ -118,8 +120,8 @@ end
 
 αs    = [];
 σs    = [];
-ratio = 0.1;
-for N in Ns
+ratio = 0.10;
+for N in Ns[6:end]
 	d = distribution_avg[N];
 	x = log10.(collect(keys(d)) ./ N);
 	y = log10.(collect(values(d)));
@@ -132,25 +134,26 @@ for N in Ns
 end
 
 α = sum(αs) / length(αs)
-τ = -α[1]
+τ₁ = -α[1]
 
-x = -7.5:0.1:-4
-collect(x)
-y = f_linear(x, α .+ [0, -3.7])
-collect(y)
+d = distribution_avg[2^24];
+x = log10.(collect(keys(d)) ./ 2^24);
+order = sortperm(x);
+x = x[order][1:Int(floor(ratio * length(x)))];
+y = f_linear(x, α .+ [0, -2])
 plot!(x, y,
 	label=latexstring("\\sim $(round(α[1], digits=3)) \\cdot \\log(s/N)"),
 	line=(1, :black),
 )
 
 if save_bool
-	savefig(plot_1, joinpath(savepath, "n_s_t_1.png"))
+	savefig(plot_1, joinpath(savepath, "n_s_t_1.png"));
 end
 
 plot_1
 
 
-# %% Plot FSS collapse
+# %% Plot FSS collapse for τ₁
 
 
 distribution_avg = distribution_avgs["t_0"]
@@ -165,8 +168,8 @@ for i in 1:length(Ns)
 	distribution = distribution_avg[N]
 	s = collect(keys(distribution))
 	n_s = collect(values(distribution))
-	x = log10.(s ./ N^(1/τ))
-	y = log10.(s.^τ .* n_s)
+	x = log10.(s ./ N^(1/τ₁))
+	y = log10.(s.^τ₁ .* n_s)
 	scatter!(x, y,
 		legend=:topleft,
 		xaxis=(L"\log_{10} (s / N^{1/\tau})", (-4, 2), -4:1:2),
@@ -174,20 +177,19 @@ for i in 1:length(Ns)
 		marker=(2, colors[i], markers[i], 0.8, stroke(colors[i])),
 		label=latexstring("N = 2^{$(Int(log2(N)))}"),
 	)
-	annotate!(-2, 0, text(latexstring("\\tau \\approx $(round(τ, digits=3))")))
+	annotate!(-2, 0, text(latexstring("\\tau_1 \\approx $(round(τ₁, digits=3))")))
 end
 
 if save_bool
-	savefig(plot_a, joinpath(savepath, "fss_collapse.png"))
+	savefig(plot_a, joinpath(savepath, "fss_collapse.png"));
 end
 
 plot_a
 
 
-# %% Plot FSS collapse under
+# %% Plot FSS collapse for τ₀
 
 
-τ_under = τ - 0.05
 distribution_avg = distribution_avgs["t_0"]
 plot_b = plot(dpi=dpi);
 Ns = sort(collect(keys(distribution_avg)));
@@ -200,8 +202,8 @@ for i in 1:length(Ns)
 	distribution = distribution_avg[N]
 	s = collect(keys(distribution))
 	n_s = collect(values(distribution))
-	x = log10.(s ./ N^(1/τ_under))
-	y = log10.(s.^τ_under .* n_s)
+	x = log10.(s ./ N^(1/τ₀))
+	y = log10.(s.^τ₀ .* n_s)
 	scatter!(x, y,
 		legend=false,
 		xaxis=(L"\log_{10} (s / N^{1/\tau})", (-4, 2), -4:1:2),
@@ -209,20 +211,16 @@ for i in 1:length(Ns)
 		marker=(2, colors[i], markers[i], 0.8, stroke(colors[i])),
 		label=latexstring("N = 2^{$(Int(log2(N)))}"),
 	)
-	annotate!(-2, 0, text(latexstring("\\tau - 0.05")))
-end
-
-if save_bool
-	savefig(plot_b, joinpath(savepath, "fss_collapse_under.png"))
+	annotate!(-2, 0, text(latexstring("\\tau_0 \\approx $(round(τ₀, digits=3))")))
 end
 
 plot_b
 
 
-# %% Plot FSS collapse over
+# %% Plot FSS collapse for τ₀
 
 
-τ_over = τ + 0.05
+τ_ref = τ₁ + 0.05
 distribution_avg = distribution_avgs["t_0"]
 plot_c = plot(dpi=dpi);
 Ns = sort(collect(keys(distribution_avg)));
@@ -235,8 +233,8 @@ for i in 1:length(Ns)
 	distribution = distribution_avg[N]
 	s = collect(keys(distribution))
 	n_s = collect(values(distribution))
-	x = log10.(s ./ N^(1/τ_over))
-	y = log10.(s.^τ_over .* n_s)
+	x = log10.(s ./ N^(1/τ_ref))
+	y = log10.(s.^τ_ref .* n_s)
 	scatter!(x, y,
 		legend=false,
 		xaxis=(L"\log_{10} (s / N^{1/\tau})", (-4, 2), -4:1:2),
@@ -244,11 +242,7 @@ for i in 1:length(Ns)
 		marker=(2, colors[i], markers[i], 0.8, stroke(colors[i])),
 		label=latexstring("N = 2^{$(Int(log2(N)))}"),
 	)
-	annotate!(-2, 0, text(latexstring("\\tau + 0.05")))
-end
-
-if save_bool
-	savefig(plot_c, joinpath(savepath, "fss_collapse_over.png"))
+	annotate!(-2, 0, text(latexstring("\\tau_1 + 0.05")))
 end
 
 plot_c
@@ -258,10 +252,10 @@ plot_c
 
 
 l = @layout [a{0.6h}; [b{0.5w} c]]
-plot_triple = plot(plot_a, plot_b, plot_c, layout=l, size=(900, 600))
+plot_triple = plot(plot_a, plot_b, plot_c, layout=l, size=(800, 600))
 
 if save_bool
-	savefig(plot_triple, joinpath(savepath, "fss_collapse_comparison.png"))
+	savefig(plot_triple, joinpath(savepath, "fss_collapse_triple.png"));
 end
 
 plot_triple

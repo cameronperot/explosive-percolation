@@ -14,7 +14,7 @@ using Dates
 
 
 function plot_Network(N, qs, evolution_method, savepath)
-	colors = RGB[cgrad(:plasma)[z] for z=range(0, stop=1, length=length(qs))]
+	colors = RGB[cgrad(:viridis)[z] for z=range(0, stop=1, length=length(qs))]
 	reverse!(colors)
 	markers = filter((m->begin m in Plots.supported_markers() end), Plots._shape_keys)
 
@@ -29,7 +29,7 @@ function plot_Network(N, qs, evolution_method, savepath)
 	plot_H = plot(dpi=300,
 		legend=false,
 		xaxis=(L"t/N", (0, 1.5), 0:0.5:1.5),
-		yaxis=(L"H/N"), (0, 0.004))
+		yaxis=(L"H/N"), (0, 0.001))
 
 	for (i, q) in enumerate(qs)
 		t₀ = now()
@@ -53,18 +53,11 @@ function plot_Network(N, qs, evolution_method, savepath)
 		println("q = $(q), time to run: $(runtime)s")
 	end
 
-	savefig(plot_C, joinpath(savepath, "q_scaling.png"))
+	savefig(plot_C, joinpath(savepath, "q_scaling_m.png"))
 
 	l = @layout [a{0.6h}; [b{0.5w} c]]
-	plot_ = plot(plot_C, plot_H, plot_S, layout=l)
-	savefig(plot_,
-		joinpath(savepath,
-			string("Network_",
-				replace(replace(string(evolution_method), "GraphEvolve." => ""), "!" => ""),
-				"_q.png"
-			)
-		)
-	)
+	plot_ = plot(plot_C, plot_H, plot_S, layout=l, size=(800, 600))
+	savefig(plot_, joinpath(savepath, "q_scaling_triple.png"))
 end
 
 

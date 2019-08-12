@@ -38,34 +38,29 @@ function plot_Network(Ns, evolution_method, savepath)
 		evolution_method(g, Int(floor(1.5N)))
 
 		n_string = @sprintf("%.1e", N)
-		n_string = Int(log2(N))
+		k = Int(log2(N))
 		x = collect(0:g.t) ./ N
 
 		scatter!(plot_C, x, g.observables.largest_cluster_size ./ N,
-			label=latexstring("\$\\log_2 N = $(n_string)\$"),
+			label=latexstring("N = 2^{$(k)}"),
 			marker=(2, colors[i], markers[i], 0.8, stroke(colors[i])))
 		scatter!(plot_S, x, g.observables.avg_cluster_size,
-			label=latexstring("\$\\log_2 N = $(n_string)\$"),
+			label=latexstring("N = 2^{$(k)}"),
 			marker=(2, colors[i], markers[i], 0.8, stroke(colors[i])))
 		scatter!(plot_H, x, g.observables.heterogeneity ./ N,
-			label=latexstring("\$\\log_2 N = $(n_string)\$"),
+			label=latexstring("N = 2^{$(k)}"),
 			marker=(2, colors[i], markers[i], 0.8, stroke(colors[i])))
 
 		t₁ = now()
 		runtime = Dates.value(t₁ - t₀) / 1000
-		println("k = $(n_string), time to run: $(runtime)s")
+		println("k = $(k), time to run: $(runtime)s")
 	end
 
+	savefig(plot_C, joinpath(savepath, "k_scaling_m.png"))
+
 	l = @layout [a{0.6h}; [b{0.5w} c]]
-	plot_ = plot(plot_C, plot_H, plot_S, layout=l)
-	savefig(plot_,
-		joinpath(savepath,
-			string("Network_",
-				replace(replace(string(evolution_method), "GraphEvolve." => ""), "!" => ""),
-				"_observables.png"
-			)
-		)
-	)
+	plot_ = plot(plot_C, plot_H, plot_S, layout=l, size=(800, 600))
+	savefig(plot_, joinpath(savepath, "k_scaling_triple.png"))
 end
 
 
