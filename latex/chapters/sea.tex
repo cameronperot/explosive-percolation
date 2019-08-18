@@ -19,7 +19,7 @@ A form of the algorithm for $q = 2$ can be written in pseudocode as follows:
 	\item Let $A_t = \{e_1, e_2, ..., e_t\}$ be the set of accepted edges at step $t$.
 	\item Let $e_t^1$ and $e_t^2$ be the two nodes which edge $e_t$ would connect.
 	\item Let $C(e_t^i)$ be the cluster which $e_t^i$ belongs to.
-	\item Let $C(e_t)$ be the cluster which would be formed by activating $e_t$.
+	\item Let $C(e_t) = C(e_t^1) \cup C(e_t^2)$ be the cluster which would be formed by activating $e_t$.
 	\item Let $R \in [0, 1)$ be a randomly generated number.
 \end{itemize}
 
@@ -56,8 +56,8 @@ The $q$-edge algorithm is similar except it would use a cumulative probability $
 %---------------------------------------------------------------------------------------
 % Simulation and Analysis
 %---------------------------------------------------------------------------------------
-\subsection{Simulation and Analysis}
-All data in this section was generated using GraphEvolve.jl (see appendix for more information).
+\section{Simulation and Analysis}
+All data in this section was generated using GraphEvolve.jl (see Appendix \ref{ch:appendix} for more information).
 Random networks of sizes $2^k$, $k \in \{15, 16, ..., 24\}$ were studied, and for each system size 1000 simulations were run with different random number generator seed values.
 It would be ideal to run simulations for larger system sizes to get a more representative sample, and is something which can be investigated further in the future.
 All code and the associated generated data used for this is publicly available on the corresponding GitHub page \url{https://github.com/cameronperot/explosive-percolation}.
@@ -76,15 +76,15 @@ The order parameter shows a sharp increase at the point of phase transition with
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=350pt, clip]{images/k_scaling_triple.png}
-	\caption{Observables dependence on system size. $H$ is the cluster heterogeneity and $\overline{s}$ is the average cluster size. As the system size increases the the peak of the heterogeneity per node $H/N$ decreases and moves towards the right. The average cluster size lines up for all system sizes.}
+	\caption{Observable dependence on system size. $H$ is the cluster heterogeneity and $\overline{s}$ is the average cluster size. As the system size increases the the peak of the heterogeneity per node $H/N$ decreases and moves towards the right. The average cluster size lines up for all system sizes.}
 	\label{fig:k_scaling_triple}
 \end{figure}
 
 Now that we've seen it exhibits interesting behavior at the point of phase transition we would like to learn more such as where does it transition, and most importantly, is it continuous?
 In order to answer these questions we will use the framework laid out in \cite{Lee_1}.
 First we need to find two points, one before the transition ($t_0$) and one after the transition ($t_1$).
-We set $t_0$ as the point at which the cluster heterogeneity peaks, i.e. when the number of unique cluster sizes is at its highest.
-We set $t_1$ as the point at which the order parameter experiences its largest increase.
+We set $t_0$ as the step at which the cluster heterogeneity peaks, i.e. when the number of unique cluster sizes is at its highest.
+We set $t_1$ as the step after the order parameter experiences its largest increase.
 Let $r_i = t_i / N$ represent the relative number of edges in the system at step $t_i$ (because at step $t_i$ there are $t_i$ edges present in the graph), and $m_i = m(r_i)$ be the order parameter at step $t_i$.
 We will define two quantities which we would like to study the behavior of:
 
@@ -131,7 +131,7 @@ We first start by analyzing the distribution at $t_0$, shown in Fig. \ref{fig:n_
 	\label{fig:n_s_t_0}
 \end{figure}
 When plotted on a $\log_{10}-\log_{10}$ basis we see a linear relationship up to a certain cutoff cluster size $s_f$ where $n_s(t_0)$ then drops off exponentially.
-Large statistical errors are visible for higher values of $s$, but nevertheless the overall message of the plot is clear.
+Large statistical errors are visible for higher values of $s$, but the overall message of the plot is clear.
 This linear behavior tells us this is a power law in $N$ and using the ansatz:
 
 \begin{equation}
@@ -141,7 +141,7 @@ and performing a linear fit gives us the value of the exponent $\tau_0 \approx 2
 
 Looking at the data for the cluster size distribution at $t_1$ (Fig. \ref{fig:n_s_t_1}) we see a similar power law scaling relation, except with a slightly different exponent $\tau_1 \approx 2.218$.
 I believe the discrepancy in the exponents here is due to the size of the simulations, and that if simulated with larger system sizes (such as up to $2^{37}$ seen in \cite{Lee_1}) that the values would converge towards the true value of $\tau$.
-In Fig. \ref{fig:n_s_t_1} we see $\log_{10}(n_s(t_1))$ versus $\log_{10}(s/N)$ rather than just $\log(s)$, where we again observe this linear scaling up to a point ($s_f$) where it then dips and breaks the linear trend (once again large statistical errors for larger values of $s/N$).
+In Fig. \ref{fig:n_s_t_1} we see $\log_{10}(n_s(t_1))$ versus $\log_{10}(s/N)$ (rather than just $\log(s)$ as in Fig. \ref{fig:n_s_t_0}), where we again observe this linear scaling up to a point where it then dips and breaks the linear trend (again large statistical errors present past the cutoff point).
 
 \begin{figure}[H]
 	\centering
@@ -163,8 +163,8 @@ This can be verified by assuming a single characteristic cluster size and taking
 	n_s(t_0) = s^{-\tau} f(s / s_f) = s^{-\tau} f(s N^{-1 / \tau})
 \end{equation}
 
-Applying this same ideology to the stochastic edge acceptance method works quite well as seen in Fig. \ref{fig:fss_collapse_triple}.
-This verifies that indeed $\tau_1 \approx 2.218$ is a good estimation of $\tau$ as the plot shows that the data for all of the system sizes lines up well and exhibits this hump behavior also seen in \cite{Lee_1}.
+Applying this same ideology to the stochastic edge acceptance method works quite well as seen in Fig. \ref{fig:fss_collapse_triple}, illustrating that the data for all of the system sizes lines up well and exhibits this hump behavior also seen in \cite{Lee_1}.
+This verifies that indeed $\tau_1 \approx 2.218$ is a good estimation of $\tau$.
 The data analysis up to this point leads me to believe that the discrepancies in the fitted values of $\tau$ could be due to $t_1$ being closer to the critical point than $t_0$, and as $N$ increases we see $t_0$ move closer to $t_1$ (Fig. \ref{fig:r_scaling}), thus if we ran simulations with larger values of $N$ then we should be able to obtain a more accurate reading of $\tau$.
 
 \begin{figure}[H]
@@ -174,7 +174,7 @@ The data analysis up to this point leads me to believe that the discrepancies in
 	\label{fig:fss_collapse_triple}
 \end{figure}
 
-Now that we have extracted some useful information, namely the values of the critical exponents, we want to show is that as the system size tends to infinity that the difference in the order parameter, $\Delta m$, tends to zero, i.e. $\lim_{N \rightarrow \infty} \Delta m = 0$.
+Now that we have extracted some useful information, namely the values of the critical exponents, we want to show that as the system size tends to infinity, the difference in the order parameter, $\Delta m$, tends to zero (i.e. $\lim_{N \rightarrow \infty} \Delta m = 0$).
 In order to show this we want to place an upper bound on $\Delta m$. In \cite{Lee_1} they laid out a clever method for setting an upper bound by starting with the cluster size distribution at $t_0$ and taking an ideal process to add edges in such a way as to maximize the largest cluster size from $t_0$ to $t_1$, thus any other process will produce a $\Delta m$ that is bounded above by the $\Delta m$ produced in the ideal process.
 This ideal process would seek to merge all clusters larger than some size $s_\delta$, which is determined by $\Delta t = t_1 - t_0$ and the cluster size distribution at $t_0$, i.e. $\Delta t = N_{C, 0} \sum_{s > s_\delta} n_s(t_0)$, where $N_{C, 0}$ is the total number of clusters at step $t_0$.
 What they arrived at is that \cite{Lee_1}:
@@ -198,14 +198,14 @@ Fig. \ref{fig:delta_m_scaling} shows $\log_2(\Delta m)$ versus $\log_2(N)$ and f
 %---------------------------------------------------------------------------------------
 % Possible Future Directions
 %---------------------------------------------------------------------------------------
-\subsection{Possible Future Directions}
+\section{Possible Future Directions}
 There are many different avenues we could go down in the future to further the analysis presented here and in the referenced sources.
 The most obvious are studying $q$-edge models for $q \ge 3$ and seeing how the system behaves as $q$ changes, as well as looking at systems other than random networks, such as a lattice.
 As a sneak peak, the Figs. below illustrate how the order parameter changes in these scenarios.
 
 Fig. \ref{fig:q_scaling_triple} shows the order parameter for systems of size $N = 10^6$ and $q \in \{2, 3, ..., 7, 8\}$. As we can see, increasing the number of edges evaluated delays the transition even longer, which makes sense from a practical standpoint since more candidate edges means we have more opportunities to minimize the size of the largest cluster.
 
-\begin{figure}[H]
+\begin{figure}
 	\centering
 	\includegraphics[width=350pt, clip]{images/q_scaling_triple.png}
 	\caption{Stochastic edge acceptance model dependence on $q$. As $q$ increases we see the transition is delayed even longer. The heterogeneity per node exhibits sharper peaks, and the average cluster size shows interesting behavior. $N = 10^6$.}

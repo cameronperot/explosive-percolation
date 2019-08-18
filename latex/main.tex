@@ -1,8 +1,6 @@
 \documentclass[12pt,twoside]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,bindingoffset=6mm]{geometry}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
 \usepackage{graphicx}
 \graphicspath{ {images/} }
 \usepackage{color}
@@ -49,6 +47,9 @@
 \chapter{Introduction}
 \input{chapters/introduction.tex}
 
+\chapter{An "Explosive" Transition}
+\input{chapters/explosive_transition.tex}
+
 \chapter{A New Model}
 \input{chapters/sea.tex}
 
@@ -57,6 +58,7 @@
 
 \appendix
 \chapter{Appendix}
+\label{ch:appendix}
 \input{chapters/appendix.tex}
 
 \printbibliography
