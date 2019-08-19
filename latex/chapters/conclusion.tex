@@ -1,0 +1,19 @@
+When Dmitris Achlioptas raised the question in 2000, he probably did not foresee the cascade of follow up questions it would lead to.
+As we have seen, small changes to the way that edges are added to the graph can drastically alter the nature of the phase transition, leading up to what some people believe to be a discontinuous transition.
+There was a lengthy debate over the course of several years discussing the continuity of these transitions, which as of now appears to have been resolved.
+The deciding factor in whether or not these transitions are continuous is what information they take into account; algorithms that take only local information into account produce continuous transitions whereas some algorithms that take global information into account can product discontinuous transitions.
+
+Since it was first discussed the topic of explosive percolation has been heavily researched and there have been many different models created and analyzed.
+The product rule seems to be the most famous of them all, and is the rule which was initially believed to be discontinuous, but was later proved continuous after using more advanced analysis techniques combined with larger scale simulations.
+The da Costa rule is another that was studied in depth, later leading to a full fledged theory on how to study such systems.
+Even though these local information based models were proven continuous, they still show unusual finite-size scaling behavior and each are in their own universality class, which makes them interesting to study.
+
+In \ref{ch:sea} we analyzed a new model (stochastic edge acceptance) using the framework laid out in \cite{Lee_1}, where we studied the scaling behavior of the cluster size distribution near the critical point to determine critical exponents which we used to place an upper bound on the order parameter, thus showing continuity.
+The SEA model was merely a toy model to show proof of concept and to see how the phase transition would look like with a little extra randomness implemented.
+Overall I think that the stochastic edge acceptance model was a success, as the data obtained from the simulations fit well with the framework within which we were studying it.
+
+I believe that through this thesis I have gained a much deeper understanding of percolation theory and computational physics as a whole.
+I very much enjoyed writing the associated library (GraphEvolve.jl) which I used to run my simulations, and it was extremely satisfying when the output data showed nice power law scaling relations near the critical point.
+As of now I am happy with what I was able to accomplish here and the future directions listed at the end of Ch. \ref{ch:sea} are there and ready to be studied if I choose to dive further into this topic.
+
+I must say thanks to Prof. Dr. Wolfhard Janke, Dr. Stefan Schnabel, M.Sc. Henrik Christiansen, and Alan Sammarone for the interesting and stimulating conversations regarding the topic of explosive percolation.

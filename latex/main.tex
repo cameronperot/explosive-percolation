@@ -39,21 +39,34 @@
 \pagenumbering{roman}
 
 \chapter*{Abstract}
+In 2000 Dmitris Achlioptas asked a question about whether or not there existed processes in which adding edges to a random network would produce a phase transition later than that seen in the traditional Erdős-Rényi model.
+Little did he know that this question would have a simple yet complicated answer.
+Yes, there did exist such processes and yes they were able to show transitions later than that in the Erdős-Rényi model; however, the continuity of these transitions was not immediately clear.
+These processes in question were designed in such a way as to minimize the size of the largest cluster, and in doing so some of them delayed the phase transition to a later point at which it appeared to transition rapidly to the state of large scale connectivity, so rapid that it was brought into question whether the transition was discontinuous.
+Over the years there was a lot of research into this topic, eventually concluding that algorithms which take only local information into account produce continuous transitions whereas algorithms that make use of global information can produce discontinuous transitions.
+In this thesis we set out to summarize how the field developed as well as produce a new model which exhibits this rapid phase transition behavior.
+The new model explored here is called stochastic edge acceptance (SEA), and is a local information based algorithm that uses probabilities (favoring the minimization of the largest cluster) and random numbers to determine which edges to accept.
+Analysis of the SEA model performed here shows that it exhibits beautiful power law scaling behavior near the critical point, allowing us to determine critical exponents and show that it does indeed produce a continuous transition.
+
 
 \tableofcontents
 \cleardoublepage
 \pagenumbering{arabic}
 
 \chapter{Introduction}
+\label{ch:introduction}
 \input{chapters/introduction.tex}
 
 \chapter{An "Explosive" Transition}
+\label{ch:explosive}
 \input{chapters/explosive_transition.tex}
 
 \chapter{A New Model}
+\label{ch:sea}
 \input{chapters/sea.tex}
 
 \chapter{Conclusion}
+\label{ch:conclusion}
 \input{chapters/conclusion.tex}
 
 \appendix
