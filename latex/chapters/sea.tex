@@ -1,7 +1,7 @@
 \section{Stochastic Edge Acceptance}
 After reading a lot about other models for evolving graphs I decided to come up with a new model for adding edges with an extra element of randomness.
 The model is called Stochastic Edge Acceptance or SEA for short.
-In most models the edges selected for evaluation are random but which of those edges is added to the graph is deterministic like in the product rule where the one with the smallest product is always accepted.
+In most models the set of edges selected for evaluation are random but, but choosing which edge to add from that set is deterministic, like in the product rule where the one with the smallest product of cluster sizes is always accepted.
 
 The underlying idea is to have a process which favors the minimization of the largest cluster through considering multiple edges at each step in the evolution algorithm, making it an Achlioptas process.
 This is a local rule, i.e. it only considers local information such as the size of the clusters to which the nodes corresponding to the considered edges belong.
@@ -57,7 +57,7 @@ The $q$-edge algorithm is similar except it would use a cumulative probability $
 % Simulation and Analysis
 %---------------------------------------------------------------------------------------
 \section{Simulation and Analysis}
-All data in this section was generated using GraphEvolve.jl (see Appendix \ref{ch:appendix} for more information).
+All data in this section was generated using \texttt{GraphEvolve.jl} (see Appendix \ref{ch:appendix} for more information).
 Random networks of sizes $2^k$, $k \in \{15, 16, ..., 24\}$ were studied, and for each system size 1000 simulations were run with different random number generator seed values.
 It would be ideal to run simulations for larger system sizes to get a more representative sample, and is something which can be investigated further in the future.
 All code and the associated generated data used for this is publicly available on the corresponding GitHub page \url{https://github.com/cameronperot/explosive-percolation}.
@@ -76,7 +76,7 @@ The order parameter shows a sharp increase at the point of phase transition with
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=350pt, clip]{images/k_scaling_triple.png}
-	\caption{Observable dependence on system size. $H$ is the cluster heterogeneity and $\overline{s}$ is the average cluster size. As the system size increases the the peak of the heterogeneity per node $H/N$ decreases and moves towards the right. The average cluster size lines up for all system sizes.}
+	\caption{Observable dependence on system size. $H$ is the cluster heterogeneity and $\overline{s}$ is the average cluster size. As the system size increases the peak of the heterogeneity per node $H/N$ decreases and moves towards the right. The average cluster size lines up for all system sizes.}
 	\label{fig:k_scaling_triple}
 \end{figure}
 
@@ -96,7 +96,7 @@ We will define two quantities which we would like to study the behavior of:
 \end{equation}
 
 Fig. \ref{fig:r_scaling} shows the scaling behavior of $r_0$ and $r_1$ as a function of the system size $N$.
-As the system size increases the two curves appear to be to be converging to the exact point of phase transition.
+As the system size increases the two curves appear to be converging to the exact point of phase transition.
 The obtained data tells us that the system transitions phases around $r \approx 0.718(4)$.
 
 \begin{figure}[H]
@@ -151,7 +151,7 @@ In Fig. \ref{fig:n_s_t_1} we see $\log_{10}(n_s(t_1))$ versus $\log_{10}(s/N)$ (
 \end{figure}
 
 In \cite{Lee_1} they determine $s_f$ by taking the ansatz $\sum_{s \ge s_f} \sim 1 / N_{C, 0}$ where $N_{C, 0}$ is the total number of clusters at $t_0$.
-Then through the use of several relations such as the the number of clusters scaling linearly with the system size they arrive at:
+Then through the use of several relations such as the number of clusters scaling linearly with the system size they arrive at:
 
 \begin{equation}
 	s_f(N) \sim N^{1 / \tau}

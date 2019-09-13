@@ -11,8 +11,8 @@ Some of the applications outside of physics include testing the durability of a 
 Percolation theory is a broad subject with the ability to be applied to problems in many different disciplines \cite{intro_to_percolation_theory} \cite{applications_of_percolation_theory}.
 
 To get a better understanding of what percolation is let's discuss a few examples.
-Society is developing faster than ever before due to the propagation of information and goods through networks we have constructed.
-These networks then allow us to create and participate in increasingly more advanced networks, thus it is critical we study and understand how these networks behave so that we can better manage and improve them.
+Society is developing faster than ever before due to the propagation of information and goods through human developed networks.
+These networks allow us to create and participate in increasingly more advanced networks, thus it is critical we study and understand how these networks behave so that we can better manage and improve them.
 The most well known being the internet, which sustains a massive flow of information between billions of people across the globe.
 When something is posted online we might ask: how many people will it reach?
 To answer this we would start at the source node then see which nodes it could possibly be connected to.
@@ -20,7 +20,7 @@ If each person has a probability $p$ of sharing it with another person then we c
 If the probability is high then we would expect the size of cluster to be significant when compared to that of the whole network.
 
 Another interesting application is that to the spread of health epidemics across a population.
-If there is a virus going around there is an underlying network that can be studied; there is the initial person(s) who contracted the virus and then the people who were contaminated from coming in contact with those infected.
+If a virus is spreading, then there is an underlying network that can be studied; there is the initial person(s) who contracted the virus and then the people who were contaminated from coming in contact with those infected.
 The obvious question is: how much of the population will it affect?
 Let's say in a very basic sense that an infected person has a $p$ percent chance of infecting those they come into contact with.
 If the virus is treatable and $p$ is low, then we would expect the virus to be eradicated fairly quickly since doctors have the time and ability to treat the outbreak properly.
@@ -58,8 +58,8 @@ The classic percolation models are known to undergo continuous phase transitions
 % Critical Exponents
 %---------------------------------------------------------------------------------------
 \subsection{Critical Exponents}
-Around the critical point in a percolation model there exists a set of numbers called the critical exponents which contain information about how certain quantities of interest behave.
-Let's take for example the order parameter as a function of the occupation probability $p$, which is described by the critical exponent $\beta$ \cite{intro_to_percolation_theory}:
+Around the critical point in a percolation model there exists a set of numbers called the critical exponents that contain information about how certain quantities of interest behave.
+For example, let's take the order parameter as a function of the occupation probability $p$, which is described by the critical exponent $\beta$ \cite{intro_to_percolation_theory}:
 
 \begin{equation}
 	\label{eqn:crit_exp_P}
@@ -204,11 +204,11 @@ Using the above we can also analytically determine the average cluster size (aga
 
 The above illustrates that we can analytically solve for some of the quantities of interest in the one-dimensional case.
 We're often more interested in the thermodynamic limit, i.e. when $L \rightarrow \infty$.
-In the thermodynamic limit percolation on the chain only occurs when we have an infinite number of neighboring occupied sites.
+In the thermodynamic limit, percolation on the chain only occurs when we have an infinite number of neighboring occupied sites.
 This means that if just one site out of the entire chain is unoccupied there is no percolating cluster which leads us to conclude that for the one-dimensional case $p_c = 1$.
 
 \paragraph{Multiple-Dimensions}
-Unfortunately it is not as straight forward in higher dimensions due to the many different arrangements and shapes that the clusters can take on.
+Unfortunately, analytical solutions to percolation problems are not as straight forward in higher dimensions due to the many different arrangements and shapes that the clusters can take on.
 This is illustrated in Fig. \ref{fig:2d_site_clusters} where we can see four possible arrangements of a nine-cluster, each with different numbers of neighboring inactive sites.
 
 \begin{figure}
@@ -220,7 +220,7 @@ This is illustrated in Fig. \ref{fig:2d_site_clusters} where we can see four pos
 Without the ability to answer our questions through analytical methods we must resort to numerical methods and simulations to study the system.
 This is where computer simulations and finite-size scaling analysis come in handy.
 Due to the limitations of computational power we can only simulate systems up to certain sizes; however, we would still like to gather some information about the infinite size system.
-What we do is we simulate systems of varying sizes and see how the quantities of interest scale with the system size, which gives us the ability to extrapolate to the thermodynamic limit.
+We can simulate systems of varying sizes and see how the quantities of interest scale with the system size, giving us the ability to extrapolate to the case of the infinite system.
 
 \paragraph{Example: Ising Model}
 The Ising model is the most well-known model of ferromagnetism, undergoing a second-order phase transition (for $d \ge 2$) from the ordered, ferromagnetic state at low temperatures to the disordered, paramagnetic state at high temperatures.

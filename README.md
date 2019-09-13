@@ -5,9 +5,7 @@ The simulations are done using a Julia package I created called [GraphEvolve.jl]
 
 The code used to produce all data used in my thesis can be found [here](code).
 
-I am currently writing my bachelor's thesis in the computational physics group at Universität Leipzig under the supervision of Prof. Dr. Wolfhard Janke and Dr. Stefan Schnabel.
-
-Percolation theory is a subject with a range of applications, and is often used to model phase transitions in physical systems, such as ferromagnets which have an ordered ferromagnetic phase at low temperatures and a disordered phase at high temperatures.
+I wrote my bachelor's thesis in the computational physics group at Universität Leipzig under the advisement of Prof. Dr. Wolfhard Janke and Dr. Stefan Schnabel on the topic of percolation theory. Percolation theory is a subject with a range of applications, and is often used to model phase transitions in physical systems, such as ferromagnets which have an ordered ferromagnetic phase at low temperatures and a disordered phase at high temperatures.
 
 To be a bit more specific, the topic I am focusing on is explosive percolation, which entails processes where clusters in the graph evolve in such a way that the onset of percolation is delayed until a critical point at which there is a sudden onset of large scale connectivity.
 I have designed and am in the process of analyzing a model for evaluating and adding edges to a graph called stochastic edge acceptance, or SEA for short.

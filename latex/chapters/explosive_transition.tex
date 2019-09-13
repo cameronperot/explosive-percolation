@@ -114,7 +114,7 @@ A form of the algorithm can be written in pseudocode as follows:
 \section{A Discontinuous Transition?}
 The first mention of explosive percolation appeared in 2009 in the paper "Explosive Percolation in Random Networks" \cite{Achlioptas_1} by Dimitris Achlioptas, Raissa M. D’Souza, and Joel Spencer, which will henceforth be referred to as Achlioptas et al.
 In this paper they laid out a method of evaluating candidate edges called the product rule (PR).
-At each step $t$ in the evolution process two edges are selected randomly/uniformly and evaluated based on the product of the cluster sizes that the edges would connect.
+At each step $t$ in the evolution process two edges are selected randomly/uniformly and evaluated based on the product of the cluster sizes corresponding to the clusters which the nodes that the edges would connect belong to.
 More specifically, if edge $e_t$ connects clusters $C(e_t^1)$ and $C(e_t^2)$ and edge $e_t'$ connects clusters $C(e_t'^1)$ and $C(e_t'^2)$, then $e_t$ is accepted if $|C(e_t^1)| \cdot |C(e_t^2)| < |C(e_t'^1)| \cdot |C(e_t'^2)|$, otherwise $e_t'$ is accepted.
 
 A form of the algorithm can be written in pseudocode as follows:
@@ -167,7 +167,7 @@ Not long after the critical point is reached the order parameter appears to jump
 	\label{fig:ER_BF_PR_transition}
 \end{figure}
 
-In their paper they analyzed the scaling behavior of their model, defining the quantity $\Delta := t_1 - t_0$, where $t_0$ is the last step where $C < N^{1/2}$ and $t_1$ is the first step where $C > 0.5N$.
+Achlioptas et al. analyzed the scaling behavior of their model, defining the quantity $\Delta := t_1 - t_0$, where $t_0$ is the last step where $C < N^{1/2}$ and $t_1$ is the first step where $C > 0.5N$.
 $\Delta$ is linear in $N$ for continuous transitions (i.e. an extensive quantity); however, their analysis indicated otherwise that $\Delta < 2N^{2/3}$ and $\Delta / N^{2/3} \rightarrow 1$ in their simulations for sizes up to $6.4 \cdot 10^7$.
 To arrive at these results they took an ensemble average of 50 different independent and identically distributed observations and fit a curve to determine the relation between $\Delta$ and $N$.
 Their findings are illustrated in Fig. \ref{fig:achlioptas_plots}.
@@ -179,7 +179,7 @@ Their findings are illustrated in Fig. \ref{fig:achlioptas_plots}.
 	\label{fig:achlioptas_plots}
 \end{figure}
 
-They ended their paper by saying: "We have demonstrated that small changes in edge formation have the ability to fundamentally alter the nature of percolation transitions. Our findings call for the comprehensive study of this phenomenon, and of its potential use in bringing phase transitions under control."
+Achlioptas et al. ended their paper by saying: "We have demonstrated that small changes in edge formation have the ability to fundamentally alter the nature of percolation transitions. Our findings call for the comprehensive study of this phenomenon, and of its potential use in bringing phase transitions under control."
 Indeed their message seemed to resonate, leading to a wave of papers from around the world exploring the subject \cite{Ziff_1, Cho_1, Radicchi_1, Friedman_1, Ziff_2, Radicchi_2, D_Souza_1, da_Costa_1, Rozenfeld_1, Araujo_1, Moreira_1, Cho_2, Cho_3, Nagler_1, Manna_1, Grassberger_1, Lee_1, Riordan_1, Hooyberghs_1, Nagler_2, Chen_1, Panagiotou_1, Pan_1, Cho_4, Gomez_1, Tian_1, Riordan_2, Riordan_3, Boettcher_1, Chen_2, Angst_1, Bizhani_1, Cho_5, Schroeder_1, Chen_3, Chen_4, Squires_1, Do_1, Chen_5, Bastas_1, Cho_6, da_Costa_2, Riordan_4, Guan_1, da_Costa_5, da_Costa_3, da_Costa_4, D_Souza_2, Hayasaka_1, Clusella_1, Boccaletti_1, Gedik_1, Rahman_1, Waagen_1, Zhu_1, Sabbir_1, Trevelyan_1, Sabbir_1}.
 
 
@@ -286,7 +286,7 @@ Their theory is quite extensive and worth the read.
 \subsection{A Look At the Developments}
 After seeing a number of papers stating that the transition is actually continuous, it looked like the debate had been settled.
 $q$-edge Achlioptas processes are always continuous if they only take local information into account, but there exist some processes that take global information into account that lead to a discontinuous transition.
-A lot of different rules for selecting, evaluating, and adding edges were created since the topic Dimitris Achlioptas raised the question.
+A lot of different rules for selecting, evaluating, and adding edges were created since Dimitris Achlioptas raised the question.
 In their 2015 paper "Explosive Percolation: Novel critical and supercritical phenomena" \cite{D_Souza_2}, Raissa M. D’Souza and Jan Nagler summarized a lot of the developments and findings in the field up to that point.
 They discussed similarities and differences between some of the well known explosive percolation models and tied it all together nicely with some real world applications and future directions for the field.
 Overall it is an excellent paper to read to get acquainted with how the field developed from 2009 to 2015.
