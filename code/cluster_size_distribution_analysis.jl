@@ -15,7 +15,7 @@ dpi = 144
 if save_bool
 	dpi = 300
 end
-
+save_bool
 
 # %%
 
@@ -23,6 +23,7 @@ end
 Ns = 2 .^ collect(15:24);
 save_file = joinpath(data_dir, "cluster_size_distribution_avgs.jld")
 distribution_avgs = load(save_file)["distribution_avgs"]
+
 
 # %% Plot t_0 data
 
@@ -56,8 +57,9 @@ end
 end
 
 αs    = [];
+σs    = [];
 ratio = 0.01;
-for N in Ns[6:end]
+for N in Ns[end:end]
 	d = distribution_avg[N];
 	x = log10.(collect(keys(d)));
 	y = log10.(collect(values(d)));
@@ -66,18 +68,20 @@ for N in Ns[6:end]
 	y = y[order][1:Int(floor(ratio * length(y)))];
 	fit = curve_fit(f_linear, x, y, [-0.1, 0])
 	push!(αs, fit.param)
+	push!(σs, stderror(fit))
 end
 
 α = sum(αs) / length(αs)
+σ = sum(σs) / length(σs)
 τ₀ = -α[1]
 
 d = distribution_avg[2^24];
 x = log10.(collect(keys(d)));
 order = sortperm(x);
 x = x[order][1:Int(floor(ratio * length(x)))];
-y = f_linear(x, α .+ [0, -0.5]);
+y = f_linear(x, α);
 plot!(x, y,
-	label=latexstring("\\sim $(round(α[1], digits=3)) \\cdot \\log (s)"),
+	label=latexstring("\\mathrm{Fit} (N = 2^{24}) \\sim $(round(α[1], digits=3)) ($(Int(round(σ[1] * 1e3, digits=0)))) \\cdot \\log_{10}(s)"),
 	line=(1, :black),
 )
 
@@ -121,7 +125,7 @@ end
 αs    = [];
 σs    = [];
 ratio = 0.10;
-for N in Ns[6:end]
+for N in Ns[end:end]
 	d = distribution_avg[N];
 	x = log10.(collect(keys(d)) ./ N);
 	y = log10.(collect(values(d)));
@@ -134,15 +138,16 @@ for N in Ns[6:end]
 end
 
 α = sum(αs) / length(αs)
+σ = sum(σs) / length(σs)
 τ₁ = -α[1]
 
 d = distribution_avg[2^24];
 x = log10.(collect(keys(d)) ./ 2^24);
 order = sortperm(x);
 x = x[order][1:Int(floor(ratio * length(x)))];
-y = f_linear(x, α .+ [0, -2])
+y = f_linear(x, α)
 plot!(x, y,
-	label=latexstring("\\sim $(round(α[1], digits=3)) \\cdot \\log(s/N)"),
+	label=latexstring("\\mathrm{Fit} (N = 2^{24}) \\sim $(round(α[1], digits=3)) ($(Int(round(σ[1] * 1e3, digits=0)))) \\cdot \\log_{10}(s/N)"),
 	line=(1, :black),
 )
 
@@ -153,7 +158,7 @@ end
 plot_1
 
 
-# %% Plot FSS collapse for τ₁
+# %% Plot FSS collapse for τ₀
 
 
 distribution_avg = distribution_avgs["t_0"]
@@ -259,3 +264,10 @@ if save_bool
 end
 
 plot_triple
+
+
+# %% Maximual decay exponent calculation
+
+
+δ = 0.302;
+exponent_of_decay = -δ * (τ₁ - 2) / (τ₁ - 1)

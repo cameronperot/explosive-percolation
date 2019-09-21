@@ -1,3 +1,5 @@
+Full documentation for \texttt{GraphEvolve.jl} can be found at \href{https://percolation.fun}{percolation.fun}.
+
 \section{Designing the Library}
 I chose Julia as the language to write the library in for several reasons, the largest being that I believe Julia is the perfect language for running large scale distributed computational physics/mathematics simulations.
 The benefit of being able to use it as an interactive language while at the same time getting speeds of a compiled language can not be understated since the immediate feedback and ability keep a kernel running with data in RAM allows for easy debugging and data exploration.
@@ -61,7 +63,7 @@ This allows for consistency, e.g. we can call \texttt{product\_rule!(Network(Int
 Currently when a single simulation is run it is run on a single core.
 For the data used in this thesis I use a script which has a parallel for loop which takes advantage of all threads that are enabled to run simulations in parallel with different seed values.
 Recently the Julia developers published an article talking about "composable multi-threaded parallelism", which is currently in the early stages, but looks promising and could make future parallelization very easy.
-Once stable it can be implemented in GraphEvolve.jl to run the updating of the observables in a separate thread, i.e. if we would like to gather information about an observable that takes too much time to run on the single thread we could spawn a new thread to compute this in parallel with the rest of the simulation.
+Once stable it can be implemented in \texttt{GraphEvolve.jl} to run the updating of the observables in a separate thread, i.e. if we would like to gather information about an observable that takes too much time to run on the single thread we could spawn a new thread to compute this in parallel with the rest of the simulation.
 
 
 

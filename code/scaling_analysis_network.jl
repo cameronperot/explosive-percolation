@@ -70,6 +70,10 @@ if save_bool
 	savefig(plot_, joinpath(savepath, "r_scaling.png"))
 end
 
+df[:, :r_0_mean]
+err = round((df[end, :r_1_mean] .- df[end, :r_0_mean]) / 2, digits=3)
+round(df[end, :r_0_mean] + err, digits=3)
+
 plot_
 
 
@@ -92,7 +96,7 @@ y_fit = f_linear(x, fit.param);
 
 plot_ = plot(dpi=dpi);
 plot!(x, y_fit,
-	label=latexstring("\\mathrm{Fit: } $(round(α[1], digits=3)) ($(Int(round(σ[1] * 1e3, digits=0)))) \\cdot \\log_2(N) + $(round(α[2], digits=3)) ($(Int(round(σ[2] * 1e3, digits=0))))"),
+	label=latexstring("\\mathrm{Fit} \\sim $(round(α[1], digits=3)) ($(Int(round(σ[1] * 1e3, digits=0)))) \\cdot \\log_2(N)"),
 	line=(1, :black, 0.8)
 );
 scatter!(x, y,
@@ -129,16 +133,16 @@ y_fit = f_linear(x, fit.param);
 
 plot_ = plot(dpi=dpi);
 plot!(x, y_fit,
-	label=latexstring("\\mathrm{Fit: } $(round(α[1], digits=3)) ($(Int(round(σ[1] * 1e3, digits=0)))) \\cdot \\log_2(N) + $(round(α[2], digits=3)) ($(Int(round(σ[2] * 1e3, digits=0))))"),
+	label=latexstring("\\mathrm{Fit} \\sim $(round(α[1], digits=3)) ($(Int(round(σ[1] * 1e3, digits=0)))) \\cdot \\log_2(N)"),
 	line=(1, :black, 0.8)
 );
 
 δ = 0.302
-τ = 2.228
+τ = 2.213
 exp_upper_bound = -δ * (τ - 2) / (τ - 1);
 α_upper_bound = [exp_upper_bound, -exp_upper_bound * x[1] + y[1]]
 plot!(x, f_linear(x, α_upper_bound),
-	label=latexstring("\\mathrm{Upper Bound: } \\sim $(round(exp_upper_bound, digits=3)) \\cdot \\log_2(N)"),
+	label=latexstring("\\mathrm{Upper Bound} \\sim $(round(exp_upper_bound, digits=3)) \\cdot \\log_2(N)"),
 	line=(1, :black, :dash)
 );
 

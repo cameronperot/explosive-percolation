@@ -97,12 +97,16 @@ We will define two quantities which we would like to study the behavior of:
 
 Fig. \ref{fig:r_scaling} shows the scaling behavior of $r_0$ and $r_1$ as a function of the system size $N$.
 As the system size increases the two curves appear to be converging to the exact point of phase transition.
-The obtained data tells us that the system transitions phases around $r \approx 0.718(4)$.
+Using the ensemble averaged data for the system size $N = 2^{24}$ we find the critical point to be:
+
+\begin{equation}
+	r_c \approx 0.719(3)
+\end{equation}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=350pt, clip]{images/r_scaling.png}
-	\caption{The curves for $r_0$ and $r_1$ appear to be converging to the point of phase transition.}
+	\caption{The curves for $r_0$ and $r_1$ appear to be converging to the point of phase transition. Error bars represent 1 standard deviation.}
 	\label{fig:r_scaling}
 \end{figure}
 
@@ -112,7 +116,12 @@ Fig. \ref{fig:delta_r_scaling} shows $\Delta r$ as a function of the system size
 \begin{equation}
 	\Delta r \sim N^{-\delta}
 \end{equation}
-with $\delta \approx 0.302(2)$.
+
+with the fitted value:
+
+\begin{equation}
+	\delta \approx 0.302(2)
+\end{equation}
 
 \begin{figure}[H]
 	\centering
@@ -137,9 +146,19 @@ This linear behavior tells us this is a power law in $N$ and using the ansatz:
 \begin{equation}
 	n_s(t_0) \sim s^{-\tau}
 \end{equation}
-and performing a linear fit gives us the value of the exponent $\tau_0 \approx 2.163$.
 
-Looking at the data for the cluster size distribution at $t_1$ (Fig. \ref{fig:n_s_t_1}) we see a similar power law scaling relation, except with a slightly different exponent $\tau_1 \approx 2.218$.
+Performing a fit on the linear portion of the data for the system size $N = 2^{24}$ gives us the value of the critical exponent:
+
+\begin{equation}
+	\tau_0 \approx 2.161(2)
+\end{equation}
+
+Looking at the data for the cluster size distribution at $t_1$ (Fig. \ref{fig:n_s_t_1}) we see a similar power law scaling relation, except with a slightly different exponent (also obtained from fitting data for the system size $N = 2^{24}$):
+
+\begin{equation}
+	 \tau_1 \approx 2.213(1)
+\end{equation}
+
 I believe the discrepancy in the exponents here is due to the size of the simulations, and that if simulated with larger system sizes (such as up to $2^{37}$ seen in \cite{Lee_1}) that the values would converge towards the true value of $\tau$.
 In Fig. \ref{fig:n_s_t_1} we see $\log_{10}(n_s(t_1))$ versus $\log_{10}(s/N)$ (rather than just $\log(s)$ as in Fig. \ref{fig:n_s_t_0}), where we again observe this linear scaling up to a point where it then dips and breaks the linear trend (again large statistical errors present past the cutoff point).
 
@@ -164,13 +183,13 @@ This can be verified by assuming a single characteristic cluster size and taking
 \end{equation}
 
 Applying this same ideology to the stochastic edge acceptance method works quite well as seen in Fig. \ref{fig:fss_collapse_triple}, illustrating that the data for all of the system sizes lines up well and exhibits this hump behavior also seen in \cite{Lee_1}.
-This verifies that indeed $\tau_1 \approx 2.218$ is a good estimation of $\tau$.
+This verifies that fitted value of $\tau_1$ is a good estimation of $\tau$.
 The data analysis up to this point leads me to believe that the discrepancies in the fitted values of $\tau$ could be due to $t_1$ being closer to the critical point than $t_0$, and as $N$ increases we see $t_0$ move closer to $t_1$ (Fig. \ref{fig:r_scaling}), thus if we ran simulations with larger values of $N$ then we should be able to obtain a more accurate reading of $\tau$.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=350pt, clip]{images/fss_collapse_triple.png}
-	\caption{$n_s(t_0)$ finite-size scaling shows a collapse of the data for the critical exponent value $\tau_1 \approx 2.218$ obtained from fitting the linear portion of the distribution at $t_1$. The lower left plot shows how the collapse looks for the value $\tau_0$ and the lower right plot illustrates a slightly higher value of $\tau$, both of which do not line up as well as when using $\tau_1$.}
+	\caption{$n_s(t_0)$ finite-size scaling shows a collapse of the data for the critical exponent value $\tau_1 \approx 2.213$ obtained from fitting the linear portion of the distribution at $t_1$. The lower left plot shows how the collapse looks for the value $\tau_0$ and the lower right plot illustrates a slightly higher value of $\tau$, both of which do not line up as well as when using $\tau_1$.}
 	\label{fig:fss_collapse_triple}
 \end{figure}
 
@@ -183,8 +202,13 @@ What they arrived at is that \cite{Lee_1}:
 	\Delta m \lesssim s_\delta^{2 - \tau} \sim N^{-\delta (\tau - 2) / (\tau - 1)}
 \end{equation}
 
-Plugging in our obtained values of $\delta$ and $\tau$ we find that $\Delta m \lesssim N^{-0.056}$, which implies that the transition of the stochastic edge acceptance model is continuous like other local information based models.
-Fig. \ref{fig:delta_m_scaling} shows $\log_2(\Delta m)$ versus $\log_2(N)$ and fitting a line we observe a decay exponent of $0.152(2)$ and verify that this is indeed below the upper bound we arrived at.
+Plugging in our obtained values of $\delta$ and $\tau$ we find that:
+
+\begin{equation}
+	\Delta m \lesssim N^{-0.053}
+\end{equation}
+which implies that the transition of the stochastic edge acceptance model is continuous like other local information based models.
+Fig. \ref{fig:delta_m_scaling} shows $\log_2(\Delta m)$ versus $\log_2(N)$ and fitting a line we observe a decay exponent of $0.152(1)$ and verify that this is indeed below the upper bound we arrived at.
 
 \begin{figure}[H]
 	\centering
