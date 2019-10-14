@@ -1,4 +1,4 @@
-Full documentation for \texttt{GraphEvolve.jl} can be found at \href{https://percolation.fun}{percolation.fun}.
+Full documentation for \texttt{GraphEvolve.jl} can be found at \href{https://percolation.fun}{https://percolation.fun}.
 
 \section{Designing the Library}
 I chose Julia as the language to write the library in for several reasons, the largest being that I believe Julia is the perfect language for running large scale distributed computational physics/mathematics simulations.
@@ -55,7 +55,7 @@ Multiple dispatch allows us to define multiple functions with the same name, yet
 This is extremely useful for dealing with differences between networks and lattices such as when selecting an edge, because for example in a \texttt{Network} we can select any inactive edge between nodes, whereas in a \texttt{LatticedD} we can only select an inactive edge between nearest neighbors (this can be seen implemented in \texttt{edge\_methods.jl}).
 
 Another benefit of this coupled with the type system is that when we have a function that is generic enough to act on both \texttt{Network}s and \texttt{LatticedD}s then we can set the input type for that function to \texttt{AbstractGraph} or if it's general enough to act on all \texttt{LatticedD}s but not \texttt{Network}s then we can set the input type to \texttt{AbstractLattice}.
-This allows for consistency, e.g. we can call \texttt{product\_rule!(Network(Int(1e6)))} and similarly \texttt{product\_rule!(Lattice2D(Int(1e3)))} and the code will decide based on the type which functions to use.
+This allows for consistency, e.g. we can call \texttt{product\_rule!(Network(Int(1e6)))} and similarly\\\noindent \texttt{product\_rule!(Lattice2D(Int(1e3)))} and the code will decide based on the type which functions to use.
 
 
 

@@ -68,15 +68,27 @@ function distribution_files_to_dict(file_dict, Ns)
 	distribution_avgs = Dict(
 		t => Dict(N => DefaultDict{Int, Float64}(0.) for N in Ns) for t in keys(file_dict)
 	)
+	distribution_arrays = Dict(
+		t => Dict(N => DefaultDict{Int, Array}([]) for N in Ns) for t in keys(file_dict)
+	)
 	for (t, N_dicts) in distributions
 		for (N, seed_dicts) in N_dicts
 			for (seed, distribution) in seed_dicts
 				for (s, n_s) in distribution
 					distribution_avgs[t][N][s] += n_s / N_counts[t][N]
+					push!(distribution_arrays[t][N][s], n_s)
 				end
 			end
 		end
 	end
+
+	# # CHECK
+	# distribution_avgs_v2 = Dict(
+	# 	t => Dict(N => DefaultDict{Int, Float64}(0.) for N in Ns) for t in keys(file_dict)
+	# )
+	# for (t, N_dicts) in distributions
+	#
+	# end
 
 	distribution_avgs_ = Dict()
 	for (t, N_dicts) in distribution_avgs
